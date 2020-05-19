@@ -63,6 +63,7 @@ export default class gameMgr {
     canSelect(id){
         let idx = id;
         if(idx - 1 < 0){return true}
+        if(id == this.embroideryID){return true}
         return this.complete[idx-1] === this.isComplete;
     }
 

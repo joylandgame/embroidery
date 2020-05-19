@@ -58,7 +58,7 @@ cc.Class({
         this.node.on(cc.Node.EventType.TOUCH_END,this.drawEnd,this);
     },
 
-    removeEvent(){
+    onDestroy(){
         cc.vv.eventMgr.off(cc.vv.eventName.game_go_home, this.game_go_home, this);
 
         this.node.off(cc.Node.EventType.TOUCH_START,this.drawBegin,this);
@@ -68,7 +68,6 @@ cc.Class({
 
     game_go_home(){
         
-        this.removeEvent();
     },
   
     selectColor(e) {

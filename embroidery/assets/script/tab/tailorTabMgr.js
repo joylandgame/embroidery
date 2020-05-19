@@ -27,13 +27,12 @@ cc.Class({
         cc.vv.eventMgr.on(cc.vv.eventName.game_go_home, this.game_go_home, this);
     },
 
-    removeEvent(){
+    onDestroy(){
         cc.vv.eventMgr.off(cc.vv.eventName.game_go_home, this.game_go_home, this);
     },
 
     game_go_home(){
-
-        this.removeEvent();
+        
     },
 
     clear(){
@@ -58,7 +57,7 @@ cc.Class({
     showClips(){
         if(!this.clipsArr){ //放入裁剪的数组
             if(!cc.vv.gameClipArr.length){
-                Log.catch('in tailorTabMgr 40',cc.vv.gameClipArr);
+                Log.catch('in tailorTabMgr 61',cc.vv.gameClipArr);
                 return;
             }
             this.clipsArr = [];

@@ -38,7 +38,7 @@ cc.Class({
         cc.vv.eventMgr.on(cc.vv.eventName.game_go_home, this.game_go_home, this);
     },
 
-    removeEvent(){
+    onDestroy(){
         cc.vv.eventMgr.off(cc.vv.eventName.complete_one_game, this.complete_one_game, this);
         cc.vv.eventMgr.off(cc.vv.eventName.game_go_home, this.game_go_home, this);
     },
@@ -48,7 +48,11 @@ cc.Class({
         for(let index = 0; index < this.tabBtns.length; index++){
             let item  = this.tabBtns[index];
             let light = this.gameMgr.canSelect(index);
-            item.getComponent(cc.Sprite).spriteFrame = light ? this.tabBtnFrames_s[index] : this.tabBtnFrames_n[index];
+            if(index == this.gameMgr.embroideryID){
+                item.getComponent(cc.Sprite).spriteFrame = this.tabBtnFrames_s[index]; 
+            }else{
+                item.getComponent(cc.Sprite).spriteFrame = light ? this.tabBtnFrames_s[index] : this.tabBtnFrames_n[index];
+            }
             item.setScale(cc.v2(1,1));
         }
         let id = Number(this.openTabID);
@@ -93,16 +97,13 @@ cc.Class({
 
     game_go_home(){
         Log.d('返回大厅');
-        this.removeEvent();
     },
 
     goHome(){
         if(this.gameMgr){
             //暂存draw数据 画板的data
             cc.vv.eventMgr.emit(cc.vv.eventName.game_go_home);
-            cc.director.loadScene('home', () => {
-                Log.d('home scene loaded');
-            })
+            cc.director.loadScene('home', () => {Log.d('home scene loaded')})
         }
     }
 

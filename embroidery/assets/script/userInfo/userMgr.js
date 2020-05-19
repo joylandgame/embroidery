@@ -34,7 +34,16 @@ const userMgr = {
             return eventName;
         }
         userInfo.gold = gold;
+        let dt = userInfo;
         localSave.set(userMgr.evt_user_config, dt);
+    },
+
+    setUserClothes(clothesID){
+        if(clothesID){
+            userInfo.clothesID = clothesID;
+            let dt = userInfo;
+            localSave.set(userMgr.evt_user_config, dt);
+        }
     }
     
 

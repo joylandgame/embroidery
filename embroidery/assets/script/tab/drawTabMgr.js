@@ -37,14 +37,13 @@ cc.Class({
         cc.vv.eventMgr.on(cc.vv.eventName.game_go_home, this.game_go_home, this);
     },
 
-    removeEvent(){
+    onDestroy(){
         cc.vv.eventMgr.off(cc.vv.eventName.game_go_home, this.game_go_home, this);
     },
 
     game_go_home(){
         let data = this.drawMgr.getData();
         cc.vv.gameMgr.setDrawData(data);
-        this.removeEvent();
     },
 
     clear(){

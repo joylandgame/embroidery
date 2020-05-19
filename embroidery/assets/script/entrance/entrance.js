@@ -1,8 +1,9 @@
 
 var gameConfig = {
-    config_1: '',
-    config_2: '',
-    config_3: '',
+    part: '',
+    signin: '',
+    skin: '',
+    upgrade: '',
 
     loadConfigOver: false,
     loadResolve: '',
@@ -12,42 +13,81 @@ var entrance = {
     
     init(){
         Promise.all([
-            this.loadConfig_1(),
-            this.loadConfig_2(),
-            this.loadConfig_3(),
+            this.loadpart(),
+            this.loadsignin(),
+            this.loadskin(),
+            this.loadupgrade(),
         ]).then((data)=>{
             gameConfig.loadConfigOver = true;
-            gameConfig.config_1 = data[0];
-            gameConfig.config_2 = data[1];
-            gameConfig.config_3 = data[2];
+            gameConfig.part = data[0];
+            gameConfig.signin = data[1];
+            gameConfig.skin = data[2];
+            gameConfig.upgrade = data[3];
             gameConfig.loadResolve && gameConfig.loadResolve();
         })
     },
 
-    loadConfig_1(){
+    loadpart(){
         return new Promise((resolve, reject)=>{
-            setTimeout(()=>{
-                resolve(1);
-            },1000)
-            // resolve(1);
+            cc.loader.loadRes('jsonInfo/part',(err, data)=>{
+                if(err){
+                    console.log('error---------in entrance 34',err);
+                    return
+                }
+                if(data && data['json']){
+                    resolve(data['json']);
+                    return
+                }
+                resolve([]);
+            })
         })
     },
 
-    loadConfig_2(){
+    loadsignin(){
         return new Promise((resolve, reject)=>{
-            setTimeout(()=>{
-                resolve(2);
-            },1000)
-            // resolve(2);
+            cc.loader.loadRes('jsonInfo/signin',(err, data)=>{
+                if(err){
+                    console.log('error---------in entrance 50',err);
+                    return
+                }
+                if(data && data['json']){
+                    resolve(data['json']);
+                    return
+                }
+                resolve([]);
+            })
         })
     },
 
-    loadConfig_3(){
+    loadskin(){
         return new Promise((resolve, reject)=>{
-            setTimeout(()=>{
-                resolve(3);
-            },1000)
-            // resolve(3);
+            cc.loader.loadRes('jsonInfo/skin',(err, data)=>{
+                if(err){
+                    console.log('error---------in entrance 66',err);
+                    return
+                }
+                if(data && data['json']){
+                    resolve(data['json']);
+                    return
+                }
+                resolve([]);
+            })
+        })
+    },
+
+    loadupgrade(){
+        return new Promise((resolve, reject)=>{
+            cc.loader.loadRes('jsonInfo/upgrade',(err, data)=>{
+                if(err){
+                    console.log('error---------in entrance 82',err);
+                    return
+                }
+                if(data && data['json']){
+                    resolve(data['json']);
+                    return
+                }
+                resolve([]);
+            })
         })
     }
 

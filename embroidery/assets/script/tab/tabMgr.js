@@ -61,9 +61,9 @@ cc.Class({
         }
         this.loading.active = true;
         utils.loadPrefab(tabDir + 'tailorTab', this.node).then((node)=>{
-            this.loading.active = false;
             this.tailorTab = node;
             this.tailorTab.getComponent('tailorTabMgr').init(data);
+            this.loading.active = false;
         })
     },
 
@@ -75,9 +75,9 @@ cc.Class({
         }
         this.loading.active = true;
         utils.loadPrefab(tabDir + 'drawTab', this.node).then((node)=>{
-            this.loading.active = false;
             this.drawTab = node;
             this.drawTab.getComponent('drawTabMgr').init(data);
+            this.loading.active = false;
         })
     },
 
@@ -89,9 +89,9 @@ cc.Class({
         }
         this.loading.active = true;
         utils.loadPrefab(tabDir + 'embroideryTab', this.node).then((node)=>{
-            this.loading.active = false;
             this.embroidery = node;
             this.embroidery.getComponent('embroideryMgr').init(data);
+            this.loading.active = false;
         })
     },
 

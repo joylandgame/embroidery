@@ -2,9 +2,7 @@ const eventMgr = {
     events: null,
     //注册事件
     on: function (eventName, callfunc, self) {
-        if (!this.events) {
-            this.events = {}
-        }
+        if (!this.events) {this.events = {}}
 
         if (!this.events[eventName]) {
             let obj = {}
@@ -40,7 +38,6 @@ const eventMgr = {
             if (k == eventName) {
                 let obj = this.events[k]
                 for (let i in obj.funcs) {
-
                     if (obj.funcs[i] == callfunc && obj.selfs[i] === self) {
                         let index = parseInt(i)
                         obj.funcs.splice(index, 1)
@@ -48,15 +45,13 @@ const eventMgr = {
                         if (obj.funcs.length == 0) {
                             this.events[eventName] = null
                         }
-
                     }
-
-
                 }
             }
         }
 
     },
+
     //移除所有与eventName 相关联的事件
     removeAllListenerByName: function (eventName) {
         if (this.events && this.events[eventName]) {
@@ -69,7 +64,6 @@ const eventMgr = {
         if (this.events) {
             this.events = null
         }
-
     }
 }
 export default eventMgr;

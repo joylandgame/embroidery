@@ -14,6 +14,8 @@ import utils from './common/utils';
 
 import gameMgr from './gameMgr';
 
+import clothesMgr from './clothesConfig/clothesMgr';
+
 cc.Class({
     extends: cc.Component,
 
@@ -26,6 +28,8 @@ cc.Class({
         //在这里打开loading界面
         this.loading.active  = true;
         this.btnLayer.active = false;
+        this.resReady        = true;
+        this.resReadyFunc    = null;
 
         if(gameConfig.loadConfigOver){
             Log.d('游戏json场景前加载完毕');
@@ -39,6 +43,7 @@ cc.Class({
 
     initData(){
         if(!cc.vv){
+            this.resReady   = false;//还没有准备资源
             cc.vv = {};
             //系统事件
             cc.vv.eventName = eventName;
@@ -47,29 +52,25 @@ cc.Class({
             cc.vv.userMgr   = userMgr;
             cc.vv.userMgr.init(); //初始化userInfo
             cc.vv.userInfo  = userInfo;
+            //皮肤 和衣服刺绣等等的配置
+            Log.d(gameConfig.part);
+            Log.d(gameConfig.signin);
+            Log.d(gameConfig.skin);
+            Log.d(gameConfig.upgrade);
+            //用户当前关卡的衣服资源
+            cc.vv.gameDemo      = null;      // texture
+            cc.vv.gameDemoWhite = null; // texture
+            cc.vv.gameClipArr   = [];   // [ texture ]
+            cc.vv.clothesMgr = clothesMgr;
+            cc.vv.clothesMgr.init(gameConfig.part);
+            //用户当前的刺绣资源
 
-            //配置信息 json
-            cc.vv.config_1 = gameConfig.config_1;
-            cc.vv.config_2 = gameConfig.config_2;
-            cc.vv.config_3 = gameConfig.config_3;
+            //预加载游戏资源
+            this.preLoadGameRes();
         }
-
-        //用户当前关卡的衣服资源
-        cc.vv.gameDemo = null;      // texture
-        cc.vv.gameDemoWhite = null; // texture
-        cc.vv.gameClipArr   = [];   // [ texture ]
 
         //游戏相关操作依据
         cc.vv.gameMgr = new gameMgr();
-
-        this.resReady = false;
-        this.resReadyFunc = null;
-        this.preLoadGameRes();
-
-        Log.d(cc.vv.config_1);
-        Log.d(cc.vv.config_2);
-        Log.d(cc.vv.config_3);
-        Log.d(cc.vv.userInfo);
 
         //在这里关闭loading界面 显示按钮并且初始化
         this.configOver();
@@ -77,34 +78,9 @@ cc.Class({
 
     //提前加载游戏资源
     preLoadGameRes(){
-        let url = 'clothes/';
-        utils.loadDir(url).then((asset)=>{
-            if(!asset || !asset.length){
-                Log.catch('err in home 78, 预加载资源[]/err');
-                return;
-            }
-            for(let i = 0; i < asset.length; i++){
-                if(asset[i].name == 'demo'){
-                    cc.vv.gameDemo = asset[i];
-                    continue;
-                }
-                if(asset[i].name == 'white'){
-                    cc.vv.gameDemoWhite = asset[i];
-                    continue;
-                }
-                if(asset[i].name.split('_')[0] == 'clip' 
-                || asset[i].name.split('_')[0] == 'line'){
-                    cc.vv.gameClipArr.push(asset[i]);
-                    continue;
-                }
-                Log.warn('加载资源时warn', asset[i]);
-            }
-
-            //全部是 texture2d 不是spriteFrame
-            Log.d(cc.vv.gameDemo);
-            Log.d(cc.vv.gameDemoWhite);
-            Log.d(cc.vv.gameClipArr);
-
+        Promise.all([
+            cc.vv.clothesMgr.preLoadClothes(),
+        ]).then(()=>{
             this.resReady = true;
             this.resReadyFunc && this.resReadyFunc();
         })

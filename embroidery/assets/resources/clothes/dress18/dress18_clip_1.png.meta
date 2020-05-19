@@ -1,0 +1,36 @@
+{
+  "ver": "2.3.4",
+  "uuid": "76219549-842b-455c-8cbc-d006667ad385",
+  "type": "sprite",
+  "wrapMode": "clamp",
+  "filterMode": "bilinear",
+  "premultiplyAlpha": false,
+  "genMipmaps": false,
+  "packable": true,
+  "width": 444,
+  "height": 432,
+  "platformSettings": {},
+  "subMetas": {
+    "dress18_clip_1": {
+      "ver": "1.0.4",
+      "uuid": "bbe68aba-fb5a-4905-8ab1-cdbc7ea17702",
+      "rawTextureUuid": "76219549-842b-455c-8cbc-d006667ad385",
+      "trimType": "auto",
+      "trimThreshold": 1,
+      "rotated": false,
+      "offsetX": 0,
+      "offsetY": -177.5,
+      "trimX": 89,
+      "trimY": 383,
+      "width": 266,
+      "height": 21,
+      "rawWidth": 444,
+      "rawHeight": 432,
+      "borderTop": 0,
+      "borderBottom": 0,
+      "borderLeft": 0,
+      "borderRight": 0,
+      "subMetas": {}
+    }
+  }
+}
