@@ -24,16 +24,13 @@ cc.Class({
         this.node.on(cc.Node.EventType.TOUCH_END, this.onTouchEnd, this);
     },
 
-    removeEvent(){
+    onDestroy(){
         this.node.off(cc.Node.EventType.TOUCH_START, this);
         this.node.off(cc.Node.EventType.TOUCH_MOVE, this);
         this.node.off(cc.Node.EventType.TOUCH_CANCEL, this);
         this.node.off(cc.Node.EventType.TOUCH_END, this);
     },
 
-    removeAllEvent(){
-        this.node.targetOff(this);
-    },
 
     onTouchStart(evt) {
         if(!this._drawUtils){return Log.d('当前无画笔')}        
@@ -44,7 +41,7 @@ cc.Class({
         withdrawArr = [];
         withdrawArr = this._drawUint8Array.copyData();
         if(!this._drawUtils.haveColor){
-            this._clearWithLocation_circle(drawLoc)
+            this._clearWithLocation_line(drawLoc)
         }else{
             this.drawColor(drawLoc);
         }
@@ -55,7 +52,7 @@ cc.Class({
         let touchLoc = evt.getLocation();
         let drawLoc = this._transition(touchLoc);
         if(!this._drawUtils.haveColor){
-            this._clearWithLocation_circle(drawLoc)
+            this._clearWithLocation_line(drawLoc)
         }else{
             this.drawColor(drawLoc);
         }
