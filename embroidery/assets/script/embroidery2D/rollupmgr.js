@@ -3,7 +3,8 @@ var rollupmgr = {
     init() {
         this._action_list = [];
         this._cur_action = null;
-        return this;
+        
+	return this;
     },
 
     addPinkAction(tilecom) {
