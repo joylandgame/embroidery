@@ -122,5 +122,6 @@ cc.Class({
         this._drawUtils = drawUtils;
         this._lastColorPen = lastColorPen;
     }
+
 })
 
