@@ -194,5 +194,15 @@ cc.Class({
         if(this.map_com) {
             this.map_com.drawEnd(e)
         }
-    }
+    },
+    drawNumOne(e) {
+        if(this.map_com) {
+            this.map_com.drawNumOne()
+        }
+    },
+    drawNumFour(e) {
+        if(this.map_com) {
+            this.map_com.drawNumFour()
+        }
+    },
 });

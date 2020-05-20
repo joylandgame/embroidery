@@ -51,6 +51,7 @@ cc.Class({
         this.runstate = 1;      //刺绣状态
         this.pinkanicounter = 0;
         this.action_slot = null;
+        this._select_num = 1
     },
 
     tile_com:cc.TileMap,
@@ -71,6 +72,7 @@ cc.Class({
 
     rendertexture:cc.Sprite,          //渲染结果的节点
 
+    _select_num:Number,               //选择个数
     start () {
 
     },
@@ -79,7 +81,7 @@ cc.Class({
 
     onLoad() {
         this.tile_com = this.node.addComponent(cc.TiledMap);
-       
+        this._select_num = 1;
     },
 
     onDestroy() {
@@ -335,6 +337,8 @@ cc.Class({
             this.layer_draw._prepareToRender();
         }
     },
+    ////0
+    ////1->()
     checkPinkGrid(worlddist) {
         let layersize = this.layer_draw.getLayerSize();
 
@@ -346,18 +350,21 @@ cc.Class({
         if(grid_x >= layersize.height || grid_x >= layersize.width || grid_x <0 || grid_y < 0) {
             return;
         }
+        for (let i=0;i<this._select_num;i++) {
+            let gridx = grid_x - i % 2;
+            let gridy = grid_y - Math.floor(i / 2);
 
-        let tiled = this.layer_draw.getTiledTileAt(grid_x,grid_y);
-        if(tiled) {
-            let tile_com = tiled.node.getComponent(TileComponent);
-            let gid = mapinfo.getGid()[0]
-            if(tile_com.setGid(gid)) {
-        
-                rollupmgr.addPinkAction(tile_com)
-                this.layer_draw._prepareToRender();
+            let tiled = this.layer_draw.getTiledTileAt(gridx,gridy);
+            if(tiled) {
+                let tile_com = tiled.node.getComponent(TileComponent);
+                let gid = mapinfo.getGid()[0]
+                if(tile_com.setGid(gid)) {
+            
+                    rollupmgr.addPinkAction(tile_com)
+                    this.layer_draw._prepareToRender();
+                }
             }
-        }
-        
+        }   
     },
     checkEraseGrid(worlddist) {
         let layersize = this.layer_draw.getLayerSize();
@@ -372,12 +379,17 @@ cc.Class({
             return;
         }
 
-        let tiled = this.layer_draw.getTiledTileAt(grid_x,grid_y);
-        if(tiled) {
-            let tile_com = tiled.node.getComponent(TileComponent);
-            if(tile_com.eraseGid()) {
-                rollupmgr.addEraseAction(tile_com)
-                this.layer_draw._prepareToRender();
+        for (let i=0;i<this._select_num;i++) {
+            let gridx = grid_x - i % 2;
+            let gridy = grid_y - Math.floor(i / 2);
+
+            let tiled = this.layer_draw.getTiledTileAt(gridx,gridy);
+            if(tiled) {
+                let tile_com = tiled.node.getComponent(TileComponent);
+                if(tile_com.eraseGid()) {
+                    rollupmgr.addEraseAction(tile_com)
+                    this.layer_draw._prepareToRender();
+                }
             }
         }
     },
@@ -454,5 +466,11 @@ cc.Class({
         if(this.layer_draw && this.layer_draw._tiles){
             return this.layer_draw._tiles;
         }
+    },
+    drawNumOne() {
+        this._select_num = 1
+    },
+    drawNumFour() {
+        this._select_num = 4
     }
 });
