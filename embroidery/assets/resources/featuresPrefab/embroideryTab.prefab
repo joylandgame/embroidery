@@ -6648,6 +6648,9 @@
       "__id__": 1
     },
     "_enabled": true,
+    "demoTip": {
+      "__id__": 26
+    },
     "hintsource": {
       "__id__": 31
     },

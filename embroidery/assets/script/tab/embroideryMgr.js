@@ -48,7 +48,6 @@ cc.Class({
     },
 
     initView(){
-
         this.loadMap();
         let texture = new cc.RenderTexture();
         texture.initWithSize(128,128,cc.gfx.RB_FMT_S8);
@@ -119,7 +118,6 @@ cc.Class({
                     resolved(false)
                     return;
                 } else {
-                    
                     this.map_com = this.source.node.addComponent(MapComponent);
                     this.map_com.init(map);
                     let data = cc.vv.gameMgr.getEmbroideryData();
@@ -127,13 +125,10 @@ cc.Class({
                     console.log("mapcom======")
                     let gids =  this.map_com.tile_com.getProperty("usegid");
                     let useicon =  this.map_com.tile_com.getProperty("useicon");
-                    
-                    
                     mapinfo.parseGid(gids);
                     mapinfo.parseIcons(useicon);
 
                     let icons_array = useicon.split(";");
-                
                     let i=0;
                     
                     for (;i<icons_array.length;i++) {
@@ -176,6 +171,13 @@ cc.Class({
                     layer2.setScale(contentsize.width/layer_size.width,contentsize.height/layer_size.height,1);
                     layer3.setScale(contentsize.width/layer_size.width,contentsize.height/layer_size.height,1);
                     this.hintsource.node.setContentSize(contentsize.width,contentsize.height);
+                    this.scheduleOnce(()=>{
+                        let v2     = this.demoTip.getPosition();
+                        let offset = cc.winSize.height / 2;
+                        this.demoTip.runAction(
+                            cc.moveTo(0.5,v2.x,offset).easing(cc.easeBackOut())
+                        )
+                    },0)
                     resolved(true);
                 }
             })

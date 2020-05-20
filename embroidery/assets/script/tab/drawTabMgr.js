@@ -100,7 +100,7 @@ cc.Class({
                 let v2     = this.demoTip.getPosition();
                 let offset = cc.winSize.height / 2;
                 this.demoTip.runAction(
-                    cc.moveTo(0.5,v2.x,offset).easing(cc.easeBackOut(10000000))
+                    cc.moveTo(0.5,v2.x,offset).easing(cc.easeBackOut())
                 )
             },0)
         }
