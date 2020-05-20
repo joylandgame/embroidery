@@ -9,13 +9,22 @@ import Log from './common/Log';
 const tailorTabID     = '0';
 const drawTabID       = '1';
 const embroideryTabID = '2';
+const putEmbroideryTabID = '3';
+
 
 cc.Class({
     extends: cc.Component,
 
     properties: {
+
+        tailorIcon: cc.Node,
+
         tabNodes: cc.Node,
-        tabBtns : [cc.Node],
+
+        tabBtns: cc.Node,
+        tabBgs : [cc.Sprite],
+        tabIcons: [cc.Sprite],
+        tabBgSpr: [cc.SpriteFrame],
 
         tabBtnFrames_n: [cc.SpriteFrame],
         tabBtnFrames_s: [cc.SpriteFrame],
@@ -23,11 +32,12 @@ cc.Class({
 
     onLoad(){
         this.gameMgr = cc.vv.gameMgr;
-        this.openTabID = tailorTabID;
 
         this.tabMgr = this.tabNodes.getComponent('tabMgr');
         this.tabMgr.init(this);
 
+        let can = this.gameMgr.canSelect();
+        this.openTabID = can ? drawTabID : tailorTabID;
         this.addEvent();
         this.initTabBtn();
         this.initTabView();
@@ -45,18 +55,20 @@ cc.Class({
 
 
     initTabBtn(){
-        for(let index = 0; index < this.tabBtns.length; index++){
-            let item  = this.tabBtns[index];
-            let light = this.gameMgr.canSelect(index);
-            if(index == this.gameMgr.embroideryID){
-                item.getComponent(cc.Sprite).spriteFrame = this.tabBtnFrames_s[index]; 
-            }else{
-                item.getComponent(cc.Sprite).spriteFrame = light ? this.tabBtnFrames_s[index] : this.tabBtnFrames_n[index];
+        let can = this.gameMgr.canSelect();
+        this.tailorIcon.active = !can;
+        this.tabBtns.active = can;
+        if(can){
+            for (let index = 0; index < this.tabBgs.length; index++){
+                this.tabBgs[index].spriteFrame = this.tabBgSpr[0];
             }
-            item.setScale(cc.v2(1,1));
+            for (let index = 0; index < this.tabIcons.length; index++) {
+                this.tabIcons[index].spriteFrame = this.tabBtnFrames_n[index];
+            }
+            let id = Number(this.openTabID);
+            this.tabBgs[id].spriteFrame = this.tabBgSpr[1];
+            this.tabIcons[id].spriteFrame = this.tabBtnFrames_n[id];
         }
-        let id = Number(this.openTabID);
-        this.tabBtns[id].setScale(cc.v2(1.3,1.3));
     },
 
     initTabView(){
@@ -76,17 +88,19 @@ cc.Class({
             case embroideryTabID:
                 selectID = this.gameMgr.embroideryID;
                 break;
+            case putEmbroideryTabID:
+                selectID = this.gameMgr.putEmbroideryTabID;
+                break;
         }
-        let can_select = this.gameMgr.canSelect(selectID);
-        if(can_select){
-            this.openTabID = id;
-            this.initTabBtn();
-            this.initTabView();
-        }
+        this.openTabID = id;
+        this.initTabBtn();
+        this.initTabView();
     },
 
     complete_one_game(id){
         this.gameMgr.completeAnyOne(id);
+        //完成一个阶段后 将阶段切换
+        
         this.initTabBtn();
         let isOver = this.gameMgr.completeGames();
         if(isOver){

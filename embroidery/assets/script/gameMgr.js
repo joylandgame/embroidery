@@ -10,18 +10,22 @@ export default class gameMgr {
         this.tailorID     = 0;
         this.drawID       = 1;
         this.embroideryID = 2;
+        this.putEmbroideryID = 3;
 
         this.isComplete   = 1;
         this.noComplete   = 0;
 
-        this.complete   = [0,0,0]; //裁剪 上色 刺绣
-        this.drawData = null;//用户画的东西
+        this.complete   = [0,0,0,0]; //裁剪 上色 刺绣
+        this.drawData   = null;//用户画的东西
         this.embroideryData = null;//用户刺的东西
+        this.putEmbroideryData = null;//用户摆放的东西
     }
 
     clean(){
-        this.complete   = [this.noComplete,this.noComplete,this.noComplete];
-        this.drawData = null;
+        this.complete   = [this.noComplete,this.noComplete,this.noComplete,this.noComplete];
+        this.drawData   = null;
+        this.embroideryData = null;//用户刺的东西
+        this.putEmbroideryData = null;//用户摆放的东西
     }
 
     getAnyOneIsComplete(id){
@@ -30,6 +34,7 @@ export default class gameMgr {
             case this.tailorID:
             case this.drawID:
             case this.embroideryID:
+            case this.putEmbroideryID:
                 n = this.complete[id];
                 break;
             default:
@@ -60,20 +65,37 @@ export default class gameMgr {
         return this.embroideryData;
     }
 
+    setPutEmbroideryData(data){ 
+        if(data){this.putEmbroideryData = data}
+    }
+
+    getPutEmbroideryData(){
+        return this.putEmbroideryData;
+    }
+
     //判断是否完成了游戏
     completeGames(){
         let completeNum = 0;
         completeNum += this.complete[this.tailorID]     === this.isComplete ? 1 : 0;
         completeNum += this.complete[this.drawID]       === this.isComplete ? 1 : 0;
         completeNum += this.complete[this.embroideryID] === this.isComplete ? 1 : 0;
+        completeNum += this.complete[this.putEmbroideryID] === this.isComplete ? 1 : 0;
         return completeNum >= this.complete.length;
     }
 
     canSelect(id){
-        let idx = id;
-        if(idx - 1 < 0){return true}
-        if(id == this.embroideryID){return true}
-        return this.complete[idx-1] === this.isComplete;
+        // let idx = id;
+        // if(idx - 1 < 0){return true}
+        // if(id == this.embroideryID){return true}
+        // return this.complete[idx-1] === this.isComplete;
+        return this.complete[this.tailorID] === this.isComplete;
+    }
+
+    jumpToNextStage(id){
+        let selectID = Number(id);
+        let nextID = selectID + 1;
+
+
     }
 
 }

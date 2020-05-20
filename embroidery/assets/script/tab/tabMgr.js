@@ -4,9 +4,10 @@ import utils from '../common/utils';
 
 const tabDir = 'featuresPrefab/';
 
-const tailorTabID     = '0';
-const drawTabID       = '1';
-const embroideryTabID = '2';
+const tailorTabID        = '0';
+const drawTabID          = '1';
+const embroideryTabID    = '2';
+const putEmbroideryTabID = '3';
 
 cc.Class({
     extends: cc.Component,
