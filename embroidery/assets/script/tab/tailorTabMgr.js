@@ -70,7 +70,7 @@ cc.Class({
                 sprite.trim = false;
                 sprite.spriteFrame = frame;
                 node.parent = this.rawMaterial;
-                if(element.name.split('_')[0] == 'line'){
+                if(element.name.split('_')[1] == 'line'){
                     node.zIndex = 2;
                     this.linesArr.push(node);
                 }else{

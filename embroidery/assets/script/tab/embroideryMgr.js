@@ -35,15 +35,18 @@ cc.Class({
         this.game = data.game;
         this.gameID = data.id;
         this.isOver = data.complete;
+        if(!this.isOver){
+            this.node.on(cc.Node.EventType.TOUCH_START,this.drawBegin,this);
+            this.node.on(cc.Node.EventType.TOUCH_MOVE,this.drawMove,this);
+            this.node.on(cc.Node.EventType.TOUCH_END,this.drawEnd,this);
+        }
 
         this.initView();
         this.addEvent();
     },
 
     initView(){
-        if(this.isOver){
 
-        }
         this.loadMap();
         let texture = new cc.RenderTexture();
         texture.initWithSize(128,128,cc.gfx.RB_FMT_S8);
@@ -52,22 +55,18 @@ cc.Class({
 
     addEvent(){
         cc.vv.eventMgr.on(cc.vv.eventName.game_go_home, this.game_go_home, this);
-
-        this.node.on(cc.Node.EventType.TOUCH_START,this.drawBegin,this);
-        this.node.on(cc.Node.EventType.TOUCH_MOVE,this.drawMove,this);
-        this.node.on(cc.Node.EventType.TOUCH_END,this.drawEnd,this);
     },
 
     onDestroy(){
         cc.vv.eventMgr.off(cc.vv.eventName.game_go_home, this.game_go_home, this);
-
         this.node.off(cc.Node.EventType.TOUCH_START,this.drawBegin,this);
         this.node.off(cc.Node.EventType.TOUCH_MOVE,this.drawMove,this);
         this.node.off(cc.Node.EventType.TOUCH_END,this.drawEnd,this);
     },
 
     game_go_home(){
-        
+        let data = this.map_com.getTileLayerData();
+        cc.vv.gameMgr.setEmbroideryData(data);
     },
   
     selectColor(e) {
@@ -102,6 +101,7 @@ cc.Class({
             this.scheduleOnce(()=>{
                 this.map_com.doneCixiu(this.layerdraw.targetTexture);
             },1)
+            
         }
     },
     onRollup(e){
@@ -120,6 +120,8 @@ cc.Class({
                     
                     this.map_com = this.source.node.addComponent(MapComponent);
                     this.map_com.init(map);
+                    let data = cc.vv.gameMgr.getEmbroideryData();
+                    this.map_com.setTileLayerModel(data)
                     console.log("mapcom======")
                     let gids =  this.map_com.tile_com.getProperty("usegid");
                     let useicon =  this.map_com.tile_com.getProperty("useicon");
@@ -180,7 +182,6 @@ cc.Class({
     drawBegin(e) {
         console.log("drawBegin===",this.map_com)
         if(this.map_com) {
-           
             this.map_com.drawBegin(e)
         }
     },

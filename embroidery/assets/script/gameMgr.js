@@ -16,6 +16,7 @@ export default class gameMgr {
 
         this.complete   = [0,0,0]; //裁剪 上色 刺绣
         this.drawData = null;//用户画的东西
+        this.embroideryData = null;//用户刺的东西
     }
 
     clean(){
@@ -49,6 +50,14 @@ export default class gameMgr {
 
     getDrawData(){
         return this.drawData;
+    }
+
+    setEmbroideryData(data){
+        if(data){this.embroideryData = data}
+    }
+
+    getEmbroideryData(){
+        return this.embroideryData;
     }
 
     //判断是否完成了游戏

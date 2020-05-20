@@ -24,13 +24,12 @@ cc.Class({
         this.node.on(cc.Node.EventType.TOUCH_END, this.onTouchEnd, this);
     },
 
-    onDestroy(){
-        this.node.off(cc.Node.EventType.TOUCH_START, this);
-        this.node.off(cc.Node.EventType.TOUCH_MOVE, this);
-        this.node.off(cc.Node.EventType.TOUCH_CANCEL, this);
-        this.node.off(cc.Node.EventType.TOUCH_END, this);
+    removeEvent(){
+        this.node.off(cc.Node.EventType.TOUCH_START, this.onTouchStart, this);
+        this.node.off(cc.Node.EventType.TOUCH_MOVE, this.onTouchMove, this);
+        this.node.off(cc.Node.EventType.TOUCH_CANCEL, this.onTouchCancel, this);
+        this.node.off(cc.Node.EventType.TOUCH_END, this.onTouchEnd, this);
     },
-
 
     onTouchStart(evt) {
         if(!this._drawUtils){return Log.d('当前无画笔')}        
@@ -41,7 +40,7 @@ cc.Class({
         withdrawArr = [];
         withdrawArr = this._drawUint8Array.copyData();
         if(!this._drawUtils.haveColor){
-            this._clearWithLocation_line(drawLoc)
+            this._clearWithLocation_circle(drawLoc)
         }else{
             this.drawColor(drawLoc);
         }
@@ -64,22 +63,22 @@ cc.Class({
     _transition(loc) {
         let touchLoc = this.node.convertToNodeSpaceAR(loc);
         touchLoc.x += this._width / 2;
-        touchLoc.y += this._height / 2;
+        touchLoc.y = this._height / 2 - touchLoc.y;
         return touchLoc;
     },
 
     drawColor(drawLoc){
         let random = this._drawUtils.width;
         let offSet = parseInt(random / 2);
-        for(let i = 0; i < 20; i++){
+        for(let i = 0; i < 10; i++){
             let up = [drawLoc.x - offSet + Math.random()*random, drawLoc.y + Math.random()*random];
             let left = [drawLoc.x - Math.random()*random, drawLoc.y - offSet + Math.random()*random];
             let right= [drawLoc.x + Math.random()*random, drawLoc.y - offSet + Math.random()*random];
             let bottom= [drawLoc.x - offSet + Math.random()*random, drawLoc.y - Math.random()*random];
-            this._drawUint8Array.circle(up[0], up[1], 2);
-            this._drawUint8Array.circle(left[0], left[1], 2);
-            this._drawUint8Array.circle(right[0], right[1], 2);
-            this._drawUint8Array.circle(bottom[0], bottom[1], 2);
+            this._drawUint8Array.circle(up[0], up[1], 3);
+            this._drawUint8Array.circle(left[0], left[1], 3);
+            this._drawUint8Array.circle(right[0], right[1], 3);
+            this._drawUint8Array.circle(bottom[0], bottom[1], 3);
         }
         this._drawRightAway();
     },
@@ -118,6 +117,13 @@ cc.Class({
     set_drawUtilsInfo(drawUtils, lastColorPen){
         this._drawUtils = drawUtils;
         this._lastColorPen = lastColorPen;
+    },
+
+    onDestroy(){
+        this.node.off(cc.Node.EventType.TOUCH_START, this.onTouchStart, this);
+        this.node.off(cc.Node.EventType.TOUCH_MOVE, this.onTouchMove, this);
+        this.node.off(cc.Node.EventType.TOUCH_CANCEL, this.onTouchCancel, this);
+        this.node.off(cc.Node.EventType.TOUCH_END, this.onTouchEnd, this);
     }
 
 })

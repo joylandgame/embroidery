@@ -134,10 +134,16 @@ cc.Class({
     
     initPenList(){
         if(this.penArr && this.penArr.length){return}
-        let data = [
-            {name: '黑色', hex: '#151515', op: 255},
-            {name: '灰色', hex: '#B0A3A3', op: 255},
-        ]
+        if(!cc.vv.clothesConfig){return}
+        let pensColor = cc.vv.clothesConfig.color;
+        let colors    = pensColor.split(',');
+        let data      = [];
+        for(let i = 0; i < colors.length; i++){
+            data.push({
+                name: i.toString(),
+                hex: "#"+colors[i],
+            })
+        }
         this.penArr = [];
         for(let i = 0; i < data.length; i++){
             let item  = cc.instantiate(this.penItem);
@@ -220,6 +226,8 @@ cc.Class({
         this.isOver = true;
         cc.vv.eventMgr.emit(cc.vv.eventName.complete_one_game,this.gameID);
         this.setUtilsView();
+        //关闭触摸
+        this.drawMgr.closeDrawNodeTouch();
     },
 
     //目前先不采用裁图再计算 虽然直观但只是修改了纹理 并没有修改图片实例
@@ -275,7 +283,6 @@ cc.Class({
         }
         this.tailorDrawTo16(obj, ++index)
     },
-
 
 
     //判分逻辑 裁图裁成16张

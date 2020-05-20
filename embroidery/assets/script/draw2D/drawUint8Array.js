@@ -5,7 +5,7 @@ class Vec2 {
         this.x = x ? x : 0;
         this.y = y ? y : 0;
     }
-    set(p,y) {
+    set(p, y) {
         if (typeof p === "number") {
             this.x = p;
             this.y = y;
@@ -18,19 +18,20 @@ class Vec2 {
 
 //虚线的配置
 var IMAGINARY = {
-    scope:100,     //像素单位 范围
+    scope: 100,     //像素单位 范围
     //虚线范围内的取随机值 0.5的概率上色 未上色的部分标记为遗漏下次再随机的时候直接给上色
     colourRandom: 0.5,
 }
 
 var drawUint8Array = {
-    _witdh : 0,
+    _witdh: 0,
     _height: 0,
 
     buffer: 0,
     pixelColor: 0,
     curColor: 0,
 
+    drawPixels: [], //参考背景
 
     /**临时存储的颜色值 */
     tempColor: 0,
@@ -38,24 +39,35 @@ var drawUint8Array = {
     tempG: 0,
     tempB: 0,
     tempA: 0,
-    previousLineCircleEnd : false,//线段终点是不是个圆
- 
+    previousLineCircleEnd: false,//线段终点是不是个圆
+
     //*********************外部调用**************************
     init(width, height, drawPixels) {
         this.tempColor = this.tempR = this.tempG = this.tempB = this.tempA = 0;
         this.curColor = 0;
         this._width = Math.round(width);
         this._height = Math.round(height);
-        this.initPixelColor(drawPixels);
+        // this.initPointColor();
+        this.initPixelColor();
         this.initLineData();
+        this.drawPixels = drawPixels;
+    },
+
+    resetPointColor() {
+        for (let x = this.width - 1; x >= 0; --x) {
+            for (let y = this.height - 1; y >= 0; --y) {
+                this.pointColor[x][y] = 0;
+            }
+        }
     },
 
     //reset如果传入一个值 视为set
     reset(data) {
-        if(data){
+        if (data) {
             this.setData(data);
             return;
         }
+        // this.resetPointColor();
         this.pixelColor.fill(0);
     },
 
@@ -69,7 +81,21 @@ var drawUint8Array = {
             return;
         }
         this.setPixelColorByRGBA(pixelData);
+        // this.setPointColorByRGBA(pixelData);
     },
+
+    //修改pointcolor
+    setPointColorByRGBA(data) {
+        for (let y = 0; y < this._height; y) {
+            let i = y * this._height;
+            for (let x = 0; x < this._width; ++x) {
+                let color = this.convertToNumber(data[i], data[i+1], data[i+2], data[i+3])
+                this.pointColor[x][y] = color;
+                i+=4;
+            }
+        }
+    },
+
 
     /**
      * 获取画板中的数据
@@ -86,11 +112,11 @@ var drawUint8Array = {
     },
 
     //获取画板中记录每个像素
-    getData(){
+    getData() {
         return this.pixelColor; //Uint8Array格式
     },
 
-     /**获取画板内部使用的内存块*/
+    /**获取画板内部使用的内存块*/
     getBuffer() {
         return this.buffer; //Uint8Array格式
     },
@@ -100,11 +126,11 @@ var drawUint8Array = {
         this.reset();
     },
 
-        /**
-     * 移动画笔到指定的位置，调用 lineTo 函数时将使用该点作为直线的起点
-     *  x     坐标X
-     *  y     坐标Y
-     */
+    /**
+ * 移动画笔到指定的位置，调用 lineTo 函数时将使用该点作为直线的起点
+ *  x     坐标X
+ *  y     坐标Y
+ */
     moveTo(x, y) {
         x = Math.round(x);
         y = Math.round(y);
@@ -267,13 +293,25 @@ var drawUint8Array = {
         this.previousLineWidth = 1;
     },
 
-    initPixelColor(drawPixels) {
+    initPixelColor() {
         this.buffer = new ArrayBuffer(this._width * this._height * 4);
         this.pixelColor = new Uint8Array(this.buffer);
         this.pixelColor.fill(0);
-
-        this.drawPixels = drawPixels;
     },
+
+    // initPointColor() {
+    //     if (!this.pointColor) {
+    //         this.pointColor = [];
+    //     }
+    //     for (let x = 0; x < this._width; ++x) {
+    //         if (!this.pointColor[x]) {
+    //             this.pointColor[x] = [];
+    //         }
+    //         for (let y = 0; y < this._height; ++y) {
+    //             this.pointColor[x][y] = 0;
+    //         }
+    //     }
+    // },
 
     /**
      * 记录各像素颜色分量
@@ -406,9 +444,9 @@ var drawUint8Array = {
         }
     },
 
-     /**
-     * 绘制一条边与Y轴平行的三角形
-     */
+    /**
+    * 绘制一条边与Y轴平行的三角形
+    */
     _drawVerticalTriangle(p1, p2, p3) {
         if (p3.x == p1.x) return;
         let k1 = (p3.y - p1.y) / (p3.x - p1.x);
@@ -443,18 +481,18 @@ var drawUint8Array = {
     },
 
     //比较啊
-    _minX(x) {return x >= 0 ? x : 0;},
-    _maxX(x) {return x < this._width ? x : this._width - 1;},
-    _minY(y) {return y >= 0 ? y : 0;},
-    _maxY(y) {return y < this._height ? y : this._height - 1;},
+    _minX(x) { return x >= 0 ? x : 0; },
+    _maxX(x) { return x < this._width ? x : this._width - 1; },
+    _minY(y) { return y >= 0 ? y : 0; },
+    _maxY(y) { return y < this._height ? y : this._height - 1; },
     clampX(x) {
-        if (x < 0){ return 0};
-        if (x >= this._width) {return this._width - 1};
+        if (x < 0) { return 0 };
+        if (x >= this._width) { return this._width - 1 };
         return x;
     },
     clampY(y) {
-        if (y < 0) {return 0;}
-        if (y >= this._height) {return this._height - 1;}
+        if (y < 0) { return 0; }
+        if (y >= this._height) { return this._height - 1; }
         return y;
     },
 
@@ -467,36 +505,38 @@ var drawUint8Array = {
      * 连续绘制一行中的像素点
      */
     _drawRowPixel(startX, endX, y) {
-        let index = ((this._height - y) * this._width + startX) * 4;
+        let index = (y * this._width + startX) * 4;
         for (let x = startX; x <= endX; ++x) {
-            if(this.drawPixels[index + 3] == 0){
-                return;
-            }
-            this.pixelColor[index] = this.tempR;
-            this.pixelColor[index + 1] = this.tempG;
-            this.pixelColor[index + 2] = this.tempB;
-            this.pixelColor[index + 3] = this.tempA;
+            // if (this.pointColor[x][y] != this.tempColor) {
+                if (this.drawPixels[index + 3] == 0) { return }
+                this.pixelColor[index] = this.tempR;
+                this.pixelColor[index + 1] = this.tempG;
+                this.pixelColor[index + 2] = this.tempB;
+                this.pixelColor[index + 3] = this.tempA;
+            //     this.pointColor[x][y] = this.tempColor;
+            // }
             index += 4;
         }
     },
     /**
      * 连续绘制一列中的像素点
      */
-     _drawColPixel(startY, endY, x) {
-        let index = ((this._height - startY) * this._width + x) * 4;
+    _drawColPixel(startY, endY, x) {
+        let index = (startY * this._width + x) * 4;
         for (let y = startY; y <= endY; ++y) {
-            if(this.drawPixels[index + 3] == 0){
-                return;
-            }
-            this.pixelColor[index] = this.tempR;
-            this.pixelColor[index + 1] = this.tempG;
-            this.pixelColor[index + 2] = this.tempB;
-            this.pixelColor[index + 3] = this.tempA;
+            // if (this.pointColor[x][y] != this.tempColor) {
+                if (this.drawPixels[index + 3] == 0) { return }
+                this.pixelColor[index] = this.tempR;
+                this.pixelColor[index + 1] = this.tempG;
+                this.pixelColor[index + 2] = this.tempB;
+                this.pixelColor[index + 3] = this.tempA;
+            //     this.pointColor[x][y] = this.tempColor;
+            // }
             index += this._width * 4;
         }
     },
 
-    
+
     /**
      * 将RGBA颜色分量转换为一个数值表示的颜色，颜色分量为0~255之间的值
      */

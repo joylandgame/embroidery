@@ -61,6 +61,7 @@ cc.Class({
             cc.vv.gameDemo      = null;      // texture
             cc.vv.gameDemoWhite = null; // texture
             cc.vv.gameClipArr   = [];   // [ texture ]
+            cc.vv.clothesConfig = null
             cc.vv.clothesMgr = clothesMgr;
             cc.vv.clothesMgr.init(gameConfig.part);
             //用户当前的刺绣资源

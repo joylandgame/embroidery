@@ -63,7 +63,7 @@ var clothesMgr = {
     //找到资源对资源进行预加载或者重置资源
     preLoadClothes(){
         return new Promise((resolve,reject)=>{
-            let clothes = this.getClothes();
+            let clothes = cc.vv.clothesConfig = cc.vv.clothesConfig || this.getClothes();
             let name    = clothes.resource;
             let id      = clothes.id;
             let url     = 'clothes/' + name;

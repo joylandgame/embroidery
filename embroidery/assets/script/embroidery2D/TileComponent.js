@@ -167,14 +167,18 @@ cc.Class({
     onLoad() {
         this.tile_com = this.node.addComponent(cc.TiledTile);
     },
-    setGrid(x,y) {
+    setGrid(x,y,gid) {
         this.tile_com.x = x;
-        this.tile_com.y = y;
-        
+        this.tile_com.y = y;        
         //if(x ==0 && y==0) {
             ////this.tile_com.gid = 3;
-        //}  
-        this.tile_com.gid = default_gid; 
+        //}
+        if(gid!==undefined){
+            this.tile_com.gid = gid;
+        }else{
+            this.tile_com.gid = default_gid;
+        }
+         
     },
 
     onDestroy() {

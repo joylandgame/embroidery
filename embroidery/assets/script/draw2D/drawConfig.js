@@ -33,7 +33,7 @@ class drawUtilsMgr{
         //橡皮擦
         this.eraser = {
             id: 3,
-            width: 30,
+            width: 40,
             color: new cc.Color(0,0,0,0),
             haveColor: false
         }

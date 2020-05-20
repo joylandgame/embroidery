@@ -192,31 +192,38 @@ cc.Class({
         
         this.node.setContentSize(contentsize.width,contentsize.height);
         this.node.getWorldPosition(world_position);
+
         righdown_position.x = world_position.x - contentsize.width * 0.5 * scale;
         righdown_position.y = world_position.y - contentsize.height  * 0.5 * scale;
-
         leftup_position.x = world_position.x + contentsize.width  * 0.5 * scale;
         leftup_position.y = world_position.y + contentsize.height * 0.5 * scale;
-       
+    },
+
+    setTileLayerModel(data){
         this.layer_draw = this.tile_com.getLayer("layer2");
-        let layer_first = this.tile_com.getLayer("layer1");
-        let logiclayer = this.tile_com.getLayer("logiclayer");
-
-
         let layersize = this.layer_draw.getLayerSize();
-        
-        for (let i=0;i<layersize.width;i++) {
-            for (let j=0;j<layersize.height;j++) {
-                let tile = this.layer_draw.getTiledTileAt(i,j,true)
-                if(tile) {
-                     let tile_com =tile.addComponent(TileComponent);
-                     let gid = Math.floor(i) + Math.floor(j) * layersize.width;
-                     tile_com.setGrid(i,j);
+        if(data && data.length){
+            for (let i=0;i<layersize.width;i++) {
+                for (let j=0;j<layersize.height;j++) {
+                    let tile = this.layer_draw.getTiledTileAt(i,j,true)
+                    if(tile) {
+                        let tile_com =tile.addComponent(TileComponent);
+                        tile_com.setGrid(i,j,data[j*layersize.width+i]);
+                    }
+                }
+            }
+        }else{
+            for (let i=0;i<layersize.width;i++) {
+                for (let j=0;j<layersize.height;j++) {
+                    let tile = this.layer_draw.getTiledTileAt(i,j,true)
+                    if(tile) {
+                        let tile_com =tile.addComponent(TileComponent);
+                        tile_com.setGrid(i,j);
+                    }
                 }
             }
         }
         this.layer_draw._prepareToRender();
-        
     },
 
     drawBegin(e) {
@@ -440,5 +447,12 @@ cc.Class({
         let layertemplate = this.tile_com.getLayer("layer1")
         ///let layerdraw = this.tile_com.getLayer("layer2");
         
+    },
+
+    /******************************tab Control*********************************/
+    getTileLayerData(){
+        if(this.layer_draw && this.layer_draw._tiles){
+            return this.layer_draw._tiles;
+        }
     }
 });
