@@ -67,7 +67,7 @@ cc.Class({
             }
             let id = Number(this.openTabID);
             this.tabBgs[id].spriteFrame = this.tabBgSpr[1];
-            this.tabIcons[id].spriteFrame = this.tabBtnFrames_n[id];
+            this.tabIcons[id].spriteFrame = this.tabBtnFrames_s[id];
         }
     },
 
@@ -100,7 +100,19 @@ cc.Class({
     complete_one_game(id){
         this.gameMgr.completeAnyOne(id);
         //完成一个阶段后 将阶段切换
-        
+        let nextID   = this.gameMgr.jumpToNextStage(id);
+        switch(nextID){
+            case this.gameMgr.drawID:
+                nextID = drawTabID;
+                break;
+            case this.gameMgr.embroideryID:
+                nextID = embroideryTabID;
+                break;
+            case this.gameMgr.putEmbroideryTabID:
+                nextID = putEmbroideryTabID;
+                break;
+        }
+        this.selectTab(null,nextID);
         this.initTabBtn();
         let isOver = this.gameMgr.completeGames();
         if(isOver){

@@ -134,8 +134,10 @@ cc.Class({
 
     result(){
         this.isOver = true;
-        cc.vv.eventMgr.emit(cc.vv.eventName.complete_one_game,this.gameID);
         this.setUtilsView();
+        this.scheduleOnce(()=>{
+            cc.vv.eventMgr.emit(cc.vv.eventName.complete_one_game,this.gameID);
+        }, 2.0)
     },
 
     hide(){

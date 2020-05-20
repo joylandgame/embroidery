@@ -94,8 +94,8 @@ export default class gameMgr {
     jumpToNextStage(id){
         let selectID = Number(id);
         let nextID = selectID + 1;
-
-
+        if(nextID >= this.complete.length){nextID = selectID}
+        return nextID;
     }
 
 }

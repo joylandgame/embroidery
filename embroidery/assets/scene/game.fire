@@ -189,7 +189,7 @@
       "array": [
         0,
         0,
-        260.673646539116,
+        220.83647796503186,
         0,
         0,
         0,
@@ -987,7 +987,7 @@
   },
   {
     "__type__": "cc.Node",
-    "_name": "tailorTabBtn",
+    "_name": "drawTabBtn",
     "_objFlags": 0,
     "_parent": {
       "__id__": 20
@@ -1374,7 +1374,7 @@
   },
   {
     "__type__": "cc.Node",
-    "_name": "drawTabBtn",
+    "_name": "embroideryTabBtn",
     "_objFlags": 0,
     "_parent": {
       "__id__": 28
@@ -1761,7 +1761,7 @@
   },
   {
     "__type__": "cc.Node",
-    "_name": "embroideryTabBtn",
+    "_name": "putEmbroideryTabBtn",
     "_objFlags": 0,
     "_parent": {
       "__id__": 36
@@ -2266,6 +2266,9 @@
     },
     "tabBgs": [
       {
+        "__id__": 16
+      },
+      {
         "__id__": 25
       },
       {
@@ -2276,6 +2279,9 @@
       }
     ],
     "tabIcons": [
+      {
+        "__id__": 15
+      },
       {
         "__id__": 24
       },
@@ -2299,6 +2305,9 @@
         "__uuid__": "2a219892-e729-4ba6-9a17-b826c0250ce2"
       },
       {
+        "__uuid__": "2a219892-e729-4ba6-9a17-b826c0250ce2"
+      },
+      {
         "__uuid__": "7fa0ccc1-a467-4049-9ca6-01985a21f669"
       },
       {
@@ -2306,6 +2315,9 @@
       }
     ],
     "tabBtnFrames_s": [
+      {
+        "__uuid__": "c8621734-0c15-48af-b061-e7b1ea25a53a"
+      },
       {
         "__uuid__": "c8621734-0c15-48af-b061-e7b1ea25a53a"
       },

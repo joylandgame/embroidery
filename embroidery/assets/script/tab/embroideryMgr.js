@@ -13,7 +13,9 @@ cc.Class({
     extends: cc.Component,
 
     properties: {
-         
+        
+        demoTip: cc.Node,
+
         hintsource:cc.Sprite,     //提示图片
         source:cc.Sprite,         //tx获取的图案 
         btnList:[cc.Button],      //点击列表
