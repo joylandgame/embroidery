@@ -20,6 +20,11 @@ cc.Class({
         this.gameMgr = cc.vv.gameMgr;
         this.openID = '';
         this.loading.active = false;
+
+        this.tailorTab = null;
+        this.drawTab   = null;
+        this.embroidery    = null;
+        this.putClothesTab = null;
     },
 
     openTab(id){
@@ -57,7 +62,7 @@ cc.Class({
     //加载 裁剪
     openTailorTab(data){
         if(this.tailorTab){
-            this.tailorTab.active = true;
+            this.tailorTab.getComponent('tailorTabMgr').init(data);
             return;
         }
         this.loading.active = true;
@@ -71,7 +76,7 @@ cc.Class({
     //加载 上色
     openDrawTab(data){
         if(this.drawTab){
-            this.drawTab.active = true;
+            this.drawTab.getComponent('drawTabMgr').init(data);
             return;
         }
         this.loading.active = true;
@@ -84,16 +89,49 @@ cc.Class({
 
     //加载 刺绣
     openEmbroideryTab(data){
-        if(this.embroidery){
-            this.embroidery.active = true;
+        if(this.embroideryTab){
+            this.embroideryTab.getComponent('embroideryTabMgr').init(data);
             return;
         }
         this.loading.active = true;
         utils.loadPrefab(tabDir + 'embroideryTab', this.node).then((node)=>{
-            this.embroidery = node;
-            this.embroidery.getComponent('embroideryMgr').init(data);
+            this.embroideryTab = node;
+            this.embroideryTab.getComponent('embroideryTabMgr').init(data);
             this.loading.active = false;
         })
+    },
+
+    openPutClothesTab(data){
+        if(this.putClothesTab){
+            this.putClothesTab.getComponent('putClothesTabMgr').init(data);
+            return;
+        }
+        this.loading.active = true;
+        utils.loadPrefab(tabDir + 'putClothesTab', this.node).then((node)=>{
+            this.putClothesTab = node;
+            this.putClothesTab.getComponent('putClothesTabMgr').init(data);
+            this.loading.active = false;
+        })
+    },
+
+    //重新初始化 不去重新加载了
+    clearAllTab(){
+        if(this.tailorTab){
+            let tailorTabMgr = this.tailorTab.getComponent('tailorTabMgr');
+            tailorTabMgr.clear();
+        }
+        if(this.drawTab){
+            let drawTabMgr = this.drawTab.getComponent('drawTabMgr');
+            drawTabMgr.clear();
+        }
+        if(this.embroidery){
+            let embroideryTabMgr = this.embroideryTab.getComponent('embroideryTabMgr');
+            embroideryTabMgr.clear();
+        }
+        if(this.putClothesTab){
+            let putClothesTabMgr = this.putClothesTab.getComponent('putClothesTabMgr');
+            putClothesTabMgr.clear();
+        }
     },
 
     closeAll(){

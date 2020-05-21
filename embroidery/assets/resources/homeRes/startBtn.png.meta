@@ -8,7 +8,7 @@
   "genMipmaps": false,
   "packable": true,
   "width": 343,
-  "height": 141,
+  "height": 147,
   "platformSettings": {},
   "subMetas": {
     "startBtn": {
@@ -23,9 +23,9 @@
       "trimX": 0,
       "trimY": 0,
       "width": 343,
-      "height": 141,
+      "height": 147,
       "rawWidth": 343,
-      "rawHeight": 141,
+      "rawHeight": 147,
       "borderTop": 0,
       "borderBottom": 0,
       "borderLeft": 0,

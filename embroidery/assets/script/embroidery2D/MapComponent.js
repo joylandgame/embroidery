@@ -9,6 +9,7 @@ import TileComponent from "./TileComponent";
 import mapinfo from "./mapinfo";
 import rollupmgr from "./rollupmgr"
 import utils from "./embroideryUtils";
+import Log from "../common/Log";
 
 const scale = 0.8875
 const world_position = new cc.Vec2();
@@ -162,32 +163,17 @@ cc.Class({
         this.pinkheader = this.pinknode.getChildByName("pinkpoint");
         this.erasenode = this.node.parent.getChildByName("brush_erase");
         this.progressnode = this.node.parent.getChildByName("progressbar");
-        this.linenode  = this.pinknode.getChildByName("line")
-        
-        let line = this.linenode.getComponent(cc.Sprite)
-        let linecolor = mapinfo.getGid()[1]
-        
-       
-        let mat = line.getMaterial(0)
-        mat.setProperty("defalutcolor",linecolor);
-
+        this.linenode  = this.pinknode.getChildByName("line");
         this.pinkpartile = this.node.parent.getChildByName("particle_pink").getComponent(cc.ParticleSystem);
-        this.pinkpartile.startColor = linecolor;
-        this.pinkpartile.endColor = linecolor;
-        this.pinkpartile.endColorVar = cc.color(0,0,0,0);
-        this.pinkpartile.startColorVar = cc.color(0,0,0,0);
-        this.pinkpartile.srcBlendFactor = cc.macro.SRC_COLOR;
-        
         this.eraseparticle = this.node.parent.getChildByName("partcile_erase").getComponent(cc.ParticleSystem);
-
         let contentsize = this.node.getContentSize();
         let layer1 = this.node.getChildByName("layer1");
         let layer2 = this.node.getChildByName("layer2");
         let layer3 = this.node.getChildByName("layer3");
         let layer_size = layer1.getContentSize();
+        this.setUtils();
         
         layer1.active = false;
-
         layer1.setScale(contentsize.width/layer_size.width * scale,contentsize.height/layer_size.height * scale,1);
         layer2.setScale(contentsize.width/layer_size.width * scale,contentsize.height/layer_size.height * scale,1);
         layer3.setScale(contentsize.width/layer_size.width * scale,contentsize.height/layer_size.height * scale,1);
@@ -290,6 +276,7 @@ cc.Class({
             this.action_slot = null;
         }
     },
+
     progress() {
         return new Promise((resolved,rejected)=>{
             this.progressnode.active = true;
@@ -310,13 +297,11 @@ cc.Class({
                 if(procom.progress >= 1) {
                     clearInterval(slot)
                     this.progressnode.active = false;
-
                     if(this.state !=1) {
                         console.log("resolve state not one====")
                         resolved(false)
                         return;
                     }
-                    
                     setTimeout(() => {
                         if(this.state !=1) {
                             console.log("not success")
@@ -332,17 +317,17 @@ cc.Class({
         })
        
     },
+
     rollup() {
         if(rollupmgr.rollup()) {
             this.layer_draw._prepareToRender();
         }
     },
-    ////0
-    ////1->()
+
     checkPinkGrid(worlddist) {
         let layersize = this.layer_draw.getLayerSize();
 
-        let modx = worlddist.x % gridsize;
+        // let modx = worlddist.x % gridsize;
         ///可以判断距离，不要太灵敏
         
         let grid_x = Math.floor((worlddist.x - righdown_position.x)/gridsize);
@@ -357,10 +342,12 @@ cc.Class({
             let tiled = this.layer_draw.getTiledTileAt(gridx,gridy);
             if(tiled) {
                 let tile_com = tiled.node.getComponent(TileComponent);
-                let gid = mapinfo.getGid()[0]
-                if(tile_com.setGid(gid)) {
-            
-                    rollupmgr.addPinkAction(tile_com)
+                let info = mapinfo.getGid();
+                if(info){
+                    let gid = info.gid;
+                    if(tile_com.setGid(gid)) {
+                        rollupmgr.addPinkAction(tile_com)
+                    }
                     this.layer_draw._prepareToRender();
                 }
             }
@@ -406,23 +393,30 @@ cc.Class({
     setRunState(runstate) {
         this.runstate = runstate;
         if(this.runstate ==1) {
-            let line = this.linenode.getComponent(cc.Sprite)
-            let linecolor = mapinfo.getGid()[1];
-
-            console.log("tttttt")
-            let mat = line.getMaterial(0)
-           
-            console.log("mat==========",mat)
-            mat.setProperty("defalutcolor",linecolor);
-          
-            this.pinkpartile.stopSystem();
-            console.log("linecolor=======",linecolor);
-            this.pinkpartile.startColor = linecolor;
-            this.pinkpartile.endColor = linecolor;
-            this.pinkpartile.endColorVar = cc.color(0,0,0,0);
-            this.pinkpartile.startColorVar = cc.color(0,0,0,0);
+            this.setUtils();
         }
     },
+
+    setUtils(){
+        let info = mapinfo.getGid();
+        if(info){
+            let linecolor = info.color;
+            this.linenode.active = true;
+            this.pinkpartile.startColor = linecolor;
+            this.pinkpartile.endColor = linecolor;
+            let line = this.linenode.getComponent(cc.Sprite);
+            let mat = line.getMaterial(0);
+            mat.setProperty("defalutcolor",linecolor);
+        }else{
+            this.linenode.active = false;
+            this.pinkpartile.startColor = cc.color(0,0,0,0);
+            this.pinkpartile.endColor = cc.color(0,0,0,0);
+        }
+        this.pinkpartile.endColorVar = cc.color(0,0,0,0);
+        this.pinkpartile.startColorVar = cc.color(0,0,0,0);
+        this.pinkpartile.srcBlendFactor = cc.macro.SRC_COLOR;
+    },
+
     playPinkParticle() {
         let node = this.pinkpartile.node
         node.position = cc.v2(this.pinknode.position.x,this.pinknode.y + pink_y_diff);
@@ -442,23 +436,28 @@ cc.Class({
             this.eraseparticle.node.active = true;
             this.eraseparticle.resetSystem();
           
-       /// }
-    },
-    doneCixiu(tex) {
-        utils.convertRenderToSpriteFrame(tex).then((spriteFrame)=>{
-            let rendertexture = this.node.parent.getChildByName("rendertexture").addComponent(cc.Sprite);
-            console.log("rendertexture=====")
-            rendertexture.spriteFrame = spriteFrame;
-       })
-
-       //this.calcScore();
+        /// }
     },
 
     //计算分数
     calcScore() {
-        let layertemplate = this.tile_com.getLayer("layer1")
-        ///let layerdraw = this.tile_com.getLayer("layer2");
-        
+        let layertemplate = this.tile_com.getLayer("layer1");
+        let drawData      = this.layer_draw._tiles;
+        let demoData      = layertemplate._tiles;
+        let allNumber     = demoData.length;
+        let rightNumber   = 0;
+        for(let index = 0; index < demoData.length; index++){
+            let draw = drawData[index];
+            let demo = demoData[index];
+            if(demo != 0 && demo == draw){
+                rightNumber++;
+            }
+            if(demo == 0 && demo != draw && draw == 14){
+                rightNumber--;
+            }
+        }
+        rightNumber = rightNumber < 0 ? 0 : rightNumber;
+        return Math.ceil(rightNumber / allNumber * 100);
     },
 
     /******************************tab Control*********************************/

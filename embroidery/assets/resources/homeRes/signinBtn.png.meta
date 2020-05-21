@@ -8,7 +8,7 @@
   "genMipmaps": false,
   "packable": true,
   "width": 128,
-  "height": 127,
+  "height": 126,
   "platformSettings": {},
   "subMetas": {
     "signinBtn": {
@@ -23,9 +23,9 @@
       "trimX": 0,
       "trimY": 0,
       "width": 128,
-      "height": 127,
+      "height": 126,
       "rawWidth": 128,
-      "rawHeight": 127,
+      "rawHeight": 126,
       "borderTop": 0,
       "borderBottom": 0,
       "borderLeft": 0,

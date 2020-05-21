@@ -19,13 +19,20 @@ export default class gameMgr {
         this.drawData   = null;//用户画的东西
         this.embroideryData = null;//用户刺的东西
         this.putEmbroideryData = null;//用户摆放的东西
+
+        this.performDrawData = null;
+        this.performEmbroideryData = null;
     }
 
     clean(){
         this.complete   = [this.noComplete,this.noComplete,this.noComplete,this.noComplete];
+        
         this.drawData   = null;
         this.embroideryData = null;//用户刺的东西
         this.putEmbroideryData = null;//用户摆放的东西
+
+        this.performDrawData = null;
+        this.performEmbroideryData = null;
     }
 
     getAnyOneIsComplete(id){
@@ -64,7 +71,7 @@ export default class gameMgr {
     getEmbroideryData(){
         return this.embroideryData;
     }
-
+    //{pos, scale, angle}
     setPutEmbroideryData(data){ 
         if(data){this.putEmbroideryData = data}
     }
@@ -73,14 +80,18 @@ export default class gameMgr {
         return this.putEmbroideryData;
     }
 
-    //判断是否完成了游戏
-    completeGames(){
-        let completeNum = 0;
-        completeNum += this.complete[this.tailorID]     === this.isComplete ? 1 : 0;
-        completeNum += this.complete[this.drawID]       === this.isComplete ? 1 : 0;
-        completeNum += this.complete[this.embroideryID] === this.isComplete ? 1 : 0;
-        completeNum += this.complete[this.putEmbroideryID] === this.isComplete ? 1 : 0;
-        return completeNum >= this.complete.length;
+    //判断步骤完成情况
+    confirmGameCompletion(){
+        let lastStep  = 0;
+        let finalStep = 0;
+        lastStep  += this.complete[this.tailorID]     === this.isComplete ? 1 : 0;
+        lastStep  += this.complete[this.drawID]       === this.isComplete ? 1 : 0;
+        lastStep  += this.complete[this.embroideryID] === this.isComplete ? 1 : 0;
+        finalStep += this.complete[this.putEmbroideryID] === this.isComplete ? 1 : 0;
+        return {
+            finalStep: lastStep == this.complete.length - 1,
+            complete : (lastStep + finalStep) == this.complete.length
+        };
     }
 
     canSelect(id){
@@ -98,4 +109,22 @@ export default class gameMgr {
         return nextID;
     }
 
+    //{spriteFrame score}
+    setPerformDrawData(data){
+        if(data){this.performDrawData = data}
+    }
+
+    
+    setPerformEmbroideryData(data){
+        if(data){this.performEmbroideryData = data}
+    }
+
+    //{spriteFrame score}
+    getPerformDrawData(){
+        return this.performDrawData;
+    }
+
+    getPerformEmbroideryData(){
+        return this.performEmbroideryData;
+    }
 }

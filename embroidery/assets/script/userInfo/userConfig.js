@@ -4,6 +4,7 @@ var userConfig = {
     gold: 0,
 
     clothesID: '', //用户当前衣服如果没有就随机一个 clothes
+    mapID    : '', //用户当前的刺绣map
 }
 
 export default userConfig

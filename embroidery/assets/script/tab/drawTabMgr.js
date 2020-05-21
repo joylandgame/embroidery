@@ -22,6 +22,10 @@ cc.Class({
     },
 
     init(data){
+        if(this.loadReady){
+            this.node.active = true;
+            return;
+        }
         this.game    = data.game;
         this.gameID  = data.id;
         this.isOver  = data.complete;
@@ -31,6 +35,7 @@ cc.Class({
 
         this.initView();
         this.addEvent();
+        this.loadReady = true;
     },
 
     addEvent(){
@@ -61,6 +66,8 @@ cc.Class({
         this.penArr       = []; //装逼的
         this.demoSpr.spriteFrame = null;
         this.drawSpr.spriteFrame = frame;
+        this.loadReady    = false;
+        cc.vv.eventMgr.off(cc.vv.eventName.game_go_home, this.game_go_home, this);
     },
 
     initView(){
@@ -81,9 +88,9 @@ cc.Class({
 
     showDemo(){
         if(!this.demoSpr.spriteFrame){
-            let texture = cc.vv.gameDemo;
+            let texture = cc.vv.clothesDemo;
             if(!texture){
-                Log.catch('in drawTabMgr 87',cc.vv.gameDemo);
+                Log.catch('in drawTabMgr 87',cc.vv.clothesDemo);
                 return;
             }
             let rt = new cc.RenderTexture();
@@ -109,9 +116,9 @@ cc.Class({
     showDemoWhite(){
         //mask只起到辅助作用可以不要 drawPixels 是参考背景 防止给透明区域染色
         if(!this.drawSpr.spriteFrame){
-            let texture = cc.vv.gameDemoWhite;
+            let texture = cc.vv.clothesDemoWhite;
             if(!texture){
-                Log.catch('in drawTabMgr 111', cc.vv.gameDemoWhite);
+                Log.catch('in drawTabMgr 111', cc.vv.clothesDemoWhite);
                 return;
             }
             let frame = new cc.SpriteFrame(texture);
@@ -137,19 +144,13 @@ cc.Class({
         if(!cc.vv.clothesConfig){return}
         let pensColor = cc.vv.clothesConfig.color;
         let colors    = pensColor.split(',');
-        let data      = [];
-        for(let i = 0; i < colors.length; i++){
-            data.push({
-                name: i.toString(),
-                hex: "#"+colors[i],
-            })
-        }
         this.penArr = [];
-        for(let i = 0; i < data.length; i++){
+        for(let i = 0; i < colors.length; i++){
             let item  = cc.instantiate(this.penItem);
-            item.color_hex = data[i].hex;
-            item.id = data[i].name; 
-            item.getChildByName('name').getComponent(cc.Label).string = data[i].name;
+            let color = colors[i];
+            item.getComponent(cc.Sprite).spriteFrame = cc.vv.pensAsset[color];
+            item.id   = i.toString();
+            item.color_hex = '#'+color;
             item.parent = this.pens;
             item.active = true;
             this.penArr.push(item);
@@ -214,11 +215,6 @@ cc.Class({
         Log.d(demoPixelsObj);
         Log.d(drawPixelsObj);
 
-        let new_calculate = new calculate('x');
-        let result = new_calculate.toCompare(demoPixelsObj,drawPixelsObj);
-        let score  = new_calculate.getScore(result);
-        console.log(score)
-
         this.result();
     },
 
@@ -228,6 +224,17 @@ cc.Class({
         this.setUtilsView();
         //关闭触摸
         this.drawMgr.closeDrawNodeTouch();
+
+        let new_calculate = new calculate('x');
+        let result = new_calculate.toCompare(demoPixelsObj,drawPixelsObj);
+        let score  = new_calculate.getScore(result);
+        let sp = this.drawMgr.getDrawSpr();
+        let texture = sp.getTexture().clone();
+        let frame   = new cc.SpriteFrame(texture);
+        cc.vv.gameMgr.setPerformDrawData({
+            frame: frame,
+            score: score
+        });
     },
 
     //目前先不采用裁图再计算 虽然直观但只是修改了纹理 并没有修改图片实例

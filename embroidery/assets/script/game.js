@@ -114,10 +114,11 @@ cc.Class({
         }
         this.selectTab(null,nextID);
         this.initTabBtn();
-        let isOver = this.gameMgr.completeGames();
-        if(isOver){
-
+        let info = this.gameMgr.confirmGameCompletion();
+        if(info.complete){
             Log.d('当前游戏关卡 游戏结束！')
+            //准备下一个关卡
+            this.readyGoNext();
         }
     },
 
@@ -131,6 +132,26 @@ cc.Class({
             cc.vv.eventMgr.emit(cc.vv.eventName.game_go_home);
             cc.director.loadScene('home', () => {Log.d('home scene loaded')})
         }
+    },
+
+    readyGoNext(){
+        let userLv = cc.vv.userInfo.level;
+        cc.vv.userMgr.setUserLevel(userLv + 1);
+
+        cc.vv.clothesDemo      = null;
+        cc.vv.clothesDemoWhite = null;
+        cc.vv.clothesClipArr   = []; 
+        cc.vv.tiledMapDemo     = null;
+
+        this.tabMgr.clearAllTab();
+
+        Promise.all([
+            cc.vv.clothesMgr.preLoadClothes(),
+            cc.vv.tiledMapMgr.preLoadTiledMap()
+        ]).then(()=>{
+            this.resReady = true;
+            this.resReadyFunc && this.resReadyFunc();
+        })
     }
 
 });

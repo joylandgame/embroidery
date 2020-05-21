@@ -14,7 +14,8 @@ import utils from './common/utils';
 
 import gameMgr from './gameMgr';
 
-import clothesMgr from './clothesConfig/clothesMgr';
+import clothesMgr from './c_clothesConfig/clothesMgr';
+import tiledMapMgr from './c_tiledMapConfig/tiledMapMgr';
 
 cc.Class({
     extends: cc.Component,
@@ -57,15 +58,22 @@ cc.Class({
             Log.d(gameConfig.signin);
             Log.d(gameConfig.skin);
             Log.d(gameConfig.upgrade);
-            //用户当前关卡的衣服资源
-            cc.vv.gameDemo      = null;      // texture
-            cc.vv.gameDemoWhite = null; // texture
-            cc.vv.gameClipArr   = [];   // [ texture ]
-            cc.vv.clothesConfig = null
-            cc.vv.clothesMgr = clothesMgr;
-            cc.vv.clothesMgr.init(gameConfig.part);
-            //用户当前的刺绣资源
+            //用户当前关卡的衣服资源          /***每关都会重新刷新的资源***/
+            cc.vv.clothesDemo      = null;  /**texture                */
+            cc.vv.clothesDemoWhite = null;  /**texture                */
+            cc.vv.clothesClipArr   = [];    /**[texture]              */
 
+            cc.vv.clothesConfig = null;
+            cc.vv.pensAsset     = null;      // {key: spriteFrame}
+            cc.vv.clothesMgr    = clothesMgr;
+            cc.vv.clothesMgr.init(gameConfig.part);
+            //用户当前的刺绣资源              /***每关都会重新刷新的资源***/
+            cc.vv.tiledMapDemo = null;      /**tiledMap */
+
+            cc.vv.tiledMapConfig = null;
+            cc.vv.linesAsset     = null;
+            cc.vv.tiledMapMgr    = tiledMapMgr;
+            cc.vv.tiledMapMgr.init(gameConfig.part);
             //预加载游戏资源
             this.preLoadGameRes();
         }
@@ -81,9 +89,11 @@ cc.Class({
     preLoadGameRes(){
         Promise.all([
             cc.vv.clothesMgr.preLoadClothes(),
+            cc.vv.tiledMapMgr.preLoadTiledMap()
         ]).then(()=>{
             this.resReady = true;
             this.resReadyFunc && this.resReadyFunc();
+            Log.d(cc.vv.linesAsset);
         })
     },
 

@@ -1,8 +1,8 @@
 import Log from '../common/Log';
 import utils from '../common/utils';
-// cc.vv.gameDemo       // texture
-// cc.vv.gameDemoWhite  // texture
-// cc.vv.gameClipArr    // [ texture ]
+// cc.vv.clothesDemo       // texture
+// cc.vv.clothesDemoWhite  // texture
+// cc.vv.clothesClipArr    // [ texture ]
 cc.Class({
     extends: cc.Component,
 
@@ -16,11 +16,16 @@ cc.Class({
     },
 
     init(data){
+        if(this.loadReady){
+            this.node.active = true;
+            return;
+        }
         this.game    = data.game;
         this.gameID  = data.id;
         this.isOver  = data.complete;
         this.initView();
         this.addEvent();
+        this.loadReady= true;
     },
 
     addEvent(){
@@ -40,6 +45,7 @@ cc.Class({
         this.linesArr = null; //线部分
         this.clipBaseNode = null; //正确的衣服
         this.demoTip_spr.spriteFrame = null; //提示板上的衣服
+        this.loadReady = false;
         this.rawMaterial.removeAllChildren();//清空案板上所有东西
     },
 
@@ -56,13 +62,13 @@ cc.Class({
     //展示需要裁减的部分
     showClips(){
         if(!this.clipsArr){ //放入裁剪的数组
-            if(!cc.vv.gameClipArr.length){
-                Log.catch('in tailorTabMgr 61',cc.vv.gameClipArr);
+            if(!cc.vv.clothesClipArr.length){
+                Log.catch('in tailorTabMgr 61',cc.vv.clothesClipArr);
                 return;
             }
             this.clipsArr = [];
             this.linesArr = [];
-            cc.vv.gameClipArr.forEach(element => {
+            cc.vv.clothesClipArr.forEach(element => {
                 let frame  = new cc.SpriteFrame(element);
                 let node   = new cc.Node();
                 let sprite = node.addComponent(cc.Sprite);
@@ -84,11 +90,11 @@ cc.Class({
     //展示正确的衣服 正确衣服和裁减部分拼接
     showDemo(){
         if(!this.clipBaseNode){ //基础的衣服 white模板
-            if(!cc.vv.gameDemoWhite){
-                Log.catch('in tailorTabMgr 40',cc.vv.gameDemoWhite);
+            if(!cc.vv.clothesDemoWhite){
+                Log.catch('in tailorTabMgr 40',cc.vv.clothesDemoWhite);
                 return;
             }
-            let frame  = new cc.SpriteFrame(cc.vv.gameDemoWhite);
+            let frame  = new cc.SpriteFrame(cc.vv.clothesDemoWhite);
             let node   = this.clipBaseNode = new cc.Node();
             let sprite = node.addComponent(cc.Sprite);
             sprite.sizeMode = 2;
@@ -97,8 +103,8 @@ cc.Class({
             node.parent = this.rawMaterial;
         }
         if(!this.demoTip_spr.spriteFrame){
-            if(!cc.vv.gameDemo){
-                Log.catch('in tailorTabMgr 40',cc.vv.gameDemo);
+            if(!cc.vv.clothesDemo){
+                Log.catch('in tailorTabMgr 40',cc.vv.clothesDemo);
                 return;
             }
             this.scheduleOnce(()=>{
@@ -108,7 +114,7 @@ cc.Class({
                     cc.moveTo(0.5,v2.x,offset).easing(cc.easeBackOut(10000000))
                 )
             },0)
-            this.demoTip_spr.spriteFrame = new cc.SpriteFrame(cc.vv.gameDemo);
+            this.demoTip_spr.spriteFrame = new cc.SpriteFrame(cc.vv.clothesDemo);
         }
     },
 

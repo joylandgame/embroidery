@@ -44,8 +44,16 @@ const userMgr = {
             let dt = userInfo;
             localSave.set(userMgr.evt_user_config, dt);
         }
+    },
+
+    setUserTiledMap(mapID){
+        if(mapID){
+            userInfo.mapID = mapID;
+            let dt = userInfo;
+            localSave.set(userMgr.evt_user_config, dt);
+        }
     }
-    
+
 
 }
 

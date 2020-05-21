@@ -127,7 +127,7 @@ const utils = {
         })
     },
 
-    loadDir: (url, call, type = cc.Texture2D)=>{
+    loadDir: (url, type = cc.Texture2D, call)=>{
         return new Promise((resolve, reject)=>{
             cc.loader.loadResDir(url,function(err,assets){
                 if (err || assets.length <= 0) {
@@ -136,12 +136,13 @@ const utils = {
                 }
                 let arr = [];
                 for(let i = 0; i < assets.length; i++){
-                    let asset = assets[i]; 
+                    let asset = assets[i];
                     if(asset instanceof type){
-                        let name = assets[i+1].name;
-                        asset.name = name;
+                        if(cc.Texture2D === type){
+                            let name = assets[i+1].name;
+                            asset.name = name;
+                        }
                         arr.push(asset);
-                        // console.log(name);
                     }
                 }
                 resolve(arr);

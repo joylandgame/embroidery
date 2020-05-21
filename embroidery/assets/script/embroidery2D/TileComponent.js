@@ -130,7 +130,7 @@ const forbit_grid={
 
 }
 
-const default_gid = 14
+const default_gid =14
 cc.Class({
     extends: cc.Component,
 
