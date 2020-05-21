@@ -28,6 +28,9 @@ cc.Class({
 
         tabBtnFrames_n: [cc.SpriteFrame],
         tabBtnFrames_s: [cc.SpriteFrame],
+
+        goHomeBtn: cc.Node,
+
     },
 
     onLoad(){
@@ -44,11 +47,13 @@ cc.Class({
     },
 
     addEvent(){
+        cc.vv.eventMgr.on(cc.vv.eventName.complete_all_game, this.complete_all_game, this);
         cc.vv.eventMgr.on(cc.vv.eventName.complete_one_game, this.complete_one_game, this);
         cc.vv.eventMgr.on(cc.vv.eventName.game_go_home, this.game_go_home, this);
     },
 
     onDestroy(){
+        cc.vv.eventMgr.off(cc.vv.eventName.complete_all_game, this.complete_all_game, this);
         cc.vv.eventMgr.off(cc.vv.eventName.complete_one_game, this.complete_one_game, this);
         cc.vv.eventMgr.off(cc.vv.eventName.game_go_home, this.game_go_home, this);
     },
@@ -120,6 +125,11 @@ cc.Class({
             //准备下一个关卡
             this.readyGoNext();
         }
+    },
+
+    complete_all_game(){
+        this.tabBtns.active   = false;
+        this.goHomeBtn.active = false;
     },
 
     game_go_home(){

@@ -79,6 +79,9 @@ cc.Class({
         this.showDemoWhite();
         this.showDemo();
         this.setUtilsView();
+        let texture = new cc.RenderTexture();
+        texture.initWithSize(500,500,cc.gfx.RB_FMT_S8);
+        this.layerdraw.targetTexture = texture;
     },
 
     showDemo(){
@@ -197,20 +200,21 @@ cc.Class({
 
     onDone() {
         if(this.map_com) {
-            let texture = new cc.RenderTexture();
-            texture.initWithSize(300,300,cc.gfx.RB_FMT_S8);
-            this.layerdraw.targetTexture = texture;
+            this.isOver = true;
+            this.setUtilsView();
+            
             this.layerdraw.render();
             let renderTexture = this.layerdraw.targetTexture;
             let data  = renderTexture.readPixels();
             let img = new cc.Texture2D();
-            img.initWithData(data, 16, texture.width, texture.height);
+            img.initWithData(data, 16, 500, 500);
             let frame = new cc.SpriteFrame(img);
             let score = this.map_com.calcScore();
             cc.vv.gameMgr.setPerformEmbroideryData({
                 score: score,
                 frame: frame,
             })
+            cc.vv.eventMgr.emit(cc.vv.eventName.complete_one_game,this.gameID);
         }
     },
 

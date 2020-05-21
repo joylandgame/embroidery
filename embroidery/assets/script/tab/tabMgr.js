@@ -23,7 +23,7 @@ cc.Class({
 
         this.tailorTab = null;
         this.drawTab   = null;
-        this.embroidery    = null;
+        this.embroideryTab = null;
         this.putClothesTab = null;
     },
 
@@ -54,6 +54,12 @@ cc.Class({
                     complete: this.gameMgr.getAnyOneIsComplete(this.gameMgr.embroideryID)
                 })
                 break;
+            case putEmbroideryTabID:
+                this.openPutClothesTab({
+                    game: this.game,
+                    id  : this.gameMgr.putEmbroideryTabID,
+                    complete: this.gameMgr.getAnyOneIsComplete(this.gameMgr.putEmbroideryTabID)
+                })
         }
 
         this.openID = id;
@@ -124,7 +130,7 @@ cc.Class({
             let drawTabMgr = this.drawTab.getComponent('drawTabMgr');
             drawTabMgr.clear();
         }
-        if(this.embroidery){
+        if(this.embroideryTab){
             let embroideryTabMgr = this.embroideryTab.getComponent('embroideryTabMgr');
             embroideryTabMgr.clear();
         }
@@ -137,6 +143,7 @@ cc.Class({
     closeAll(){
         if(this.tailorTab){this.tailorTab.active   = false}
         if(this.drawTab)  {this.drawTab.active     = false}
-        if(this.embroidery){this.embroidery.active = false}
+        if(this.embroideryTab){this.embroideryTab.active = false}
+        if(this.putClothesTab){this.putClothesTab.active = false}
     }
 })

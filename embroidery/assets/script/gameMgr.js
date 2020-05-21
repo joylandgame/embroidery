@@ -10,7 +10,7 @@ export default class gameMgr {
         this.tailorID     = 0;
         this.drawID       = 1;
         this.embroideryID = 2;
-        this.putEmbroideryID = 3;
+        this.putEmbroideryTabID = 3;
 
         this.isComplete   = 1;
         this.noComplete   = 0;
@@ -41,7 +41,7 @@ export default class gameMgr {
             case this.tailorID:
             case this.drawID:
             case this.embroideryID:
-            case this.putEmbroideryID:
+            case this.putEmbroideryTabID:
                 n = this.complete[id];
                 break;
             default:
@@ -87,7 +87,7 @@ export default class gameMgr {
         lastStep  += this.complete[this.tailorID]     === this.isComplete ? 1 : 0;
         lastStep  += this.complete[this.drawID]       === this.isComplete ? 1 : 0;
         lastStep  += this.complete[this.embroideryID] === this.isComplete ? 1 : 0;
-        finalStep += this.complete[this.putEmbroideryID] === this.isComplete ? 1 : 0;
+        finalStep += this.complete[this.putEmbroideryTabID] === this.isComplete ? 1 : 0;
         return {
             finalStep: lastStep == this.complete.length - 1,
             complete : (lastStep + finalStep) == this.complete.length

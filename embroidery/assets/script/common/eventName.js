@@ -5,10 +5,13 @@ const eventName = {
 
     //注册事件
     complete_one_game: 'complete_one_game',//玩家完成一项页签
+    complete_all_game: 'complete_all_game',//玩家完成所有页签
 
     save_user_schedule: 'save_user_schedule', //保存用户数据
 
     game_go_home: 'game_go_home', //用户返回主页
+
+    
 
 }
 

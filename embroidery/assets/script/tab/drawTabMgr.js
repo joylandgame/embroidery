@@ -212,25 +212,21 @@ cc.Class({
         let drawPixelsObj = {};
         this.tailorDrawTo16(drawPixelsObj);
 
-        Log.d(demoPixelsObj);
-        Log.d(drawPixelsObj);
-
-        this.result();
+        let new_calculate = new calculate('x');
+        let result = new_calculate.toCompare(demoPixelsObj,drawPixelsObj);
+        let score  = new_calculate.getScore(result);
+        this.result(score);
     },
 
-    result(){
+    result(score){
         this.isOver = true;
         cc.vv.eventMgr.emit(cc.vv.eventName.complete_one_game,this.gameID);
         this.setUtilsView();
         //关闭触摸
         this.drawMgr.closeDrawNodeTouch();
-
-        let new_calculate = new calculate('x');
-        let result = new_calculate.toCompare(demoPixelsObj,drawPixelsObj);
-        let score  = new_calculate.getScore(result);
         let sp = this.drawMgr.getDrawSpr();
-        let texture = sp.getTexture().clone();
-        let frame   = new cc.SpriteFrame(texture);
+        let texture = sp.spriteFrame.clone();
+        let frame   = texture;//new cc.SpriteFrame(texture);
         cc.vv.gameMgr.setPerformDrawData({
             frame: frame,
             score: score
