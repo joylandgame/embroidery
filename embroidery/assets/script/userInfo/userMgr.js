@@ -11,13 +11,17 @@ const userMgr = {
 
     init(){
         let dt = localSave.get(userMgr.evt_user_config);
-        if(!dt){
-            dt = userConfig;
-            localSave.set(userMgr.evt_user_config, dt);
+        if(dt){
+            for(let key in dt){
+                userInfo[key] = dt[key]
+            }
         }
-        for(let key in dt){
-            userInfo[key] = dt[key]
-        } 
+        for(let key in userConfig){
+            if(userInfo[key] === undefined){
+               userInfo[key] = userConfig[key]
+            }
+        }
+        localSave.set(userMgr.evt_user_config, userInfo);
     },
 
     setUserLevel(number){
