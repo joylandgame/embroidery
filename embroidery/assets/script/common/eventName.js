@@ -2,14 +2,15 @@ const eventName = {
     //系统提示
     gold_not_enough: 'gold_not_enough',//金币不足
 
-
     //注册事件
     complete_one_game: 'complete_one_game',//玩家完成一项页签
     complete_all_game: 'complete_all_game',//玩家完成所有页签
 
-    save_user_schedule: 'save_user_schedule', //保存用户数据
+    //游戏结算
+    game_settle_accounts: 'game_settle_accounts', 
 
-    game_go_home: 'game_go_home', //用户返回主页
+    //返回主界面
+    game_go_home: 'game_go_home',
 
     
 

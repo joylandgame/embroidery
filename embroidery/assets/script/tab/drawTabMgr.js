@@ -22,10 +22,6 @@ cc.Class({
     },
 
     init(data){
-        if(this.loadReady){
-            this.node.active = true;
-            return;
-        }
         this.game    = data.game;
         this.gameID  = data.id;
         this.isOver  = data.complete;
@@ -35,7 +31,6 @@ cc.Class({
 
         this.initView();
         this.addEvent();
-        this.loadReady = true;
     },
 
     addEvent(){
@@ -66,7 +61,6 @@ cc.Class({
         this.penArr       = []; //装逼的
         this.demoSpr.spriteFrame = null;
         this.drawSpr.spriteFrame = frame;
-        this.loadReady    = false;
         cc.vv.eventMgr.off(cc.vv.eventName.game_go_home, this.game_go_home, this);
     },
 
@@ -204,26 +198,28 @@ cc.Class({
     },
 
     //算分
-    testCall(){
+    toNextGame(){
+        cc.vv.eventMgr.emit(cc.vv.eventName.complete_one_game,this.gameID);
+    },
+
+    result(){
+        //this.isOver = true;
+        //cc.vv.eventMgr.emit(cc.vv.eventName.complete_one_game,this.gameID);
+        //this.setUtilsView();
+        //关闭触摸
+        //this.drawMgr.closeDrawNodeTouch();
+    },
+
+    setResultData(){
         Log.d('判分...请勿打扰...');
         let demoPixelsObj = {};
         this.tailorDemoTo16(demoPixelsObj);
-
         let drawPixelsObj = {};
         this.tailorDrawTo16(drawPixelsObj);
 
         let new_calculate = new calculate('x');
         let result = new_calculate.toCompare(demoPixelsObj,drawPixelsObj);
         let score  = new_calculate.getScore(result);
-        this.result(score);
-    },
-
-    result(score){
-        this.isOver = true;
-        cc.vv.eventMgr.emit(cc.vv.eventName.complete_one_game,this.gameID);
-        this.setUtilsView();
-        //关闭触摸
-        this.drawMgr.closeDrawNodeTouch();
         let sp = this.drawMgr.getDrawSpr();
         let texture = sp.spriteFrame.clone();
         let frame   = texture;//new cc.SpriteFrame(texture);

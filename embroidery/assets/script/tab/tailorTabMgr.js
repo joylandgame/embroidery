@@ -13,19 +13,19 @@ cc.Class({
         demoTip_spr: cc.Sprite,
 
         clipBtn:cc.Node,
+
+        headGuide: cc.Node,
+        goNextBtn: cc.Node,
     },
 
     init(data){
-        if(this.loadReady){
-            this.node.active = true;
-            return;
-        }
         this.game    = data.game;
         this.gameID  = data.id;
         this.isOver  = data.complete;
+        this.goNextBtn.active = this.isOver;
         this.initView();
         this.addEvent();
-        this.loadReady= true;
+        this.headGuide.active = false;
     },
 
     addEvent(){
@@ -41,11 +41,10 @@ cc.Class({
     },
 
     clear(){
-        this.clipsArr = null; //掉落的部分
-        this.linesArr = null; //线部分
+        this.clipsArr_1 = null; //掉落的部分
+        this.linesArr_1 = null; //线部分
         this.clipBaseNode = null; //正确的衣服
         this.demoTip_spr.spriteFrame = null; //提示板上的衣服
-        this.loadReady = false;
         this.rawMaterial.removeAllChildren();//清空案板上所有东西
     },
 
@@ -61,13 +60,15 @@ cc.Class({
 
     //展示需要裁减的部分
     showClips(){
-        if(!this.clipsArr){ //放入裁剪的数组
+        if(!this.linesArr_1 && !this.linesArr_2){ //放入裁剪的数组
             if(!cc.vv.clothesClipArr.length){
                 Log.catch('in tailorTabMgr 61',cc.vv.clothesClipArr);
                 return;
             }
-            this.clipsArr = [];
-            this.linesArr = [];
+            this.clipsArr_1 = [];
+            this.clipsArr_2 = [];
+            this.linesArr_1 = [];
+            this.linesArr_2 = [];
             cc.vv.clothesClipArr.forEach(element => {
                 let frame  = new cc.SpriteFrame(element);
                 let node   = new cc.Node();
@@ -78,10 +79,28 @@ cc.Class({
                 node.parent = this.rawMaterial;
                 if(element.name.split('_')[1] == 'line'){
                     node.zIndex = 2;
-                    this.linesArr.push(node);
+                    if(element.name.split('_')[3]){
+                        if(element.name.split('_')[3] == '0'){
+                            this.linesArr_1.push(node);
+                        }
+                        if(element.name.split('_')[3] == '1'){
+                            this.linesArr_2.push(node);
+                        }
+                    }else{
+                        this.linesArr_1.push(node);
+                    }
                 }else{
                     node.zIndex = 1;
-                    this.clipsArr.push(node);
+                    if(element.name.split('_')[3]){
+                        if(element.name.split('_')[3] == '0'){
+                            this.clipsArr_1.push(node);
+                        }
+                        if(element.name.split('_')[3] == '1'){
+                            this.clipsArr_2.push(node);
+                        }
+                    }else{
+                        this.clipsArr_1.push(node);
+                    }
                 }
             });
         }
@@ -120,13 +139,19 @@ cc.Class({
 
     cutCallBack(){
         if(this.isOver){return}
-        if(this.linesArr && this.linesArr.length){
-            this.linesArr.forEach(element=>{
+        if(this.linesArr_1 && this.linesArr_1.length){
+            this.linesArr_1.forEach(element=>{
                 element.active = false;
             })
+            this.linesArr_1 = [];
+        }else if(this.linesArr_2 && this.linesArr_2.length){
+            this.linesArr_2.forEach(element=>{
+                element.active = false;
+            })
+            this.linesArr_2 = [];
         }
-        if(this.clipsArr && this.clipsArr.length){
-            this.clipsArr.forEach(element=>{
+        if(this.clipsArr_1 && this.clipsArr_1.length){
+            this.clipsArr_1.forEach(element=>{
                 let ro  = Math.random()<0.6?-Math.random()*40:Math.random()*40;
                 let ani = new cc.spawn(
                     cc.rotateBy(1, ro),
@@ -134,19 +159,30 @@ cc.Class({
                 )
                 element.runAction(ani);
             })
+            this.clipsArr_1 = [];
+        }else if(this.clipsArr_2 && this.clipsArr_2.length){
+            this.clipsArr_2.forEach(element=>{
+                let ro  = Math.random()<0.6?-Math.random()*40:Math.random()*40;
+                let ani = new cc.spawn(
+                    cc.rotateBy(1, ro),
+                    cc.moveBy(2,0,-1000),
+                )
+                element.runAction(ani);
+            })
+            this.clipsArr_2 = [];
         }
-        this.result();
+        if(this.clipsArr_1.length == 0 && this.clipsArr_2.length == 0){
+            this.isOver = true;
+            this.headGuide.active = true;
+            this.goNextBtn.active = true;
+            this.setUtilsView();
+            this.scheduleOnce(()=>{
+                this.result();
+            }, 5)
+        }
     },
 
     result(){
-        this.isOver = true;
-        this.setUtilsView();
-        this.scheduleOnce(()=>{
-            cc.vv.eventMgr.emit(cc.vv.eventName.complete_one_game,this.gameID);
-        }, 2.0)
+        cc.vv.eventMgr.emit(cc.vv.eventName.complete_one_game,this.gameID);
     },
-
-    hide(){
-        this.node.active = false;
-    }
 })

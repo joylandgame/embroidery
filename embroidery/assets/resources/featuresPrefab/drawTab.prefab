@@ -136,7 +136,7 @@
       "array": [
         0,
         0,
-        319.56337399645787,
+        360.2665679743265,
         0,
         0,
         0,
@@ -247,7 +247,7 @@
       "array": [
         0,
         0,
-        319.56337399645787,
+        360.2665679743265,
         0,
         0,
         0,
@@ -363,8 +363,8 @@
       "__type__": "TypedArray",
       "ctor": "Float64Array",
       "array": [
-        237.956,
-        952,
+        237,
+        958,
         0,
         0,
         0,
@@ -540,7 +540,7 @@
     "_right": 0,
     "_top": 0,
     "_bottom": 0,
-    "_verticalCenter": 819,
+    "_verticalCenter": 825,
     "_horizontalCenter": 0,
     "_isAbsLeft": true,
     "_isAbsRight": true,
@@ -1418,7 +1418,7 @@
     },
     "component": "",
     "_componentId": "cfe08V7Ow9DD5gJwfnfXPvb",
-    "handler": "testCall",
+    "handler": "toNextGame",
     "customEventData": ""
   },
   {

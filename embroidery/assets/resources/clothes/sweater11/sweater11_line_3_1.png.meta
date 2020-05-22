@@ -1,0 +1,36 @@
+{
+  "ver": "2.3.4",
+  "uuid": "f50bfdae-0278-4205-add8-c6295ee0b2a1",
+  "type": "sprite",
+  "wrapMode": "clamp",
+  "filterMode": "bilinear",
+  "premultiplyAlpha": false,
+  "genMipmaps": false,
+  "packable": true,
+  "width": 444,
+  "height": 432,
+  "platformSettings": {},
+  "subMetas": {
+    "sweater11_line_3_1": {
+      "ver": "1.0.4",
+      "uuid": "ac735a9a-dae7-4d1d-93e1-dfafa9bdfc12",
+      "rawTextureUuid": "f50bfdae-0278-4205-add8-c6295ee0b2a1",
+      "trimType": "auto",
+      "trimThreshold": 1,
+      "rotated": false,
+      "offsetX": 1.5,
+      "offsetY": -164.5,
+      "trimX": 127,
+      "trimY": 379,
+      "width": 193,
+      "height": 3,
+      "rawWidth": 444,
+      "rawHeight": 432,
+      "borderTop": 0,
+      "borderBottom": 0,
+      "borderLeft": 0,
+      "borderRight": 0,
+      "subMetas": {}
+    }
+  }
+}

@@ -68,7 +68,7 @@ cc.Class({
     //加载 裁剪
     openTailorTab(data){
         if(this.tailorTab){
-            this.tailorTab.getComponent('tailorTabMgr').init(data);
+            this.tailorTab.active = true;
             return;
         }
         this.loading.active = true;
@@ -82,7 +82,7 @@ cc.Class({
     //加载 上色
     openDrawTab(data){
         if(this.drawTab){
-            this.drawTab.getComponent('drawTabMgr').init(data);
+            this.drawTab.active = true;
             return;
         }
         this.loading.active = true;
@@ -96,7 +96,7 @@ cc.Class({
     //加载 刺绣
     openEmbroideryTab(data){
         if(this.embroideryTab){
-            this.embroideryTab.getComponent('embroideryTabMgr').init(data);
+            this.embroideryTab.active = true;
             return;
         }
         this.loading.active = true;
@@ -110,6 +110,7 @@ cc.Class({
     openPutClothesTab(data){
         if(this.putClothesTab){
             this.putClothesTab.getComponent('putClothesTabMgr').init(data);
+            this.putClothesTab.active = true;
             return;
         }
         this.loading.active = true;
@@ -120,30 +121,53 @@ cc.Class({
         })
     },
 
-    //重新初始化 不去重新加载了
     clearAllTab(){
+        // if(this.tailorTab){
+        //     let tailorTabMgr = this.tailorTab.getComponent('tailorTabMgr');
+        //     tailorTabMgr.clear();
+        // }
+        // if(this.drawTab){
+        //     let drawTabMgr = this.drawTab.getComponent('drawTabMgr');
+        //     drawTabMgr.clear();
+        // }
+        // if(this.embroideryTab){
+        //     let embroideryTabMgr = this.embroideryTab.getComponent('embroideryTabMgr');
+        //     embroideryTabMgr.clear();
+        // }
+        // if(this.putClothesTab){
+        //     let putClothesTabMgr = this.putClothesTab.getComponent('putClothesTabMgr');
+        //     putClothesTabMgr.clear();
+        // }
+
         if(this.tailorTab){
-            let tailorTabMgr = this.tailorTab.getComponent('tailorTabMgr');
-            tailorTabMgr.clear();
+            this.tailorTab.destroy();
+            this.tailorTab = null;
         }
         if(this.drawTab){
-            let drawTabMgr = this.drawTab.getComponent('drawTabMgr');
-            drawTabMgr.clear();
+            this.drawTab.destroy();
+            this.drawTab = null;
         }
         if(this.embroideryTab){
-            let embroideryTabMgr = this.embroideryTab.getComponent('embroideryTabMgr');
-            embroideryTabMgr.clear();
+            this.embroideryTab.destroy();
+            this.embroideryTab = null;
         }
         if(this.putClothesTab){
-            let putClothesTabMgr = this.putClothesTab.getComponent('putClothesTabMgr');
-            putClothesTabMgr.clear();
+            this.putClothesTab.destroy();
+            this.putClothesTab = null;
         }
+        
     },
 
     closeAll(){
         if(this.tailorTab){this.tailorTab.active   = false}
-        if(this.drawTab)  {this.drawTab.active     = false}
-        if(this.embroideryTab){this.embroideryTab.active = false}
+        if(this.drawTab)  {
+            this.drawTab.getComponent('drawTabMgr').setResultData();
+            this.drawTab.active = false
+        }
+        if(this.embroideryTab){
+            this.embroideryTab.getComponent('embroideryTabMgr').setResultData();
+            this.embroideryTab.active = false
+        }
         if(this.putClothesTab){this.putClothesTab.active = false}
     }
 })

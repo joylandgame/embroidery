@@ -121,7 +121,9 @@ class calculate{
             let baseScore = 100;
             let diffPoint = data[key];
             let allPoint  = data[key + "all"];
-            all_score += baseScore*(allPoint-diffPoint)/allPoint;
+            if(allPoint){
+                all_score += baseScore*(allPoint-diffPoint)/allPoint;
+            }
             key += 1;
             if(times>catchErr){
                 Log.catch("in calculateMgr 127,可能算分时溢出 times",times)

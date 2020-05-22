@@ -52,6 +52,34 @@ const userMgr = {
             let dt = userInfo;
             localSave.set(userMgr.evt_user_config, dt);
         }
+    },
+
+    clearUserGameInfo(){
+        userInfo.clothesID = '';
+        userInfo.mapID     = '';
+        let dt = userInfo;
+        localSave.set(userMgr.evt_user_config, dt);
+    },
+
+    setUserBonus(number){
+        if(number){
+            userInfo.bonus = Number(number);
+            let dt = userInfo;
+            localSave.set(userMgr.evt_user_config, dt);
+        }
+    },
+
+    setUserUpgradeLv(number){
+        if(number){
+            number = number > 50 ? 50 : number;
+            userInfo.upgradeLv = number;
+            let dt = userInfo;
+            localSave.set(userMgr.evt_user_config, dt);
+            if(cc.vv.upgrade){
+                let bonus = cc.vv.upgrade[number].bonus;
+                userMgr.setUserBonus(bonus);
+            }
+        }
     }
 
 

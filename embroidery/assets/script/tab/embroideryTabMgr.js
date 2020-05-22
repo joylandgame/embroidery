@@ -34,10 +34,6 @@ cc.Class({
     ctor() {this.map_com = null;}, 
 
     init(data) {
-        if(this.loadReady){
-            this.node.active = true;
-            return;
-        }
         this.game = data.game;
         this.gameID = data.id;
         this.isOver = data.complete;
@@ -51,7 +47,6 @@ cc.Class({
         }
         this.initView();
         this.addEvent();
-        this.loadReady = true;
     },
 
     addEvent(){
@@ -199,23 +194,26 @@ cc.Class({
     },
 
     onDone() {
-        if(this.map_com) {
-            this.isOver = true;
-            this.setUtilsView();
-            
-            this.layerdraw.render();
-            let renderTexture = this.layerdraw.targetTexture;
-            let data  = renderTexture.readPixels();
-            let img = new cc.Texture2D();
-            img.initWithData(data, 16, 500, 500);
-            let frame = new cc.SpriteFrame(img);
-            let score = this.map_com.calcScore();
-            cc.vv.gameMgr.setPerformEmbroideryData({
-                score: score,
-                frame: frame,
-            })
+        // if(this.map_com) {
+            // this.isOver = true;
+            // this.setUtilsView();
             cc.vv.eventMgr.emit(cc.vv.eventName.complete_one_game,this.gameID);
-        }
+        // }
+    },
+
+    setResultData(){
+        this.layerdraw.render();
+        let renderTexture = this.layerdraw.targetTexture;
+        let data  = renderTexture.readPixels();
+        let img = new cc.Texture2D();
+        img.initWithData(data, 16, 500, 500);
+        let frame = new cc.SpriteFrame(img);
+        frame.setFlipY(true);
+        let score = this.map_com.calcScore();
+        cc.vv.gameMgr.setPerformEmbroideryData({
+            score: score,
+            frame: frame,
+        })
     },
 
     onRollup(e){

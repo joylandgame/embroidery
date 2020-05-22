@@ -23,6 +23,8 @@ cc.Class({
     properties: {
         loading: cc.Node,
         btnLayer: cc.Node,
+
+        upLv: [cc.Sprite],
     },
 
     onLoad(){
@@ -58,6 +60,9 @@ cc.Class({
             Log.d(gameConfig.signin);
             Log.d(gameConfig.skin);
             Log.d(gameConfig.upgrade);
+
+            cc.vv.upgrade = gameConfig.upgrade;
+
             //用户当前关卡的衣服资源          /***每关都会重新刷新的资源***/
             cc.vv.clothesDemo      = null;  /**texture                */
             cc.vv.clothesDemoWhite = null;  /**texture                */
@@ -83,6 +88,7 @@ cc.Class({
 
         //在这里关闭loading界面 显示按钮并且初始化
         this.configOver();
+        this.loadNumber();
     },
 
     //提前加载游戏资源
@@ -116,8 +122,34 @@ cc.Class({
         cc.director.loadScene('game',()=>{
             Log.d('game scene loaded');
         })
+    },
+
+    loadNumber(){
+        if(cc.vv && !cc.vv.numbers){
+            utils.loadDir('./number', cc.SpriteFrame).then((asset)=>{
+                cc.vv.numbers = asset;
+                this.updateLv();
+            })
+        }else{
+            this.updateLv();
+        }
+
+    },
+
+    upLvCallBack(){
+        let lv = cc.vv.userInfo.upgradeLv;
+        cc.vv.userMgr.setUserUpgradeLv(lv + 1);
+        this.updateLv();
+    },
+
+    updateLv(){
+        if(cc.vv && cc.vv.numbers){
+            let lv = cc.vv.userInfo.upgradeLv;
+            let _lv = lv.toString();
+            for(let i = 0; i < _lv.length; i++){
+                this.upLv[i].spriteFrame = cc.vv.numbers[_lv[i]];
+            }
+        }
     }
-
-
 
 });
