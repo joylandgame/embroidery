@@ -189,6 +189,7 @@ cc.Class({
                 this.brushpink.active = false;
                 this.brusherase.position = cc.v2(this.brushpink.position.x,this.brushpink.position.y - 323);
             }
+            this.layDownLine();
             this.map_com.setRunState(2)
         }
     },
