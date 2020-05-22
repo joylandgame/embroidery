@@ -12,59 +12,41 @@
         "color": "0",
         "id": "1",
         "type": "2",
-        "resource": "textmax",
-        "gold": "110",
+        "resource": "note",
+        "gold": "185",
         "level": "1",
-        "weight": "30"
+        "weight": "23"
     },
     {
         "color": "0",
         "id": "2",
         "type": "2",
-        "resource": "textyy",
-        "gold": "120",
+        "resource": "catfoot",
+        "gold": "155",
         "level": "1",
-        "weight": "29"
+        "weight": "25"
     },
     {
         "color": "0",
         "id": "3",
         "type": "2",
-        "resource": "textha",
-        "gold": "130",
+        "resource": "lipsticks",
+        "gold": "140",
         "level": "1",
-        "weight": "28"
+        "weight": "27"
     },
     {
         "color": "0",
         "id": "4",
         "type": "2",
-        "resource": "lipsticks",
-        "gold": "140",
-        "level": "2",
-        "weight": "27"
-    },
-    {
-        "color": "0",
-        "id": "5",
-        "type": "2",
         "resource": "textpro",
         "gold": "150",
-        "level": "2",
+        "level": "3",
         "weight": "26"
     },
     {
         "color": "0",
-        "id": "6",
-        "type": "2",
-        "resource": "catfoot",
-        "gold": "155",
-        "level": "2",
-        "weight": "25"
-    },
-    {
-        "color": "0",
-        "id": "7",
+        "id": "5",
         "type": "2",
         "resource": "battery",
         "gold": "170",
@@ -73,7 +55,7 @@
     },
     {
         "color": "0",
-        "id": "8",
+        "id": "6",
         "type": "2",
         "resource": "10",
         "gold": "175",
@@ -82,12 +64,30 @@
     },
     {
         "color": "0",
+        "id": "7",
+        "type": "2",
+        "resource": "textmax",
+        "gold": "110",
+        "level": "6",
+        "weight": "30"
+    },
+    {
+        "color": "0",
+        "id": "8",
+        "type": "2",
+        "resource": "textyy",
+        "gold": "120",
+        "level": "6",
+        "weight": "29"
+    },
+    {
+        "color": "0",
         "id": "9",
         "type": "2",
-        "resource": "note",
-        "gold": "185",
-        "level": "3",
-        "weight": "23"
+        "resource": "textha",
+        "gold": "130",
+        "level": "6",
+        "weight": "28"
     },
     {
         "color": "0",
@@ -95,7 +95,7 @@
         "type": "2",
         "resource": "23",
         "gold": "185",
-        "level": "4",
+        "level": "9",
         "weight": "23"
     },
     {
@@ -104,7 +104,7 @@
         "type": "2",
         "resource": "bottle",
         "gold": "185",
-        "level": "4",
+        "level": "9",
         "weight": "23"
     },
     {
@@ -113,7 +113,7 @@
         "type": "2",
         "resource": "sushi",
         "gold": "195",
-        "level": "4",
+        "level": "9",
         "weight": "23"
     },
     {
@@ -122,7 +122,7 @@
         "type": "2",
         "resource": "jiushengquan",
         "gold": "195",
-        "level": "5",
+        "level": "12",
         "weight": "23"
     },
     {
@@ -131,7 +131,7 @@
         "type": "2",
         "resource": "lighting",
         "gold": "200",
-        "level": "5",
+        "level": "12",
         "weight": "22"
     },
     {
@@ -140,7 +140,7 @@
         "type": "2",
         "resource": "cherry",
         "gold": "235",
-        "level": "5",
+        "level": "12",
         "weight": "21"
     },
     {
@@ -149,7 +149,7 @@
         "type": "2",
         "resource": "arrow",
         "gold": "235",
-        "level": "6",
+        "level": "15",
         "weight": "21"
     },
     {
@@ -158,7 +158,7 @@
         "type": "2",
         "resource": "crown",
         "gold": "250",
-        "level": "6",
+        "level": "15",
         "weight": "20"
     },
     {
@@ -167,7 +167,7 @@
         "type": "2",
         "resource": "yangtuo",
         "gold": "250",
-        "level": "6",
+        "level": "15",
         "weight": "20"
     },
     {
@@ -176,7 +176,7 @@
         "type": "2",
         "resource": "egg",
         "gold": "255",
-        "level": "7",
+        "level": "18",
         "weight": "20"
     },
     {
@@ -185,7 +185,7 @@
         "type": "2",
         "resource": "super",
         "gold": "295",
-        "level": "7",
+        "level": "18",
         "weight": "18"
     },
     {
@@ -194,7 +194,7 @@
         "type": "2",
         "resource": "duck",
         "gold": "295",
-        "level": "7",
+        "level": "18",
         "weight": "18"
     },
     {
@@ -203,7 +203,7 @@
         "type": "2",
         "resource": "moon",
         "gold": "300",
-        "level": "8",
+        "level": "21",
         "weight": "18"
     },
     {
@@ -212,7 +212,7 @@
         "type": "2",
         "resource": "star",
         "gold": "300",
-        "level": "8",
+        "level": "21",
         "weight": "18"
     },
     {
@@ -221,7 +221,7 @@
         "type": "2",
         "resource": "shoes",
         "gold": "300",
-        "level": "8",
+        "level": "21",
         "weight": "18"
     },
     {
@@ -230,7 +230,7 @@
         "type": "2",
         "resource": "pacman",
         "gold": "315",
-        "level": "9",
+        "level": "24",
         "weight": "18"
     },
     {
@@ -239,7 +239,7 @@
         "type": "2",
         "resource": "lip",
         "gold": "315",
-        "level": "9",
+        "level": "24",
         "weight": "18"
     },
     {
@@ -248,7 +248,7 @@
         "type": "2",
         "resource": "rocket",
         "gold": "340",
-        "level": "9",
+        "level": "24",
         "weight": "17"
     },
     {
@@ -257,7 +257,7 @@
         "type": "2",
         "resource": "bixin",
         "gold": "355",
-        "level": "10",
+        "level": "27",
         "weight": "17"
     },
     {
@@ -266,7 +266,7 @@
         "type": "2",
         "resource": "tabioka",
         "gold": "355",
-        "level": "10",
+        "level": "27",
         "weight": "17"
     },
     {
@@ -275,7 +275,7 @@
         "type": "2",
         "resource": "pokemonball",
         "gold": "365",
-        "level": "10",
+        "level": "27",
         "weight": "17"
     },
     {
@@ -284,7 +284,7 @@
         "type": "2",
         "resource": "sun",
         "gold": "380",
-        "level": "11",
+        "level": "30",
         "weight": "16"
     },
     {
@@ -293,7 +293,7 @@
         "type": "2",
         "resource": "diy",
         "gold": "385",
-        "level": "11",
+        "level": "30",
         "weight": "16"
     },
     {
@@ -302,7 +302,7 @@
         "type": "2",
         "resource": "pumpukin",
         "gold": "385",
-        "level": "11",
+        "level": "30",
         "weight": "16"
     },
     {
@@ -311,7 +311,7 @@
         "type": "2",
         "resource": "cat",
         "gold": "390",
-        "level": "12",
+        "level": "33",
         "weight": "16"
     },
     {
@@ -320,7 +320,7 @@
         "type": "2",
         "resource": "beer",
         "gold": "425",
-        "level": "12",
+        "level": "33",
         "weight": "15"
     },
     {
@@ -329,7 +329,7 @@
         "type": "2",
         "resource": "dog",
         "gold": "455",
-        "level": "12",
+        "level": "33",
         "weight": "15"
     },
     {
@@ -338,7 +338,7 @@
         "type": "2",
         "resource": "chicken",
         "gold": "485",
-        "level": "13",
+        "level": "36",
         "weight": "14"
     },
     {
@@ -347,7 +347,7 @@
         "type": "2",
         "resource": "dragon",
         "gold": "500",
-        "level": "13",
+        "level": "36",
         "weight": "14"
     },
     {
@@ -356,7 +356,7 @@
         "type": "2",
         "resource": "grandpa",
         "gold": "500",
-        "level": "13",
+        "level": "36",
         "weight": "14"
     },
     {

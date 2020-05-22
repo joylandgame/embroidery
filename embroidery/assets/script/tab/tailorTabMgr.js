@@ -23,6 +23,7 @@ cc.Class({
         this.gameID  = data.id;
         this.isOver  = data.complete;
         this.goNextBtn.active = this.isOver;
+        this.clipBtn.active   = false;
         this.initView();
         this.addEvent();
         this.headGuide.active = false;
@@ -51,11 +52,6 @@ cc.Class({
     initView(){
         this.showDemo();
         if(!this.isOver){this.showClips();}
-        this.setUtilsView();
-    },
-
-    setUtilsView(){
-        this.clipBtn.active = !this.isOver;
     },
 
     //展示需要裁减的部分
@@ -138,7 +134,7 @@ cc.Class({
     },
 
     cutCallBack(){
-        if(this.isOver){return}
+        if(this.isOver || this.isCut){return}
         if(this.linesArr_1 && this.linesArr_1.length){
             this.linesArr_1.forEach(element=>{
                 element.active = false;
@@ -171,15 +167,27 @@ cc.Class({
             })
             this.clipsArr_2 = [];
         }
+
+        this.clipBtnAni();
+
         if(this.clipsArr_1.length == 0 && this.clipsArr_2.length == 0){
             this.isOver = true;
             this.headGuide.active = true;
             this.goNextBtn.active = true;
-            this.setUtilsView();
             this.scheduleOnce(()=>{
                 this.result();
             }, 5)
         }
+    },
+
+    clipBtnAni(){
+        this.isCut = true;
+        this.clipBtn.active = true;
+        this.clipBtn.runAction(cc.sequence(cc.moveTo(0.5, -this.clipBtn.x, this.clipBtn.y), cc.callFunc(()=>{
+            this.isCut = false;
+            this.clipBtn.active = false;
+            this.clipBtn.angle  = -this.clipBtn.angle;
+        },this)))
     },
 
     result(){

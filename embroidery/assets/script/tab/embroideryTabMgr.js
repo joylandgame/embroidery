@@ -145,7 +145,8 @@ cc.Class({
             item.parent = this.linesLayer;
             item.active = true;
             this.lineArr.push(item);
-        } 
+        }
+        this.selectColor({target: this.lineArr[0]})
     },
 
     selectColor(evt) {
