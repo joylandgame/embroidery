@@ -48,7 +48,7 @@ cc.Class({
         this.tile_com = null;
         this.move_pos = null;
         this.layer_draw = null;
-
+        this.state = 0;
         this.runstate = 1;      //刺绣状态
         this.pinkanicounter = 0;
         this.action_slot = null;
@@ -90,6 +90,9 @@ cc.Class({
     },
     
     update(dt){
+        if(dt > 0.5) {
+            console.log("dt=========",dt);
+        }
        if(this.move_pos) {
             let dir = cc.v2(this.move_pos.x - this.start_pos.x,this.move_pos.y - this.start_pos.y);
                 
@@ -134,11 +137,16 @@ cc.Class({
                 }
                 */
                 this.pinkheader.getWorldPosition(pinkheaderworld);
-                this.checkPinkGrid(pinkheaderworld);
+                if(this.checkPinkGrid(pinkheaderworld)) {
+                    console.log("draw===== preparerender")
+                    this.layer_draw._prepareToRender();
+                }
                 
            } else if(this.runstate ==2) {
                 this.erasenode.getWorldPosition(eraseworld);
-                this.checkEraseGrid(eraseworld);
+                if(this.checkEraseGrid(eraseworld)) {
+                    this.layer_draw._prepareToRender();
+                }
                 this.playEraseParticle();
            }
        }
@@ -211,10 +219,14 @@ cc.Class({
                 }
             }
         }
-        this.layer_draw._prepareToRender();
+        /////this.layer_draw._prepareToRender();
     },
 
     drawBegin(e) {
+        if(this.state !=0 ) {
+            console.log("this.state=========",this.state)
+            return;
+        }
         this.state = 1;
         
         this.start_pos = e.touch.getLocation();
@@ -293,7 +305,7 @@ cc.Class({
                     clearInterval(slot);
                     resolved(false);
                 }
-                procom.progress = procom.progress + 0.1;
+                procom.progress = procom.progress + 0.05;
                 if(procom.progress >= 1) {
                     clearInterval(slot)
                     this.progressnode.active = false;
@@ -302,18 +314,9 @@ cc.Class({
                         resolved(false)
                         return;
                     }
-                    setTimeout(() => {
-                        if(this.state !=1) {
-                            console.log("not success")
-                            clearInterval(slot)
-                            this.progressnode.active = false;
-                            resolved(false)
-                        } else {
-                            resolved(true)
-                        }
-                    }, 100);
+                    resolved(true)
                 }
-            },100)
+            },30)
         })
        
     },
@@ -329,12 +332,14 @@ cc.Class({
 
         // let modx = worlddist.x % gridsize;
         ///可以判断距离，不要太灵敏
-        
+        let change = false;
         let grid_x = Math.floor((worlddist.x - righdown_position.x)/gridsize);
         let grid_y = layersize.height - Math.floor((worlddist.y - righdown_position.y)/gridsize) -1;
         if(grid_x >= layersize.height || grid_x >= layersize.width || grid_x <0 || grid_y < 0) {
-            return;
+        
+            return change;
         }
+      
         for (let i=0;i<this._select_num;i++) {
             let gridx = grid_x - i % 2;
             let gridy = grid_y - Math.floor(i / 2);
@@ -342,20 +347,28 @@ cc.Class({
             let tiled = this.layer_draw.getTiledTileAt(gridx,gridy);
             if(tiled) {
                 let tile_com = tiled.node.getComponent(TileComponent);
+                if(!tile_com) {
+                    tile_com = tiled.node.addComponent(TileComponent);
+                    tile_com.setGrid(gridx,gridy);
+                   
+                }
                 let info = mapinfo.getGid();
                 if(info){
                     let gid = info.gid;
                     if(tile_com.setGid(gid)) {
+                        change = true;
                         rollupmgr.addPinkAction(tile_com)
                     }
-                    this.layer_draw._prepareToRender();
+                   
                 }
             }
-        }   
+        } 
+       
+        return change;  
     },
     checkEraseGrid(worlddist) {
         let layersize = this.layer_draw.getLayerSize();
-
+        let change = false;
         let modx = worlddist.x % gridsize;
         ///可以判断距离，不要太灵敏
         
@@ -363,7 +376,8 @@ cc.Class({
         let grid_y = layersize.height - Math.floor((worlddist.y - righdown_position.y)/gridsize) -1;
        
         if(grid_x >= layersize.height || grid_x >= layersize.width || grid_x <0 || grid_y < 0) {
-            return;
+            
+            return change;
         }
 
         for (let i=0;i<this._select_num;i++) {
@@ -375,10 +389,12 @@ cc.Class({
                 let tile_com = tiled.node.getComponent(TileComponent);
                 if(tile_com.eraseGid()) {
                     rollupmgr.addEraseAction(tile_com)
-                    this.layer_draw._prepareToRender();
+                    
+                    change = true;
                 }
             }
         }
+        return this.change;
     },
 
     checkCanMove(worlddist) {
