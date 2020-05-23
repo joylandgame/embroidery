@@ -32,6 +32,8 @@ cc.Class({
         goHomeBtn: cc.Node,
 
         saleTip: cc.Node,
+
+        camera: cc.Camera,
     },
 
     onLoad(){
@@ -88,21 +90,21 @@ cc.Class({
 
     selectTab(evt,id){
         if(this.openTabID == id){return}
-        let selectID = -1;
-        switch(id){
-            case tailorTabID:
-                selectID = cc.vv.gameMgr.tailorID;
-                break;
-            case drawTabID:
-                selectID = cc.vv.gameMgr.drawID;
-                break;
-            case embroideryTabID:
-                selectID = cc.vv.gameMgr.embroideryID;
-                break;
-            case putEmbroideryTabID:
-                selectID = cc.vv.gameMgr.putEmbroideryTabID;
-                break;
-        }
+        // let selectID = -1;
+        // switch(id){
+        //     case tailorTabID:
+        //         selectID = cc.vv.gameMgr.tailorID;
+        //         break;
+        //     case drawTabID:
+        //         selectID = cc.vv.gameMgr.drawID;
+        //         break;
+        //     case embroideryTabID:
+        //         selectID = cc.vv.gameMgr.embroideryID;
+        //         break;
+        //     case putEmbroideryTabID:
+        //         selectID = cc.vv.gameMgr.putEmbroideryTabID;
+        //         break;
+        // }
         this.openTabID = id;
         this.initTabBtn();
         this.initTabView();

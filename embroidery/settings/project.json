@@ -1,7 +1,8 @@
 {
   "group-list": [
     "default",
-    "layerdraw"
+    "layerdraw",
+    "layerdemo"
   ],
   "collision-matrix": [
     [
@@ -10,10 +11,19 @@
     [
       false,
       true
+    ],
+    [
+      false,
+      false,
+      true
     ]
   ],
   "excluded-modules": [
-    "3D Physics/Builtin"
+    "3D",
+    "3D Primitive",
+    "3D Physics/cannon.js",
+    "3D Physics/Builtin",
+    "3D Particle"
   ],
   "last-module-event-record-time": 1589869277635,
   "design-resolution-width": 720,

@@ -73,7 +73,8 @@ cc.Class({
             cc.vv.clothesMgr    = clothesMgr;
             cc.vv.clothesMgr.init(gameConfig.part);
             //用户当前的刺绣资源              /***每关都会重新刷新的资源***/
-            cc.vv.tiledMapDemo = null;      /**tiledMap */
+            cc.vv.tiledMapDemo  = null;      /**tiledMap */
+            cc.vv.tiledMapFrame = null;
 
             cc.vv.tiledMapConfig = null;
             cc.vv.linesAsset     = null;

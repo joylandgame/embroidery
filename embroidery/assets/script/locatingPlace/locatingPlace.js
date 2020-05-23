@@ -4,26 +4,19 @@ cc.Class({
         rectNode:   cc.Node,
 
         touchToMoveLayer: cc.Node,
-        touchToScaleLayer: cc.Node,
+        scaleBtn: cc.Node,
 
         touchRectSpr: cc.SpriteFrame,
         touchScaleSpr: cc.SpriteFrame,
     },
 
     onLoad(){
-
         this.touchToMoveLayer.on('touchstart', this.touchstart_tomovelayer, this);
         this.touchToMoveLayer.on('touchmove', this.touchmove_tomovelayer, this);
         this.touchToMoveLayer.on('touchend', this.touchend_tomovelayer, this);
-        this.touchToMoveLayer.on('touchcancel', this.touchcancel_tomovelayer, this);
-
-        this.touchToScaleLayer.on('touchstart', this.touchstart_scalelayer, this);
-        this.touchToScaleLayer.on('touchmove', this.touchmove_scalelayer, this);
-        this.touchToScaleLayer.on('touchend', this.touchend_scalelayer, this);
-        this.touchToScaleLayer.on('touchcancel', this.touchcancel_scalelayer, this);
-
-        this.scaleBtnDefault_x = this.touchToScaleLayer.x;
-        this.scaleBtnDefault_y = this.touchToScaleLayer.y;                                                                                                                                     
+        this.touchToMoveLayer.on('touchcancel', this.touchcancel_tomovelayer, this);                                                                                                                                                                                                                   
+        
+        this.baseDis = Math.sqrt(150*150 + 150*150);
     },
 
     init(){
@@ -31,17 +24,30 @@ cc.Class({
     },
 
     touchstart_tomovelayer(evt){
-        let rect = this.node.getBoundingBox();
-        let p = evt.getLocation();
+        let rect_1 = this.node.getBoundingBox();
+        // if(this.scale){
+        //     rect_1.width  *= this.scale;
+        //     rect_1.height *= this.scale;
+        // }
+        let p   = evt.getLocation();
         let p_1 = this.touchToMoveLayer.convertToNodeSpaceAR(p);
         this.toMoveStart = null;
         this.angleLayer_touchPos = null;
-        if(rect.contains(p_1)){
+
+        let rect_2 = this.scaleBtn.getBoundingBox();
+        let pp  = this.scaleBtn.convertToWorldSpaceAR(cc.v2(0,0));
+        let pp_1 = this.touchToMoveLayer.convertToNodeSpaceAR(pp);
+        rect_2.x = pp_1.x;
+        rect_2.y = pp_1.y;
+        let offSetP = cc.v2(p_1.x + 23, p_1.y + 63)
+        if(rect_2.contains(offSetP)){
+            this.targetPos = this.node.getPosition();
+        }else if(rect_1.contains(p_1)){
             this.rectNode.getComponent(cc.Sprite).spriteFrame          = this.touchRectSpr;
-            this.touchToScaleLayer.getComponent(cc.Sprite).spriteFrame = this.touchScaleSpr;
+            this.scaleBtn.getComponent(cc.Sprite).spriteFrame = this.touchScaleSpr;
             this.toMoveStart = p;
         }else{
-            this.angleLayer_touchPos = evt.getLocation();
+            this.angleLayer_touchPos = p;
         }
     },
 
@@ -62,44 +68,30 @@ cc.Class({
             this.node.angle += offset / 10;
             this.angleLayer_touchPos = p;
         }
+
+        if(this.targetPos){
+            let p_1 = this.touchToMoveLayer.convertToNodeSpaceAR(p);
+            this.lastDis   = Math.sqrt((p_1.x - this.targetPos.x)*(p_1.x - this.targetPos.x)+(p_1.y - this.targetPos.y)*(p_1.y - this.targetPos.y));
+            let ratio = this.lastDis / this.baseDis;
+            this.node.scale = this.scale = ratio < 0.2 ? 0.2 : ratio > 1 ? 1 : ratio;
+        }
     },
 
     touchend_tomovelayer(){
         if(this.angleLayer_touchPos && !this.angleLayer_move){
             this.rectNode.getComponent(cc.Sprite).spriteFrame          = null;
-            this.touchToScaleLayer.getComponent(cc.Sprite).spriteFrame = null;
+            this.scaleBtn.getComponent(cc.Sprite).spriteFrame = null;
         }
+        this.scaleLayer_touchPos = null;
+        this.angleLayer_touchPos = null;
+        this.targetPos = null;
         this.angleLayer_move = false;
+        this.scaleLayer_move = false;
+        
     },
 
-    touchcancel_tomovelayer(){},
-
-    touchstart_scalelayer(evt){
-        // this.touchToScaleLayer.setScale(cc.v2(1.1,1.1));
-    },
-
-    touchmove_scalelayer(evt){
-        let p   = evt.getLocation();
-        let p_1 = this.touchToMoveLayer.convertToNodeSpaceAR(p);
-
-        if(p_1.x < this.scaleBtnDefault_x && p_1.y > this.scaleBtnDefault_y
-        || p_1.x > this.scaleBtnDefault_x && p_1.y < this.scaleBtnDefault_y){
-            let move_x = parseInt(p_1.x - this.scaleBtnDefault_x);
-            let move_y = parseInt(this.scaleBtnDefault_y - p_1.y);
-            let min    = this.getMinBase(move_x, move_y) / 2;
-            let ratio  = min / this.scaleBtnDefault_x + 1;
-            ratio = ratio > 1.5 ? 1.5 : ratio;
-            ratio = ratio < 0.5 ? 0.5 : ratio;
-            this.node.setScale(cc.v2(ratio, ratio));
-        }
-    },
-
-    touchend_scalelayer(evt){
-        // this.touchToScaleLayer.setScale(cc.v2(1,1));
-    },
-
-    touchcancel_scalelayer(evt){
-        // this.touchToScaleLayer.setScale(cc.v2(1,1));
+    touchcancel_tomovelayer(){
+        this.angleLayer_move = false;
     },
 
     getMinBase(a,b){

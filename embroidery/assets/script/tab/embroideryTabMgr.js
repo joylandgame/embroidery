@@ -17,8 +17,8 @@ cc.Class({
         
         demoTip: cc.Node,
 
-        hintsource:cc.Sprite,     //提示图片
-        source:cc.Sprite,         //tx获取的图案 
+        hintsource:cc.TiledMap,     //提示图片
+        source:cc.Node,         //tx获取的图案 
         brushpink:cc.Node,      //刺绣笔刷
         brusherase:cc.Node,     //擦除笔刷
         progressbar:cc.ProgressBar,   //针/擦除进度
@@ -75,7 +75,7 @@ cc.Class({
         this.showDemo();
         this.setUtilsView();
         let texture = new cc.RenderTexture();
-        texture.initWithSize(500,500,cc.gfx.RB_FMT_S8);
+        texture.initWithSize(640,640,cc.gfx.RB_FMT_S8);
         this.layerdraw.targetTexture = texture;
     },
 
@@ -85,7 +85,7 @@ cc.Class({
             return;
         }
         let contentsize = this.hintsource.node.getContentSize();
-        let hint_com = this.hintsource.node.addComponent(cc.TiledMap);
+        let hint_com = this.hintsource;
         hint_com.tmxAsset = cc.vv.tiledMapDemo;
         let layer1 = hint_com.node.getChildByName("layer1");
         let layer2 = hint_com.node.getChildByName("layer2");
@@ -94,16 +94,15 @@ cc.Class({
         layer3.active = false;
         let layer_size = layer1.getContentSize();
         layer1.setScale(contentsize.width/layer_size.width,contentsize.height/layer_size.height,1);
-        layer2.setScale(contentsize.width/layer_size.width,contentsize.height/layer_size.height,1);
-        layer3.setScale(contentsize.width/layer_size.width,contentsize.height/layer_size.height,1);
         this.hintsource.node.setContentSize(contentsize.width,contentsize.height);
+        
         this.scheduleOnce(()=>{
-            let v2     = this.demoTip.getPosition();
-            let offset = cc.winSize.height / 2;
+            this.demoTip.y = cc.winSize.height / 2;
+            let offset     = this.demoTip.y - this.demoTip.height + 60
             this.demoTip.runAction(
-                cc.moveTo(0.5,v2.x,offset).easing(cc.easeBackOut())
+                cc.moveTo(0.5,this.demoTip.x,offset).easing(cc.easeBackOut())
             )
-        },0)
+        },0.018)
     },
 
     showDemoWhite(){
@@ -111,7 +110,7 @@ cc.Class({
             Log.catch('err in embroideryMgr 98, cc.vv.tiledMapDemo::',cc.vv.tiledMapDemo);
             return;
         }
-        this.map_com = this.source.node.addComponent(MapComponent);
+        this.map_com = this.source.addComponent(MapComponent);
         this.map_com.init(cc.vv.tiledMapDemo);
         let data     = cc.vv.gameMgr.getEmbroideryData();
         this.map_com.setTileLayerModel(data);
@@ -208,7 +207,7 @@ cc.Class({
         let renderTexture = this.layerdraw.targetTexture;
         let data  = renderTexture.readPixels();
         let img = new cc.Texture2D();
-        img.initWithData(data, 16, 500, 500);
+        img.initWithData(data, 16, 640, 640);
         let frame = new cc.SpriteFrame(img);
         frame.setFlipY(true);
         let score = this.map_com.calcScore();

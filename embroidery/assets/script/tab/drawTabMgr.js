@@ -98,12 +98,12 @@ cc.Class({
             img.initWithData(data, 16, texture.width, texture.height);
             this.demoSpr.spriteFrame = new cc.SpriteFrame(img);
             this.scheduleOnce(()=>{
-                let v2     = this.demoTip.getPosition();
-                let offset = cc.winSize.height / 2;
+                this.demoTip.y = cc.winSize.height / 2;
+                let offset     = this.demoTip.y - this.demoTip.height + 60
                 this.demoTip.runAction(
-                    cc.moveTo(0.5,v2.x,offset).easing(cc.easeBackOut())
+                    cc.moveTo(0.5,this.demoTip.x,offset).easing(cc.easeBackOut())
                 )
-            },0)
+            },0.018)
         }
     },
 
