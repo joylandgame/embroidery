@@ -1,3 +1,4 @@
+import Log from '../common/Log'
 cc.Class({
     extends: cc.Component,
     properties: {
@@ -24,6 +25,7 @@ cc.Class({
     },
 
     touchstart_tomovelayer(evt){
+        cc.vv.eventMgr.emit(cc.vv.eventName.close_moveScale_guide);
         let rect_1 = this.node.getBoundingBox();
         // if(this.scale){
         //     rect_1.width  *= this.scale;
@@ -87,11 +89,15 @@ cc.Class({
         this.targetPos = null;
         this.angleLayer_move = false;
         this.scaleLayer_move = false;
-        
+        Log.d('put scale and pos and angle : ', this.node.scale, this.node.x, this.node.y, this.node.angle)
     },
 
-    touchcancel_tomovelayer(){
+    touchcancel_tomovelayer(){   
+        this.scaleLayer_touchPos = null;
+        this.angleLayer_touchPos = null;
+        this.targetPos = null;
         this.angleLayer_move = false;
+        this.scaleLayer_move = false;
     },
 
     getMinBase(a,b){

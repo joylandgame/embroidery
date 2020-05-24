@@ -31,7 +31,7 @@ const userMgr = {
         localSave.set(userMgr.evt_user_config, dt);
     },
 
-    setUserGold(number){
+    addUserGold(number){
         let gold = userInfo.gold + number;
         if(gold<0){
             let eventName = cc.vv.eventName.gold_not_enough;
@@ -84,9 +84,19 @@ const userMgr = {
                 userMgr.setUserBonus(bonus);
             }
         }
+    },
+
+    setUserGudie(index){
+        if(index !== undefined){
+            if(!userInfo.guide){
+                userInfo.guide = {};
+            }
+            index = index+"";
+            userInfo.guide[index] = 1;
+            let dt = userInfo;
+            localSave.set(userMgr.evt_user_config, dt);
+        }
     }
-
-
 }
 
 userMgr.init();

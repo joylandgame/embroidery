@@ -32,6 +32,7 @@ cc.Class({
     },
 
     onTouchStart(evt) {
+        cc.vv.eventMgr.emit(cc.vv.eventName.close_drawColor_guide);
         if(!this._drawUtils){return Log.d('当前无画笔')}        
         let loc = evt.getLocation();
         let drawLoc = this._transition(loc);

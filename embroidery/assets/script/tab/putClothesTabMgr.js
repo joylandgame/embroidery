@@ -51,6 +51,8 @@ cc.Class({
         resultTip_tiledMap: cc.Sprite,
         
         readMapCamera: cc.Camera,
+
+        guide: cc.Node,
     },
 
     init(data){
@@ -73,14 +75,10 @@ cc.Class({
     },
 
     addEvent(){
-        cc.vv.eventMgr.on(cc.vv.eventName.game_go_home, this.game_go_home, this);
-    },
-
-    clear(){
-        this.drawScore = 0;
-        this.embroideryScore = 0;
-        this.draw.spriteFrame = null;
         cc.vv.eventMgr.off(cc.vv.eventName.game_go_home, this.game_go_home, this);
+        cc.vv.eventMgr.off(cc.vv.eventName.close_moveScale_guide, this.hideGuide, this);
+        cc.vv.eventMgr.on(cc.vv.eventName.game_go_home, this.game_go_home, this);
+        cc.vv.eventMgr.on(cc.vv.eventName.close_moveScale_guide, this.hideGuide, this);
     },
 
     game_go_home(){
@@ -131,6 +129,8 @@ cc.Class({
         let texture = new cc.RenderTexture();
         texture.initWithSize(640,640,cc.gfx.RB_FMT_S8);
         this.readMapCamera.targetTexture = texture;
+
+        this.showGuide(1);
     },
 
     initPutDemoTip(){
@@ -204,6 +204,9 @@ cc.Class({
             this.resultIcon_demo.node.setScale(cc.v2(data.scale, data.scale));
             this.resultIcon_demo.node.angle = data.angle;
 
+            this.randomPutData = data;
+            Log.d('random scale :', data);
+
             this.resultTip_demo.node.y = 120;
             this.resultTip_demo.node.scale = 0.45;
 
@@ -214,26 +217,38 @@ cc.Class({
                     cc.moveTo(0.5,this.resultTip.x,offset).easing(cc.easeBackOut())
                 )
             },0.018)
-        }, 0.3)
+        }, 0)
         
     },
 
     resultCallBack(){
+        
         cc.vv.eventMgr.emit(cc.vv.eventName.complete_all_game);
 
         this.resultAniNode.active   = false;
         this.resultBtn.active       = false;
         this.resultScoreNode.active = false;
 
-        let embroidery_angle = this.embroidery.node.angle;
-        let embroidery_pos   = this.embroidery.node.getPosition();
-        let embroidery_scale = this.embroidery.node.getScale();
+        let randomAngle = this.randomPutData.angle;
+        let randomX     = this.randomPutData.pos[0];
+        let randomY     = this.randomPutData.pos[1];
+        let randomScale = this.randomPutData.scale;
 
-        this.resultIcon.node.angle = embroidery_angle;
-        embroidery_pos.x -= 21;
-        embroidery_pos.y -= 63;
-        this.resultIcon.node.setPosition(embroidery_pos);
-        this.resultIcon.node.setScale(embroidery_scale);
+        let putAngle = this.embroidery.node.angle;
+        let putX     = this.embroidery.node.x - 21;
+        let putY     = this.embroidery.node.y - 63;
+        let putScale = this.embroidery.node.scale;
+
+        Log.d(
+            "randomAngle - putAngle " + randomAngle + " - " + putAngle + "\n",
+            "randomX - putX " + randomX + " - " + putX + "\n",
+            "randomY - putY " + randomY + " - " + putY + "\n",
+            "randomScale - putScale " + randomScale + " - " + putScale,
+        )
+        
+        this.resultIcon.node.angle = putAngle;
+        this.resultIcon.node.setScale(cc.v2(putScale,putScale));
+        this.resultIcon.node.setPosition(cc.v2(putX,putY));
 
         this.resultLayer.active     = true;
         let resultAni = this.resultAniNode.getComponent(cc.Animation);
@@ -261,7 +276,7 @@ cc.Class({
             base+=1;
             this.resultScore.string = base.toString();
         }
-        this.schedule(func, 0.05);
+        this.schedule(func, 0.02);
     },
 
     gameOverCallBack(){
@@ -269,7 +284,21 @@ cc.Class({
     },
 
     onDestroy(){
+        cc.vv.eventMgr.off(cc.vv.eventName.close_moveScale_guide, this.hideGuide, this);
         cc.vv.eventMgr.off(cc.vv.eventName.game_go_home, this.game_go_home, this);
     },
+   
+    showGuide(index){
+        if(cc.vv.userInfo.guide && cc.vv.userInfo.guide['3']){
+            return;
+        }
+        if(index == 1){
+            this.guide.active = true;
+        }
+    },
 
+    hideGuide(){
+        this.guide.active = false;
+        cc.vv.userMgr.setUserGudie('3');
+    }
 });

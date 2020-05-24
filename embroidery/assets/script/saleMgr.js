@@ -11,12 +11,14 @@ cc.Class({
 
         nextBtn: cc.Node,
         saleBtn: cc.Node,
+        highestBtn: cc.Node,
     },
 
     init(game,price,scoreRatio){
         this.game = game;
         this.nextBtn.active = true;
         this.saleBtn.active = true;
+        this.highestBtn.active = false;
         this.basePrice  = price;
         this.scoreRatio = scoreRatio;
         this.nextBtn.x  =  150;
@@ -28,10 +30,6 @@ cc.Class({
     },
 
     initView(){
-        if(this.buyerIndex == 2){
-            this.nextBtn.active = false;
-            this.saleBtn.x      = 0;
-        }
         this.headIcon.spriteFrame = this.buyerSpr[this.buyerIndex];
         let _random = Math.random() < 0.4 ? - Math.random()*0.2 : Math.random()*0.2;
         let price   = this.basePrice*this.scoreRatio;
@@ -41,6 +39,12 @@ cc.Class({
         if(price>this._highestPrice){this._highestPrice = price}
         this.highestPrice.string = '目前最高销售价格为:'+this._highestPrice;
         this.nowTime.string = String(this.buyerIndex + 1);
+        if(this.buyerIndex == 2){
+            this.nextBtn.active = false;
+            // this.highestBtn.active = this._highestPrice > this._price;
+            // this.saleBtn.x = this._highestPrice <= this._price ? 0 : this.saleBtn.x;
+            this.saleBtn.x = 0;
+        }
     },
 
     nextBtnCall(){
@@ -49,7 +53,14 @@ cc.Class({
     },
 
     saleBtnCall(){
-        cc.vv.userMgr.setUserGold(cc.vv.userInfo.gold + this._price);
+        cc.vv.userMgr.addUserGold(this._price);
+        this.game.readyGoNext();
+        this.node.active = false;
+    },
+
+    highestBtnCall(){
+        let _price = this._highestPrice ? this._highestPrice : this._price;
+        cc.vv.userMgr.addUserGold(_price);
         this.game.readyGoNext();
         this.node.active = false;
     }

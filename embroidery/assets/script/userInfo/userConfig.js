@@ -8,6 +8,8 @@ var userConfig = {
 
     bonus: 0.025, //收益加成
     upgradeLv: 1,
+
+    guide: '', //{"0": '', "1": '', "2": '', "3": ''}
 }
 
 export default userConfig

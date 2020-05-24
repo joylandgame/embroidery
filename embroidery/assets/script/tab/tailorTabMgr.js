@@ -26,7 +26,7 @@ cc.Class({
         this.clipBtn.active   = false;
         this.initView();
         this.addEvent();
-        this.headGuide.active = false;
+        
     },
 
     addEvent(){
@@ -74,7 +74,7 @@ cc.Class({
                 sprite.spriteFrame = frame;
                 node.parent = this.rawMaterial;
                 if(element.name.split('_')[1] == 'line'){
-                    node.zIndex = 2;
+                    node.zIndex = 1;
                     if(element.name.split('_')[3]){
                         if(element.name.split('_')[3] == '0'){
                             this.linesArr_1.push(node);
@@ -86,7 +86,7 @@ cc.Class({
                         this.linesArr_1.push(node);
                     }
                 }else{
-                    node.zIndex = 1;
+                    node.zIndex = 0;
                     if(element.name.split('_')[3]){
                         if(element.name.split('_')[3] == '0'){
                             this.clipsArr_1.push(node);
@@ -99,6 +99,10 @@ cc.Class({
                     }
                 }
             });
+            // this.scheduleOnce(()=>{
+                this.showGuide(1);
+            // }, 0.1)
+            
         }
     },
 
@@ -135,6 +139,7 @@ cc.Class({
 
     cutCallBack(){
         if(this.isOver || this.isCut){return}
+        this.hideGuide();
         if(this.linesArr_1 && this.linesArr_1.length){
             this.linesArr_1.forEach(element=>{
                 element.active = false;
@@ -172,8 +177,8 @@ cc.Class({
 
         if(this.clipsArr_1.length == 0 && this.clipsArr_2.length == 0){
             this.isOver = true;
-            this.headGuide.active = true;
             this.goNextBtn.active = true;
+            this.showGuide(2);
             this.scheduleOnce(()=>{
                 this.result();
             }, 5)
@@ -187,10 +192,35 @@ cc.Class({
             this.isCut = false;
             this.clipBtn.active = false;
             this.clipBtn.angle  = -this.clipBtn.angle;
+            this.showGuide(1);
         },this)))
     },
 
     result(){
+        cc.vv.userMgr.setUserGudie('0');
         cc.vv.eventMgr.emit(cc.vv.eventName.complete_one_game,this.gameID);
     },
+
+
+    showGuide(index){
+        if(cc.vv.userInfo.guide && cc.vv.userInfo.guide['0']){
+            return;
+        }
+        if(index == 1){
+            if(this.clipsArr_2.length){
+                this.headGuide.active = true;
+                this.headGuide.setPosition(cc.v2(0,0));
+            }
+        }
+
+        if(index == 2){
+            let p = this.goNextBtn.getPosition();
+            this.headGuide.setPosition(p);
+            this.headGuide.active = true;
+        }
+    },
+
+    hideGuide(){
+        this.headGuide.active = false;
+    }
 })

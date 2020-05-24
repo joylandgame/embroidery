@@ -19,6 +19,8 @@ cc.Class({
         pens: cc.Node,
         penItem: cc.Node,
         btnLayer: cc.Node,
+
+        guide: cc.Node,
     },
 
     init(data){
@@ -34,10 +36,12 @@ cc.Class({
     },
 
     addEvent(){
+        cc.vv.eventMgr.on(cc.vv.eventName.close_drawColor_guide, this.hideGuide, this);
         cc.vv.eventMgr.on(cc.vv.eventName.game_go_home, this.game_go_home, this);
     },
 
     onDestroy(){
+        cc.vv.eventMgr.off(cc.vv.eventName.close_drawColor_guide, this.hideGuide, this);
         cc.vv.eventMgr.off(cc.vv.eventName.game_go_home, this.game_go_home, this);
     },
 
@@ -71,13 +75,13 @@ cc.Class({
     },
 
     setUtilsView(){
-        if(!this.isOver){
+        // if(!this.isOver){
             this.btnLayer.active = true;
             this.initPenList();
-        }else{
-            this.pens.active     = false;
-            this.btnLayer.active = false;
-        }
+        // }else{
+        //     this.pens.active     = false;
+        //     this.btnLayer.active = false;
+        // }
     },
 
     showDemo(){
@@ -123,7 +127,8 @@ cc.Class({
             this.drawCamera.render();
             this.drawBgPixels = rt.readPixels();
             this.drawSpr.spriteFrame = frame;
-            this.scheduleOnce(this.initDrawMgr,0);
+            // this.scheduleOnce(this.initDrawMgr,0);
+            this.initDrawMgr();
         }
     },
 
@@ -149,6 +154,8 @@ cc.Class({
             item.active = true;
             this.penArr.push(item);
         }
+        this.selectPenCallBack({target: this.penArr[0]});
+        this.showGuide(1);
     },
 
     //选择橡皮
@@ -335,7 +342,19 @@ cc.Class({
     //     this.drawCamera.render();
     //     let data = rt.readPixels();
     //     console.log(data);
-    // }
+    // },
 
+    showGuide(index){
+        if(cc.vv.userInfo.guide && cc.vv.userInfo.guide['1']){
+            return;
+        }
+        if(index == 1){
+            this.guide.active = true;
+        }
+    },
 
+    hideGuide(){
+        this.guide.active = false;
+        cc.vv.userMgr.setUserGudie('1');
+    }
 })

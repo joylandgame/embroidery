@@ -208,6 +208,7 @@ cc.Class({
                     }
                 }
             }
+            this.layer_draw._prepareToRender();
         }else{
             for (let i=0;i<layersize.width;i++) {
                 for (let j=0;j<layersize.height;j++) {
@@ -219,7 +220,7 @@ cc.Class({
                 }
             }
         }
-        /////this.layer_draw._prepareToRender();
+       //this.layer_draw._prepareToRender();
     },
 
     drawBegin(e) {

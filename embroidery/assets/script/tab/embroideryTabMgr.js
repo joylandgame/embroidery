@@ -29,6 +29,8 @@ cc.Class({
 
         btnLayer: cc.Node,
         btnDone : cc.Node,
+
+        guide: cc.Node,
     },
 
     ctor() {this.map_com = null;}, 
@@ -39,18 +41,17 @@ cc.Class({
         this.isOver = data.complete;
 
         mapinfo.init();//初始化画笔
-
-        if(!this.isOver){
-            this.node.on(cc.Node.EventType.TOUCH_START,this.drawBegin,this);
-            this.node.on(cc.Node.EventType.TOUCH_MOVE,this.drawMove,this);
-            this.node.on(cc.Node.EventType.TOUCH_END,this.drawEnd,this);
-        }
+        
         this.initView();
         this.addEvent();
     },
 
     addEvent(){
         cc.vv.eventMgr.on(cc.vv.eventName.game_go_home, this.game_go_home, this);
+        
+        this.node.on(cc.Node.EventType.TOUCH_START,this.drawBegin,this);
+        this.node.on(cc.Node.EventType.TOUCH_MOVE,this.drawMove,this);
+        this.node.on(cc.Node.EventType.TOUCH_END,this.drawEnd,this);
     },
 
     game_go_home(){
@@ -77,6 +78,8 @@ cc.Class({
         let texture = new cc.RenderTexture();
         texture.initWithSize(640,640,cc.gfx.RB_FMT_S8);
         this.layerdraw.targetTexture = texture;
+
+        this.showGuide(1);
     },
 
     showDemo(){
@@ -117,13 +120,13 @@ cc.Class({
     },
 
     setUtilsView(){
-        if(!this.isOver){
+        // if(!this.isOver){
             this.btnLayer.active = true;
             this.initLineList();
-        }else{
-            this.btnLayer.active   = false;
-            this.linesLayer.active = false;
-        }
+        // }else{
+        //     this.btnLayer.active   = false;
+        //     this.linesLayer.active = false;
+        // }
     },
 
     initLineList(){
@@ -233,6 +236,7 @@ cc.Class({
         if(this.map_com) {
             this.map_com.drawBegin(e)
         }
+        this.hideGuide();
     },
     drawMove(e) {
         if(this.map_com) {
@@ -254,4 +258,18 @@ cc.Class({
             this.map_com.drawNumFour()
         }
     },
+
+    showGuide(index){
+        if(cc.vv.userInfo.guide && cc.vv.userInfo.guide['2']){
+            return;
+        }
+        if(index == 1){
+            this.guide.active = true;
+        }
+    },
+
+    hideGuide(){
+        this.guide.active = false;
+        cc.vv.userMgr.setUserGudie('2');
+    }
 });

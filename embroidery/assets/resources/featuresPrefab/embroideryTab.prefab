@@ -64,16 +64,19 @@
       },
       {
         "__id__": 106
+      },
+      {
+        "__id__": 109
       }
     ],
     "_active": true,
     "_components": [
       {
-        "__id__": 109
+        "__id__": 113
       }
     ],
     "_prefab": {
-      "__id__": 110
+      "__id__": 114
     },
     "_opacity": 255,
     "_color": {
@@ -163,7 +166,7 @@
       "array": [
         0,
         0,
-        480.64409910036346,
+        290.1113034287998,
         0,
         0,
         0,
@@ -1441,7 +1444,7 @@
     "_contentSize": {
       "__type__": "cc.Size",
       "width": 400,
-      "height": 4.638422979041934e-11
+      "height": 1.8118839761882555e-13
     },
     "_anchorPoint": {
       "__type__": "cc.Vec2",
@@ -1696,7 +1699,7 @@
     "_layoutSize": {
       "__type__": "cc.Size",
       "width": 400,
-      "height": 4.638422979041934e-11
+      "height": 1.8118839761882555e-13
     },
     "_resize": 1,
     "_N$layoutType": 3,
@@ -4108,7 +4111,7 @@
       "array": [
         0,
         0,
-        480.64409910036346,
+        290.1113034287998,
         0,
         0,
         0,
@@ -4179,6 +4182,135 @@
     "sync": false
   },
   {
+    "__type__": "cc.Node",
+    "_name": "guide",
+    "_objFlags": 0,
+    "_parent": {
+      "__id__": 1
+    },
+    "_children": [],
+    "_active": false,
+    "_components": [
+      {
+        "__id__": 110
+      },
+      {
+        "__id__": 111
+      }
+    ],
+    "_prefab": {
+      "__id__": 112
+    },
+    "_opacity": 255,
+    "_color": {
+      "__type__": "cc.Color",
+      "r": 238,
+      "g": 75,
+      "b": 75,
+      "a": 255
+    },
+    "_contentSize": {
+      "__type__": "cc.Size",
+      "width": 240,
+      "height": 75.6
+    },
+    "_anchorPoint": {
+      "__type__": "cc.Vec2",
+      "x": 0.5,
+      "y": 0.5
+    },
+    "_trs": {
+      "__type__": "TypedArray",
+      "ctor": "Float64Array",
+      "array": [
+        10,
+        -336.503,
+        0,
+        0,
+        0,
+        0,
+        1,
+        1,
+        1,
+        1
+      ]
+    },
+    "_eulerAngles": {
+      "__type__": "cc.Vec3",
+      "x": 0,
+      "y": 0,
+      "z": 0
+    },
+    "_skewX": 0,
+    "_skewY": 0,
+    "_is3DNode": false,
+    "_groupIndex": 0,
+    "groupIndex": 0,
+    "_id": ""
+  },
+  {
+    "__type__": "cc.Label",
+    "_name": "",
+    "_objFlags": 0,
+    "node": {
+      "__id__": 109
+    },
+    "_enabled": true,
+    "_materials": [
+      {
+        "__uuid__": "eca5d2f2-8ef6-41c2-bbe6-f9c79d09c432"
+      }
+    ],
+    "_useOriginalSize": true,
+    "_string": "按住开始刺绣",
+    "_N$string": "按住开始刺绣",
+    "_fontSize": 40,
+    "_lineHeight": 60,
+    "_enableWrapText": true,
+    "_N$file": null,
+    "_isSystemFontUsed": true,
+    "_spacingX": 0,
+    "_batchAsBitmap": false,
+    "_styleFlags": 0,
+    "_underlineHeight": 0,
+    "_N$horizontalAlign": 0,
+    "_N$verticalAlign": 0,
+    "_N$fontFamily": "Arial",
+    "_N$overflow": 0,
+    "_N$cacheMode": 0,
+    "_id": ""
+  },
+  {
+    "__type__": "cc.Animation",
+    "_name": "",
+    "_objFlags": 0,
+    "node": {
+      "__id__": 109
+    },
+    "_enabled": true,
+    "_defaultClip": {
+      "__uuid__": "7b742697-ad42-4630-bedf-5f7bca59ec48"
+    },
+    "_clips": [
+      {
+        "__uuid__": "7b742697-ad42-4630-bedf-5f7bca59ec48"
+      }
+    ],
+    "playOnLoad": true,
+    "_id": ""
+  },
+  {
+    "__type__": "cc.PrefabInfo",
+    "root": {
+      "__id__": 1
+    },
+    "asset": {
+      "__uuid__": "04fbfaf0-f8fe-488b-a568-f211a6d7275c"
+    },
+    "fileId": "ee9FY1ov1L85gOXhj+6bW1",
+    "sync": false
+  },
+  {
     "__type__": "0c8e3byUp9Bq5rHrJYMtH/9",
     "_name": "",
     "_objFlags": 0,
@@ -4218,6 +4350,9 @@
     },
     "btnDone": {
       "__id__": 66
+    },
+    "guide": {
+      "__id__": 109
     },
     "_id": ""
   },
