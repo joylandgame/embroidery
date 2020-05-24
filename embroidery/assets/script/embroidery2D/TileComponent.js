@@ -165,10 +165,16 @@ cc.Class({
     // update (dt) {},
 
     onLoad() {
-        this.tile_com = this.node.addComponent(cc.TiledTile);
+        if(!this.tile_com) {
+            this.tile_com = this.node.getComponent(cc.TiledTile);
+        }
     },
     setGrid(x,y,gid) {
-       
+        if(!this.tile_com) {
+            if(!this.tile_com) {
+                this.tile_com = this.node.getComponent(cc.TiledTile);
+            }
+        }
         this.tile_com.x = x;
         this.tile_com.y = y;        
         //if(x ==0 && y==0) {

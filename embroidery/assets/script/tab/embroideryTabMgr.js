@@ -232,7 +232,7 @@ cc.Class({
     },
 
     drawBegin(e) {
-        console.log("drawBegin===",this.map_com)
+        console.log("drawBegin===")
         if(this.map_com) {
             this.map_com.drawBegin(e)
         }
