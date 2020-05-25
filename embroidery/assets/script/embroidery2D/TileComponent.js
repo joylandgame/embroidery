@@ -157,6 +157,7 @@ cc.Class({
     // onLoad () {},
     ctor() {
         this.old_gid = 0;
+        this.use_gids = [];
     },
     start () {
 
@@ -185,7 +186,7 @@ cc.Class({
         }else{
             this.tile_com.gid = default_gid;
         }
-         
+        this.use_gids.push(this.tile_com.gid);
     },
 
     onDestroy() {
@@ -203,6 +204,9 @@ cc.Class({
         }
 
         this.tile_com.gid = gid;
+        if(this.use_gids.length > 0 && this.use_gids[this.use_gids.length -1] != gid) {
+            this.use_gids.push(gid);  
+        }
         return true;
     },
     
@@ -211,10 +215,14 @@ cc.Class({
         if(curgid ==default_gid) {    
             return false;
         }
+        if(this.use_gids.length > 0 && this.use_gids[this.use_gids.length -1] != curgid) {
+            this.use_gids.push(curgid);  
+        }
+       
         this.tile_com.gid = default_gid;
         this.tile_com._layer.setTileGIDAt(default_gid,this.tile_com.x,this.tile_com.y);
-        console.log("擦除了=========",default_gid,this.tile_com.x,this.tile_com.y);
-        this.old_gid = curgid;
+       
+        
         return true;
     },
 
@@ -227,16 +235,28 @@ cc.Class({
         }   
         return true;
     },
+
     //回退绘画
     rollup_pink() {
-        this.tile_com.gid = default_gid;
-        this.old_gid = 0;
-    },
-    rollup_erase() {
-        console.log("撤销擦除========",this.old_gid);
-        if(this.old_gid !=0 && this.old_gid != default_gid) {
-            this.tile_com.gid = this.old_gid;
-            this.old_gid = 0;
+       
+        let revertid = default_gid
+        if(this.use_gids.length >= 2) {
+            revertid = this.use_gids[this.use_gids.length -2];
+            this.use_gids.length = this.use_gids.length -1;
         }
+
+       
+        this.tile_com.gid = revertid;
+       
+    },
+
+    rollup_erase() {
+     
+       let revertid = default_gid;
+       if(this.use_gids.length > 0) {
+           revertid = this.use_gids[this.use_gids.length -1];
+       }
+
+       this.tile_com.gid = revertid;
     }
 });

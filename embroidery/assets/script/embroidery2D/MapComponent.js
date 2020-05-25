@@ -19,6 +19,7 @@ const pinkheaderworld = new cc.Vec2();
 const eraseworld = new cc.Vec2();
 const gridsize = scale * 32;
 const pink_y_diff = -323
+const movespd = 200
 ///runstate:1 刺绣状态 2:擦除状态
 cc.Class({
     extends: cc.Component,
@@ -102,9 +103,9 @@ cc.Class({
             if(this.runstate ==1) {
                
                 this.pinkheader.getWorldPosition(pinkheaderworld);
-                let dist_position = cc.v2(pinkheaderworld.x + dir_norm.x * dt * 300,pinkheaderworld.y + dir_norm.y * dt * 300);
+                let dist_position = cc.v2(pinkheaderworld.x + dir_norm.x * dt * movespd,pinkheaderworld.y + dir_norm.y * dt * movespd);
                 if(this.checkCanMove(dist_position)){
-                    this.pinknode.position = cc.v2(this.pinknode.position.x + dir_norm.x * dt * 300,this.pinknode.position.y + dir_norm.y * dt * 300);;
+                    this.pinknode.position = cc.v2(this.pinknode.position.x + dir_norm.x * dt * movespd,this.pinknode.position.y + dir_norm.y * dt * movespd);;
                     if(this.progressnode.active) {
                         this.progressnode.position = cc.v2(this.pinknode.position.x,this.pinknode.position.y + pink_y_diff);
                     }
@@ -113,9 +114,9 @@ cc.Class({
                 
             } else {
                 this.erasenode.getWorldPosition(eraseworld);
-                let dist_position = cc.v2(eraseworld.x + dir_norm.x * dt * 300,eraseworld.y + dir_norm.y * dt * 300);
+                let dist_position = cc.v2(eraseworld.x + dir_norm.x * dt * movespd,eraseworld.y + dir_norm.y * dt * movespd);
                 if(this.checkCanMove(dist_position)){
-                    this.erasenode.position = cc.v2(this.erasenode.position.x + dir_norm.x * dt * 300,this.erasenode.position.y + dir_norm.y * dt * 300);;
+                    this.erasenode.position = cc.v2(this.erasenode.position.x + dir_norm.x * dt * movespd,this.erasenode.position.y + dir_norm.y * dt * movespd);;
                     if(this.progressnode.active) {
                         this.progressnode.position = this.erasenode.position;
                     }
