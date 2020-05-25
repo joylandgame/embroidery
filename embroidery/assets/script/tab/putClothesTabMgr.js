@@ -148,6 +148,7 @@ cc.Class({
             let renderTexture = this.readMapCamera.targetTexture;
             let info  = renderTexture.readPixels();
             tiledMapNode.destroy();
+            tiledMapNode = null;
             let img = new cc.Texture2D();
             img.initWithData(info, 16, 640, 640);
             let frame = new cc.SpriteFrame(img);

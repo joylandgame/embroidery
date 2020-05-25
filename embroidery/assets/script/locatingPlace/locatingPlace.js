@@ -45,7 +45,7 @@ cc.Class({
         if(rect_2.contains(offSetP)){
             this.targetPos = this.node.getPosition();
         }else if(rect_1.contains(p_1)){
-            this.rectNode.getComponent(cc.Sprite).spriteFrame          = this.touchRectSpr;
+            this.rectNode.getComponent(cc.Sprite).spriteFrame = this.touchRectSpr;
             this.scaleBtn.getComponent(cc.Sprite).spriteFrame = this.touchScaleSpr;
             this.toMoveStart = p;
         }else{

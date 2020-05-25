@@ -1,4 +1,4 @@
-var userConfig = {
+export default userConfig = {
     id: '0',
     level: 1,
     gold: 0,
@@ -10,6 +10,12 @@ var userConfig = {
     upgradeLv: 1,
 
     guide: '', //{"0": '', "1": '', "2": '', "3": ''}
-}
 
-export default userConfig
+    usePen: '',    //用着的笔 id
+    useNeedle: '', //针
+    useScissor: '',//剪子
+
+    userPens: [],
+    userNeedles: [],
+    userScissors: [],
+}

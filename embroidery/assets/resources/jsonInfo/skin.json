@@ -25,7 +25,7 @@
         "name": "剪刀2",
         "skin_res_name": "s2",
         "unlock_type": "1",
-        "unlock_need": "450",
+        "unlock_need": "500",
         "skin_try_icon": "img_s2",
         "skin_try_weight": "10"
     },
@@ -35,7 +35,7 @@
         "name": "剪刀3",
         "skin_res_name": "s3",
         "unlock_type": "1",
-        "unlock_need": "450",
+        "unlock_need": "1000",
         "skin_try_icon": "img_s3",
         "skin_try_weight": "10"
     },
@@ -44,8 +44,8 @@
         "id": "4",
         "name": "剪刀4",
         "skin_res_name": "s4",
-        "unlock_type": "1",
-        "unlock_need": "900",
+        "unlock_type": "3",
+        "unlock_need": "1",
         "skin_try_icon": "img_s4",
         "skin_try_weight": "10"
     },
@@ -55,7 +55,7 @@
         "name": "剪刀5",
         "skin_res_name": "s5",
         "unlock_type": "1",
-        "unlock_need": "1350",
+        "unlock_need": "1500",
         "skin_try_icon": "img_s5",
         "skin_try_weight": "10"
     },
@@ -64,169 +64,399 @@
         "id": "6",
         "name": "剪刀6",
         "skin_res_name": "s6",
-        "unlock_type": "2",
-        "unlock_need": "0",
+        "unlock_type": "1",
+        "unlock_need": "2000",
         "skin_try_icon": "img_s6",
-        "skin_try_weight": "0"
+        "skin_try_weight": "10"
     },
     {
-        "type": "2",
+        "type": "1",
         "id": "7",
-        "name": "笔刷1",
-        "skin_res_name": "b7",
-        "unlock_type": "0",
-        "unlock_need": "0",
-        "skin_try_icon": "1-3",
-        "skin_try_weight": "0"
-    },
-    {
-        "type": "2",
-        "id": "8",
-        "name": "笔刷2",
-        "skin_res_name": "b8",
-        "unlock_type": "1",
-        "unlock_need": "500",
-        "skin_try_icon": "1-2",
-        "skin_try_weight": "10"
-    },
-    {
-        "type": "2",
-        "id": "9",
-        "name": "笔刷3",
-        "skin_res_name": "b6",
-        "unlock_type": "1",
-        "unlock_need": "500",
-        "skin_try_icon": "1-1",
-        "skin_try_weight": "10"
-    },
-    {
-        "type": "2",
-        "id": "10",
-        "name": "笔刷4",
-        "skin_res_name": "b1",
+        "name": "剪刀7",
+        "skin_res_name": "s7",
         "unlock_type": "3",
         "unlock_need": "2",
-        "skin_try_icon": "1-4",
-        "skin_try_weight": "10"
+        "skin_try_icon": "img_s7",
+        "skin_try_weight": "20"
+    },
+    {
+        "type": "1",
+        "id": "8",
+        "name": "剪刀8",
+        "skin_res_name": "s8",
+        "unlock_type": "1",
+        "unlock_need": "3000",
+        "skin_try_icon": "img_s8",
+        "skin_try_weight": "20"
+    },
+    {
+        "type": "1",
+        "id": "9",
+        "name": "剪刀9",
+        "skin_res_name": "s9",
+        "unlock_type": "1",
+        "unlock_need": "3500",
+        "skin_try_icon": "img_s9",
+        "skin_try_weight": "20"
+    },
+    {
+        "type": "1",
+        "id": "10",
+        "name": "剪刀10",
+        "skin_res_name": "s10",
+        "unlock_type": "3",
+        "unlock_need": "2",
+        "skin_try_icon": "img_s10",
+        "skin_try_weight": "20"
     },
     {
         "type": "2",
         "id": "11",
-        "name": "笔刷5",
-        "skin_res_name": "b4",
-        "unlock_type": "1",
-        "unlock_need": "500",
-        "skin_try_icon": "1-5",
-        "skin_try_weight": "10"
+        "name": "笔刷1",
+        "skin_res_name": "01",
+        "unlock_type": "0",
+        "unlock_need": "0",
+        "skin_try_icon": "01",
+        "skin_try_weight": "0"
     },
     {
         "type": "2",
         "id": "12",
-        "name": "笔刷6",
-        "skin_res_name": "b3",
+        "name": "笔刷2",
+        "skin_res_name": "02",
         "unlock_type": "1",
-        "unlock_need": "500",
-        "skin_try_icon": "1-6",
-        "skin_try_weight": "10"
+        "unlock_need": "2500",
+        "skin_try_icon": "02",
+        "skin_try_weight": "20"
     },
     {
         "type": "2",
         "id": "13",
-        "name": "笔刷7",
-        "skin_res_name": "b5",
+        "name": "笔刷3",
+        "skin_res_name": "03",
         "unlock_type": "1",
-        "unlock_need": "600",
-        "skin_try_icon": "1-7",
-        "skin_try_weight": "10"
+        "unlock_need": "3000",
+        "skin_try_icon": "03",
+        "skin_try_weight": "20"
     },
     {
         "type": "2",
         "id": "14",
-        "name": "笔刷8",
-        "skin_res_name": "b2",
+        "name": "笔刷4",
+        "skin_res_name": "04",
         "unlock_type": "3",
         "unlock_need": "2",
-        "skin_try_icon": "1-8",
-        "skin_try_weight": "10"
+        "skin_try_icon": "04",
+        "skin_try_weight": "20"
     },
     {
-        "type": "3",
+        "type": "2",
         "id": "15",
-        "name": "刺针1",
-        "skin_res_name": "b22",
+        "name": "笔刷5",
+        "skin_res_name": "05",
         "unlock_type": "1",
-        "unlock_need": "200",
-        "skin_try_icon": "JS1",
-        "skin_try_weight": "10"
+        "unlock_need": "4000",
+        "skin_try_icon": "05",
+        "skin_try_weight": "20"
     },
     {
-        "type": "3",
+        "type": "2",
         "id": "16",
-        "name": "刺针2",
-        "skin_res_name": "b12",
+        "name": "笔刷6",
+        "skin_res_name": "06",
+        "unlock_type": "1",
+        "unlock_need": "4500",
+        "skin_try_icon": "06",
+        "skin_try_weight": "20"
+    },
+    {
+        "type": "2",
+        "id": "17",
+        "name": "笔刷7",
+        "skin_res_name": "07",
+        "unlock_type": "3",
+        "unlock_need": "2",
+        "skin_try_icon": "07",
+        "skin_try_weight": "20"
+    },
+    {
+        "type": "2",
+        "id": "18",
+        "name": "笔刷8",
+        "skin_res_name": "08",
+        "unlock_type": "1",
+        "unlock_need": "6000",
+        "skin_try_icon": "08",
+        "skin_try_weight": "30"
+    },
+    {
+        "type": "2",
+        "id": "19",
+        "name": "笔刷9",
+        "skin_res_name": "09",
         "unlock_type": "2",
         "unlock_need": "0",
-        "skin_try_icon": "car3",
+        "skin_try_icon": "09",
+        "skin_try_weight": "0"
+    },
+    {
+        "type": "2",
+        "id": "20",
+        "name": "笔刷10",
+        "skin_res_name": "10",
+        "unlock_type": "3",
+        "unlock_need": "3",
+        "skin_try_icon": "10",
+        "skin_try_weight": "30"
+    },
+    {
+        "type": "2",
+        "id": "21",
+        "name": "笔刷11",
+        "skin_res_name": "11",
+        "unlock_type": "1",
+        "unlock_need": "9500",
+        "skin_try_icon": "11",
+        "skin_try_weight": "30"
+    },
+    {
+        "type": "2",
+        "id": "22",
+        "name": "笔刷12",
+        "skin_res_name": "12",
+        "unlock_type": "1",
+        "unlock_need": "10500",
+        "skin_try_icon": "12",
+        "skin_try_weight": "30"
+    },
+    {
+        "type": "2",
+        "id": "23",
+        "name": "笔刷13",
+        "skin_res_name": "13",
+        "unlock_type": "3",
+        "unlock_need": "3",
+        "skin_try_icon": "13",
+        "skin_try_weight": "40"
+    },
+    {
+        "type": "2",
+        "id": "24",
+        "name": "笔刷14",
+        "skin_res_name": "14",
+        "unlock_type": "1",
+        "unlock_need": "13500",
+        "skin_try_icon": "14",
+        "skin_try_weight": "40"
+    },
+    {
+        "type": "2",
+        "id": "25",
+        "name": "笔刷15",
+        "skin_res_name": "15",
+        "unlock_type": "1",
+        "unlock_need": "15500",
+        "skin_try_icon": "15",
+        "skin_try_weight": "40"
+    },
+    {
+        "type": "3",
+        "id": "26",
+        "name": "刺针1",
+        "skin_res_name": "1",
+        "unlock_type": "0",
+        "unlock_need": "0",
+        "skin_try_icon": "1",
         "skin_try_weight": "0"
     },
     {
         "type": "3",
-        "id": "17",
+        "id": "27",
+        "name": "刺针2",
+        "skin_res_name": "2",
+        "unlock_type": "1",
+        "unlock_need": "5500",
+        "skin_try_icon": "2",
+        "skin_try_weight": "20"
+    },
+    {
+        "type": "3",
+        "id": "28",
         "name": "刺针3",
-        "skin_res_name": "b14",
+        "skin_res_name": "3",
         "unlock_type": "1",
-        "unlock_need": "200",
-        "skin_try_icon": "car4",
-        "skin_try_weight": "10"
+        "unlock_need": "6000",
+        "skin_try_icon": "3",
+        "skin_try_weight": "30"
     },
     {
         "type": "3",
-        "id": "18",
+        "id": "29",
         "name": "刺针4",
-        "skin_res_name": "b9",
-        "unlock_type": "3",
-        "unlock_need": "1",
-        "skin_try_icon": "car6",
-        "skin_try_weight": "10"
-    },
-    {
-        "type": "3",
-        "id": "19",
-        "name": "刺针5",
-        "skin_res_name": "b15",
-        "unlock_type": "1",
-        "unlock_need": "300",
-        "skin_try_icon": "car2",
-        "skin_try_weight": "10"
-    },
-    {
-        "type": "3",
-        "id": "20",
-        "name": "刺针6",
-        "skin_res_name": "b11",
-        "unlock_type": "1",
-        "unlock_need": "400",
-        "skin_try_icon": "car7",
-        "skin_try_weight": "10"
-    },
-    {
-        "type": "3",
-        "id": "21",
-        "name": "刺针7",
-        "skin_res_name": "b10",
-        "unlock_type": "1",
-        "unlock_need": "400",
-        "skin_try_icon": "car1",
-        "skin_try_weight": "10"
-    },
-    {
-        "type": "3",
-        "id": "22",
-        "name": "刺针8",
-        "skin_res_name": "b13",
+        "skin_res_name": "4",
         "unlock_type": "3",
         "unlock_need": "2",
-        "skin_try_icon": "car6_14",
-        "skin_try_weight": "10"
+        "skin_try_icon": "4",
+        "skin_try_weight": "30"
+    },
+    {
+        "type": "3",
+        "id": "30",
+        "name": "刺针5",
+        "skin_res_name": "5",
+        "unlock_type": "1",
+        "unlock_need": "8000",
+        "skin_try_icon": "5",
+        "skin_try_weight": "30"
+    },
+    {
+        "type": "3",
+        "id": "31",
+        "name": "刺针6",
+        "skin_res_name": "6",
+        "unlock_type": "1",
+        "unlock_need": "9000",
+        "skin_try_icon": "6",
+        "skin_try_weight": "30"
+    },
+    {
+        "type": "3",
+        "id": "32",
+        "name": "刺针7",
+        "skin_res_name": "7",
+        "unlock_type": "3",
+        "unlock_need": "3",
+        "skin_try_icon": "7",
+        "skin_try_weight": "30"
+    },
+    {
+        "type": "3",
+        "id": "33",
+        "name": "刺针8",
+        "skin_res_name": "8",
+        "unlock_type": "1",
+        "unlock_need": "12500",
+        "skin_try_icon": "8",
+        "skin_try_weight": "40"
+    },
+    {
+        "type": "3",
+        "id": "34",
+        "name": "刺针9",
+        "skin_res_name": "9",
+        "unlock_type": "1",
+        "unlock_need": "14000",
+        "skin_try_icon": "9",
+        "skin_try_weight": "40"
+    },
+    {
+        "type": "3",
+        "id": "35",
+        "name": "刺针10",
+        "skin_res_name": "10",
+        "unlock_type": "2",
+        "unlock_need": "0",
+        "skin_try_icon": "10",
+        "skin_try_weight": "0"
+    },
+    {
+        "type": "3",
+        "id": "36",
+        "name": "刺针11",
+        "skin_res_name": "11",
+        "unlock_type": "3",
+        "unlock_need": "4",
+        "skin_try_icon": "11",
+        "skin_try_weight": "50"
+    },
+    {
+        "type": "3",
+        "id": "37",
+        "name": "刺针12",
+        "skin_res_name": "12",
+        "unlock_type": "1",
+        "unlock_need": "21500",
+        "skin_try_icon": "12",
+        "skin_try_weight": "50"
+    },
+    {
+        "type": "3",
+        "id": "38",
+        "name": "刺针13",
+        "skin_res_name": "13",
+        "unlock_type": "1",
+        "unlock_need": "24500",
+        "skin_try_icon": "13",
+        "skin_try_weight": "60"
+    },
+    {
+        "type": "3",
+        "id": "39",
+        "name": "刺针14",
+        "skin_res_name": "14",
+        "unlock_type": "3",
+        "unlock_need": "4",
+        "skin_try_icon": "14",
+        "skin_try_weight": "60"
+    },
+    {
+        "type": "3",
+        "id": "40",
+        "name": "刺针15",
+        "skin_res_name": "15",
+        "unlock_type": "1",
+        "unlock_need": "30500",
+        "skin_try_icon": "15",
+        "skin_try_weight": "60"
+    },
+    {
+        "type": "3",
+        "id": "41",
+        "name": "刺针16",
+        "skin_res_name": "16",
+        "unlock_type": "1",
+        "unlock_need": "34500",
+        "skin_try_icon": "16",
+        "skin_try_weight": "70"
+    },
+    {
+        "type": "3",
+        "id": "42",
+        "name": "刺针17",
+        "skin_res_name": "17",
+        "unlock_type": "3",
+        "unlock_need": "5",
+        "skin_try_icon": "17",
+        "skin_try_weight": "70"
+    },
+    {
+        "type": "3",
+        "id": "43",
+        "name": "刺针18",
+        "skin_res_name": "18",
+        "unlock_type": "1",
+        "unlock_need": "42000",
+        "skin_try_icon": "18",
+        "skin_try_weight": "80"
+    },
+    {
+        "type": "3",
+        "id": "44",
+        "name": "刺针19",
+        "skin_res_name": "19",
+        "unlock_type": "1",
+        "unlock_need": "46500",
+        "skin_try_icon": "19",
+        "skin_try_weight": "80"
+    },
+    {
+        "type": "3",
+        "id": "45",
+        "name": "刺针20",
+        "skin_res_name": "20",
+        "unlock_type": "3",
+        "unlock_need": "5",
+        "skin_try_icon": "20",
+        "skin_try_weight": "90"
     }
 ]

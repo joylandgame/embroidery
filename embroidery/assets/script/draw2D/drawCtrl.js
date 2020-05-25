@@ -70,8 +70,8 @@ cc.Class({
 
     drawColor(drawLoc){
         let random = this._drawUtils.width;
-        let offSet = parseInt(random / 2);
-        for(let i = 0; i < 10; i++){
+        let offSet = parseInt(random / 2-5);
+        for(let i = 0; i < 18; i++){
             let up = [drawLoc.x - offSet + Math.random()*random, drawLoc.y + Math.random()*random];
             let left = [drawLoc.x - Math.random()*random, drawLoc.y - offSet + Math.random()*random];
             let right= [drawLoc.x + Math.random()*random, drawLoc.y - offSet + Math.random()*random];

@@ -43,7 +43,6 @@ var calculateMgr = {
             this.calculateDifference(property_1, property_2, key);
 
         }
-        hasOwnProperty
     },
 
     calculateArr(arr1, arr2, key){

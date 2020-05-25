@@ -12,7 +12,7 @@ cc.Class({
         demoTip    : cc.Node,
         demoTip_spr: cc.Sprite,
 
-        clipBtn:cc.Node,
+        clipBtn: dragonBones.ArmatureDisplay,
 
         headGuide: cc.Node,
         goNextBtn: cc.Node,
@@ -23,7 +23,8 @@ cc.Class({
         this.gameID  = data.id;
         this.isOver  = data.complete;
         this.goNextBtn.active = this.isOver;
-        this.clipBtn.active   = false;
+        this.clipBtn.node.active   = false;
+        this.clipName = cc.vv.skinMgr.getUserUseScissor().skin_res_name + "_clip";
         this.initView();
         this.addEvent();
         
@@ -187,11 +188,12 @@ cc.Class({
 
     clipBtnAni(){
         this.isCut = true;
-        this.clipBtn.active = true;
-        this.clipBtn.runAction(cc.sequence(cc.moveTo(0.5, -this.clipBtn.x, this.clipBtn.y), cc.callFunc(()=>{
+        this.clipBtn.node.active = true;
+        this.clipBtn.playAnimation(this.clipName);
+        this.clipBtn.node.runAction(cc.sequence(cc.moveTo(0.5, -this.clipBtn.node.x, this.clipBtn.node.y), cc.callFunc(()=>{
             this.isCut = false;
-            this.clipBtn.active = false;
-            this.clipBtn.angle  = -this.clipBtn.angle;
+            this.clipBtn.node.active = false;
+            this.clipBtn.node.angle  = -this.clipBtn.node.angle;
             this.showGuide(1);
         },this)))
     },
@@ -207,7 +209,7 @@ cc.Class({
             return;
         }
         if(index == 1){
-            if(this.clipsArr_2.length){
+            if(this.clipsArr_1.length || this.clipsArr_2.length){
                 this.headGuide.active = true;
                 this.headGuide.setPosition(cc.v2(0,0));
             }

@@ -1,7 +1,7 @@
-import userConfig from './userConfig';
-import localSave from '../common/localSave';
+import userConfig from './userConfig'; //{userSkins, userConfig}
+import localSave  from '../common/localSave';
 
-var userInfo  = {
+var userInfo   = {
     name: 'sxy',
 }
 
@@ -10,15 +10,16 @@ const userMgr = {
     evt_user_config: 'evt_user_config',
 
     init(){
-        let dt = localSave.get(userMgr.evt_user_config);
+
+        let dt   = localSave.get(userMgr.evt_user_config);
         if(dt){
             for(let key in dt){
-                userInfo[key] = dt[key]
+                userInfo[key] = dt[key];
             }
         }
         for(let key in userConfig){
             if(userInfo[key] === undefined){
-               userInfo[key] = userConfig[key]
+               userInfo[key] = userConfig[key];
             }
         }
         localSave.set(userMgr.evt_user_config, userInfo);
@@ -96,7 +97,67 @@ const userMgr = {
             let dt = userInfo;
             localSave.set(userMgr.evt_user_config, dt);
         }
-    }
+    },
+
+    // userPens: [],
+    // userNeedles: [],
+    // userScissors: [],
+    
+    setUserUsePen(id){
+        if(!id){cc.error('setUserUsePen'+id)}
+        userInfo.usePen = id;
+        let dt = userInfo;
+        localSave.set(userMgr.evt_user_config, dt);
+    },
+
+    setUserPens(id){
+        if(!id){cc.error('setUserPens'+id)}
+        let arr = userInfo.userPens;
+        arr.push(id);
+        const set = new Set(arr);
+        arr = Array.from(set);
+        userInfo.userPens = arr;
+        let dt = userInfo;
+        localSave.set(userMgr.evt_user_config, dt);
+    },
+
+    setUserUseNeedle(id){
+        if(!id){cc.error('setUserUseNeedle'+id)}
+        userInfo.useNeedle = id;
+        let dt = userInfo;
+        localSave.set(userMgr.evt_user_config, dt);
+    },
+
+    setUserNeedles(id){
+        if(!id){cc.error('setUserNeedles'+id)}
+        let arr = userInfo.userNeedles;
+        arr.push(id);
+        const set = new Set(arr);
+        arr = Array.from(set);
+        userInfo.userNeedles = arr;
+        let dt = userInfo;
+        localSave.set(userMgr.evt_user_config, dt);
+    },
+
+    setUserUseScissor(id){
+        if(!id){cc.error('setUserUseScissor'+id)}
+        userInfo.useScissor = id;
+        let dt = userInfo;
+        localSave.set(userMgr.evt_user_config, dt);
+    },
+
+    setUserScissors(id){
+        if(!id){cc.error('setUserScissors'+id)}
+        let arr = userInfo.userScissors;
+        arr.push(id);
+        const set = new Set(arr);
+        arr = Array.from(set);
+        userInfo.userScissors = arr;
+        let dt = userInfo;
+        localSave.set(userMgr.evt_user_config, dt);
+    },
+
+
 }
 
 userMgr.init();
