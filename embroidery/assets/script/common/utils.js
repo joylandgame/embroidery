@@ -91,9 +91,9 @@ const utils = {
     loadSpriteFrameByHttp(url,spr){
         return new Promise((resolve,reject)=>{
             try {
-                if(!cc.sys.isNative){
-                    return;
-                }
+                // if(!cc.sys.isNative){
+                //     return;
+                // }
                 cc.loader.load(url, (err, texture)=>{
                     if(err){
                         Log.catch(err);
@@ -108,7 +108,7 @@ const utils = {
                     resolve(frame);
                 })
             } catch (error) {
-                console.log(error)
+                Log.catch(error);
             }
 
         })

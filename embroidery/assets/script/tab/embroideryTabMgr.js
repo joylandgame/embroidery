@@ -245,7 +245,7 @@ cc.Class({
     },
 
     drawBegin(e) {
-        console.log("drawBegin===")
+        Log.d("drawBegin===")
         if(this.map_com) {
             this.map_com.drawBegin(e)
         }

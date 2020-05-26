@@ -91,10 +91,7 @@ cc.Class({
     },
     
     update(dt){
-        if(dt > 0.5) {
-            console.log("dt=========",dt);
-        }
-       if(this.move_pos) {
+        if(this.move_pos) {
             let dir = cc.v2(this.move_pos.x - this.start_pos.x,this.move_pos.y - this.start_pos.y);
                 
             let length = 1/Math.sqrt(dir.x * dir.x + dir.y * dir.y);
@@ -139,7 +136,6 @@ cc.Class({
                 */
                 this.pinkheader.getWorldPosition(pinkheaderworld);
                 if(this.checkPinkGrid(pinkheaderworld)) {
-                    console.log("draw===== preparerender")
                     this.layer_draw._prepareToRender();
                 }
                 
@@ -155,7 +151,7 @@ cc.Class({
 
     
     init(tileaset) {
-        console.log("group===========",cc.game.groupList)
+        Log.d("group===========",cc.game.groupList)
         this.tile_com.tmxAsset = tileaset;
         let render_texture_node = this.tile_com.getLayer("layer2");
         render_texture_node.node.group = "layerdraw";
@@ -226,7 +222,7 @@ cc.Class({
 
     drawBegin(e) {
         if(this.state !=0 ) {
-            console.log("this.state=========",this.state)
+            Log.d("this.state=========",this.state)
             return;
         }
         this.state = 1;
@@ -261,7 +257,7 @@ cc.Class({
                                this.action_slot = null;
                            } else {
                                 seq.stop();
-                                console.log("强制停止")
+                                Log.d("强制停止")
                                 seq._actions = [];  
                            }
                        }
@@ -312,7 +308,7 @@ cc.Class({
                     clearInterval(slot)
                     this.progressnode.active = false;
                     if(this.state !=1) {
-                        console.log("resolve state not one====")
+                        Log.d("resolve state not one====")
                         resolved(false)
                         return;
                     }
@@ -450,7 +446,7 @@ cc.Class({
         this.eraseparticle.node.position = this.erasenode.position;
 
         //if(!this.eraseparticle.active) {
-            console.log("reset system")
+            Log.d("reset system")
             this.eraseparticle.node.active = true;
             this.eraseparticle.resetSystem();
           

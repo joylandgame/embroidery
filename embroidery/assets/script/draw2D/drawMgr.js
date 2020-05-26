@@ -49,7 +49,6 @@ cc.Class({
 
     //对应打开状态的 uint8 mgr中的属性
     resetStroke() {
-        console.log(this.drawUtils.color)
         let strokeColor = this.drawUtils.color;
         let lineWidth = this.drawUtils.width;
 		this.drawUint8Array.setColor(strokeColor.getR(), strokeColor.getG(), strokeColor.getB(), strokeColor.getA());

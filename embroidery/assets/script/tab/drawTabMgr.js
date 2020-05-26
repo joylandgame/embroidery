@@ -341,7 +341,6 @@ cc.Class({
     //     this.drawCamera.targetTexture = rt;
     //     this.drawCamera.render();
     //     let data = rt.readPixels();
-    //     console.log(data);
     // },
 
     showGuide(index){

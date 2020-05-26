@@ -12,11 +12,7 @@ var utils = {
         return new Promise((resolved,rejected)=>{
             let canvas = document.createElement("canvas");
             let ctx = canvas.getContext('2d');
-
-            console.log("read convert =======",width,height)
             let rowBytes = width * 4; 
-          
-        
             for (let row = 0; row < height; row++) {
                 let srow = height - 1 - row;
                 let imageData = ctx.createImageData(width, 1);
