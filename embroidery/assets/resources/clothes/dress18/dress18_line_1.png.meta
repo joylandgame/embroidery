@@ -1,6 +1,6 @@
 {
   "ver": "2.3.4",
-  "uuid": "4260fcdb-0f06-42ca-9de1-4b347c6ad2cb",
+  "uuid": "21bdaeae-7bae-4629-8306-a917c46e6620",
   "type": "sprite",
   "wrapMode": "clamp",
   "filterMode": "bilinear",
@@ -13,8 +13,8 @@
   "subMetas": {
     "dress18_line_1": {
       "ver": "1.0.4",
-      "uuid": "835916e6-bbc1-41c7-a458-7308d0d1b2a6",
-      "rawTextureUuid": "4260fcdb-0f06-42ca-9de1-4b347c6ad2cb",
+      "uuid": "2efb8a21-e476-4022-8d3b-920959f020e7",
+      "rawTextureUuid": "21bdaeae-7bae-4629-8306-a917c46e6620",
       "trimType": "auto",
       "trimThreshold": 1,
       "rotated": false,

@@ -1,6 +1,6 @@
 {
   "ver": "2.3.4",
-  "uuid": "b34c639b-59b2-4710-8f95-76a27132db3c",
+  "uuid": "2dce9a3f-4a99-4665-843e-8f95818188e9",
   "type": "sprite",
   "wrapMode": "clamp",
   "filterMode": "bilinear",
@@ -13,8 +13,8 @@
   "subMetas": {
     "sleeve12_clip_1": {
       "ver": "1.0.4",
-      "uuid": "b3252c1d-4b13-4de7-974c-47b77478cce0",
-      "rawTextureUuid": "b34c639b-59b2-4710-8f95-76a27132db3c",
+      "uuid": "dc559d78-fc54-4c24-ab50-495df4d3858f",
+      "rawTextureUuid": "2dce9a3f-4a99-4665-843e-8f95818188e9",
       "trimType": "auto",
       "trimThreshold": 1,
       "rotated": false,

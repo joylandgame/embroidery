@@ -35,12 +35,12 @@ const userMgr = {
     addUserGold(number){
         let gold = userInfo.gold + number;
         if(gold<0){
-            let eventName = cc.vv.eventName.gold_not_enough;
-            return eventName;
+            return false;
         }
         userInfo.gold = gold;
         let dt = userInfo;
         localSave.set(userMgr.evt_user_config, dt);
+        return true;
     },
 
     setUserClothes(clothesID){
@@ -102,7 +102,6 @@ const userMgr = {
     // userPens: [],
     // userNeedles: [],
     // userScissors: [],
-    
     setUserUsePen(id){
         if(!id){cc.error('setUserUsePen'+id)}
         userInfo.usePen = id;
@@ -156,7 +155,6 @@ const userMgr = {
         let dt = userInfo;
         localSave.set(userMgr.evt_user_config, dt);
     },
-
 
 }
 

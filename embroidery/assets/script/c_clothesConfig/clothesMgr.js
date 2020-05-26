@@ -71,7 +71,7 @@ var clothesMgr = {
             let url     = 'clothes/' + name;
             utils.loadDir(url).then((asset)=>{
                 if(!asset || !asset.length){
-                    Log.catch('err in home 78, 预加载资源[]/err');
+                    Log.catch('err in home 74, 预加载资源[]/err');
                     return;
                 }
                 for(let i = 0; i < asset.length; i++){

@@ -11,64 +11,64 @@
     {
         "signin_icon": "di_li1",
         "id": "1",
-        "name": "金币X200",
-        "reward_gold": "200",
+        "name": "金币X1500",
+        "reward_gold": "1500",
         "reward_skinid": "0",
-        "destext": "恭喜获得 金币X200",
-        "destext_double": "恭喜获得 金币X400"
+        "destext": "恭喜获得 金币X1500",
+        "destext_double": "恭喜获得 金币X3000"
     },
     {
         "signin_icon": "di_li2",
         "id": "2",
-        "name": "金币X200+限定皮肤",
-        "reward_gold": "200",
-        "reward_skinid": "8",
-        "destext": "恭喜获得 金币X200+限定皮肤",
-        "destext_double": "恭喜获得 金币X400+限定皮肤"
+        "name": "金币X2500+限定皮肤",
+        "reward_gold": "2500",
+        "reward_skinid": "19",
+        "destext": "恭喜获得 金币X2500+限定皮肤",
+        "destext_double": "恭喜获得 金币X5000+限定皮肤"
     },
     {
         "signin_icon": "di_li3",
         "id": "3",
-        "name": "金币X400",
-        "reward_gold": "400",
+        "name": "金币X3500",
+        "reward_gold": "3500",
         "reward_skinid": "0",
-        "destext": "恭喜获得 金币X400",
-        "destext_double": "恭喜获得 金币X800"
+        "destext": "恭喜获得 金币X3500",
+        "destext_double": "恭喜获得 金币X7000"
     },
     {
         "signin_icon": "di_li4",
         "id": "4",
-        "name": "金币X600",
-        "reward_gold": "600",
+        "name": "金币X5000",
+        "reward_gold": "5000",
         "reward_skinid": "0",
-        "destext": "恭喜获得 金币X600",
-        "destext_double": "恭喜获得 金币X1200"
+        "destext": "恭喜获得 金币X5000",
+        "destext_double": "恭喜获得 金币X10000"
     },
     {
         "signin_icon": "di_li5",
         "id": "5",
-        "name": "金币X800",
-        "reward_gold": "800",
+        "name": "金币X6500",
+        "reward_gold": "6500",
         "reward_skinid": "0",
-        "destext": "恭喜获得 金币X800",
-        "destext_double": "恭喜获得 金币X1600"
+        "destext": "恭喜获得 金币X6500",
+        "destext_double": "恭喜获得 金币X13000"
     },
     {
         "signin_icon": "di_li6",
         "id": "6",
-        "name": "金币X1200",
-        "reward_gold": "1200",
+        "name": "金币X10000",
+        "reward_gold": "10000",
         "reward_skinid": "0",
-        "destext": "恭喜获得 金币X1200",
-        "destext_double": "恭喜获得 金币X2400"
+        "destext": "恭喜获得 金币X10000",
+        "destext_double": "恭喜获得 金币X20000"
     },
     {
         "signin_icon": "di_li7",
         "id": "7",
-        "name": "金币X2000+限定皮肤",
-        "reward_gold": "2000",
-        "reward_skinid": "25",
-        "destext": "恭喜获得 金币X2000+限定皮肤",
-        "destext_double": "恭喜获得 金币X4000+限定皮肤"
+        "name": "金币X17000+限定皮肤",
+        "reward_gold": "17000",
+        "reward_skinid": "35",
+        "destext": "恭喜获得 金币X17000+限定皮肤",
+        "destext_double": "恭喜获得 金币X34000+限定皮肤"
     }
 ]

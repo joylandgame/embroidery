@@ -21,8 +21,9 @@ cc.Class({
     extends: cc.Component,
 
     properties: {
-        loading: cc.Node,
-        homeView: cc.Node,
+        loading   : cc.Node,
+        homeView  : cc.Node,
+        commonTip : cc.Node,
     },
 
     onLoad(){
@@ -53,16 +54,22 @@ cc.Class({
             cc.vv.userMgr   = userMgr;
             cc.vv.userMgr.init(); //初始化userInfo
             cc.vv.userInfo  = userInfo;
+            //常驻节点
+            cc.game.addPersistRootNode(this.commonTip);
+            cc.vv.commonTipMgr = this.commonTip.getComponent('commonTipMgr');
             //皮肤 和衣服刺绣等等的配置
             Log.d(gameConfig.part);
             Log.d(gameConfig.signin);
             Log.d(gameConfig.skin);
             Log.d(gameConfig.upgrade);
 
-            cc.vv.upgrade    = gameConfig.upgrade;
-            cc.vv.signinInfo = gameConfig.signinInfo;
-            cc.vv.skinInfo   = null;
-            cc.vv.skinMgr    = skinMgr;
+            cc.vv.upgrade      = gameConfig.upgrade;
+            cc.vv.signinInfo   = gameConfig.signinInfo;
+            cc.vv.skinInfo     = null;
+            cc.vv.pensSkin     = null;
+            cc.vv.needlesSkin  = null;
+            cc.vv.scissorsSkin = null;
+            cc.vv.skinMgr      = skinMgr;
             cc.vv.skinMgr.init(gameConfig.skin);
 
             //用户当前关卡的衣服资源          /***每关都会重新刷新的资源***/
@@ -100,7 +107,10 @@ cc.Class({
     preLoadGameRes(){
         Promise.all([
             cc.vv.clothesMgr.preLoadClothes(),
-            cc.vv.tiledMapMgr.preLoadTiledMap()
+            cc.vv.tiledMapMgr.preLoadTiledMap(),
+            cc.vv.skinMgr.preLoadPensSkin(),
+            cc.vv.skinMgr.preLoadScissorsSkin(),
+            cc.vv.skinMgr.preLoadNeedlesSkin(),
         ]).then(()=>{
             this.resReady = true;
             this.resReadyFunc && this.resReadyFunc();

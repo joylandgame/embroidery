@@ -1,6 +1,6 @@
 {
   "ver": "2.3.4",
-  "uuid": "09281002-aa9e-431f-8750-ee89f75811e3",
+  "uuid": "045862d6-fbab-4f12-a17c-885ec8d95b36",
   "type": "sprite",
   "wrapMode": "clamp",
   "filterMode": "bilinear",
@@ -13,8 +13,8 @@
   "subMetas": {
     "pants12_clip_2_0": {
       "ver": "1.0.4",
-      "uuid": "8d07567d-3b12-4ce4-a247-55dab0df64f9",
-      "rawTextureUuid": "09281002-aa9e-431f-8750-ee89f75811e3",
+      "uuid": "e2ac092b-b4de-49b2-bf17-f9ae1fa13bc5",
+      "rawTextureUuid": "045862d6-fbab-4f12-a17c-885ec8d95b36",
       "trimType": "auto",
       "trimThreshold": 1,
       "rotated": false,

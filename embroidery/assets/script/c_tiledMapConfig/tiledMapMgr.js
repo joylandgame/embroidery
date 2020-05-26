@@ -68,7 +68,7 @@ var tiledMapMgr = {
             let url     = './tilemap/' + name + ".tmx";
             utils.loadTexture(url).then((map)=>{
                 if(!map){
-                    Log.catch('err in tiledMapMgr, 预加载资源 url:',url);
+                    Log.catch('err in tiledMapMgr 71, 预加载资源 url:',url);
                     return;
                 }
                 cc.vv.tiledMapDemo = map;
@@ -82,7 +82,7 @@ var tiledMapMgr = {
     loadDirForLines(){
         utils.loadDir(this.lineUrl, cc.SpriteFrame).then((asset)=>{
             if(!asset.length){
-                Log.catch('err in tileMapMgr 108',asset);
+                Log.catch('err in tileMapMgr 85',asset);
                 return
             }
             cc.vv.linesAsset = {};

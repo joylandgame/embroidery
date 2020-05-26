@@ -22,16 +22,16 @@ cc.Class({
 
     openShopView(){
         if(this.shopView){
-            this.shopView.active = true;
+            this.shopView.getComponent('shopTipMgr').init();
             return;
         }
         this.loading.active = true;
         this.loadingAni.active = true;
-        utils.loadPrefab('./tipView/shopTip', this.node).then((node)=>{
+        utils.loadPrefab('./tipViewPrefab/shopTipView', this.node).then((node)=>{
             this.loading.active = false;
             this.loadingAni.active = false;
             this.shopView = node;
-            this.shopView.geComponent('shopTipMgr').init();
+            this.shopView.getComponent('shopTipMgr').init();
         })
     },
 

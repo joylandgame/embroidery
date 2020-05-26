@@ -1,6 +1,6 @@
 {
   "ver": "2.3.4",
-  "uuid": "caf02c74-1d74-4b8c-8458-f0af50753bf8",
+  "uuid": "b3b9e52d-bcb5-4fda-8fce-50ddb0f3f52f",
   "type": "sprite",
   "wrapMode": "clamp",
   "filterMode": "bilinear",
@@ -13,8 +13,8 @@
   "subMetas": {
     "sweater5_line_3_1": {
       "ver": "1.0.4",
-      "uuid": "72b7c44c-0ecf-469c-acb9-f8c2d68bb016",
-      "rawTextureUuid": "caf02c74-1d74-4b8c-8458-f0af50753bf8",
+      "uuid": "7ad5a096-93f2-43ee-aff7-dfad11edc5d5",
+      "rawTextureUuid": "b3b9e52d-bcb5-4fda-8fce-50ddb0f3f52f",
       "trimType": "auto",
       "trimThreshold": 1,
       "rotated": false,

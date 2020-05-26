@@ -1,6 +1,6 @@
 {
   "ver": "2.3.4",
-  "uuid": "78197173-a764-4296-a19d-3c8b59dce51e",
+  "uuid": "aae0cc1f-08f5-49b2-a18e-80965fd6cd49",
   "type": "sprite",
   "wrapMode": "clamp",
   "filterMode": "bilinear",
@@ -13,8 +13,8 @@
   "subMetas": {
     "pants15_white": {
       "ver": "1.0.4",
-      "uuid": "48b4abba-7c40-4b53-bdf4-43d81cb025d9",
-      "rawTextureUuid": "78197173-a764-4296-a19d-3c8b59dce51e",
+      "uuid": "c339cfa7-3562-4662-b106-66cc0ee86cbe",
+      "rawTextureUuid": "aae0cc1f-08f5-49b2-a18e-80965fd6cd49",
       "trimType": "auto",
       "trimThreshold": 1,
       "rotated": false,

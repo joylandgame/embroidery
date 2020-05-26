@@ -1,6 +1,6 @@
 {
   "ver": "2.3.4",
-  "uuid": "791915d6-abd0-4b90-a964-01531e9d363f",
+  "uuid": "399d19ce-1838-4be4-9ead-d978e2e0c64f",
   "type": "sprite",
   "wrapMode": "clamp",
   "filterMode": "bilinear",
@@ -13,8 +13,8 @@
   "subMetas": {
     "dress25_clip_1": {
       "ver": "1.0.4",
-      "uuid": "12ce2bbc-c3ab-4556-9717-153c98244a72",
-      "rawTextureUuid": "791915d6-abd0-4b90-a964-01531e9d363f",
+      "uuid": "941a9b5e-33a7-4216-b22d-1375c6ba1db3",
+      "rawTextureUuid": "399d19ce-1838-4be4-9ead-d978e2e0c64f",
       "trimType": "auto",
       "trimThreshold": 1,
       "rotated": false,

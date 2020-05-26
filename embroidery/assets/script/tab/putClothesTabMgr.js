@@ -87,7 +87,7 @@ cc.Class({
 
     initDemo(){
         if(!cc.vv.clothesDemoWhite){
-            Log.catch('err in putClothesTabMgr 36', cc.vv.clothesDemoWhite);
+            Log.catch('err in putClothesTabMgr 90', cc.vv.clothesDemoWhite);
             return;
         }
         if(!this._initDemo){

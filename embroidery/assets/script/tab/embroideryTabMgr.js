@@ -27,6 +27,8 @@ cc.Class({
         linesLayer: cc.Node,
         lineItem: cc.Node, //线轴
 
+        cutor: cc.Sprite,
+
         btnLayer: cc.Node,
         btnDone : cc.Node,
 
@@ -75,6 +77,7 @@ cc.Class({
         this.showDemoWhite();
         this.showDemo();
         this.setUtilsView();
+        this.initCutorSkin();
         let texture = new cc.RenderTexture();
         texture.initWithSize(640,640,cc.gfx.RB_FMT_S8);
         this.layerdraw.targetTexture = texture;
@@ -84,7 +87,7 @@ cc.Class({
 
     showDemo(){
         if(!cc.vv.tiledMapDemo){
-            Log.catch('err in embroideryMgr 71, cc.vv.tiledMapDemo::',cc.vv.tiledMapDemo);
+            Log.catch('err in embroideryMgr 87, cc.vv.tiledMapDemo::',cc.vv.tiledMapDemo);
             return;
         }
         let contentsize = this.hintsource.node.getContentSize();
@@ -110,7 +113,7 @@ cc.Class({
 
     showDemoWhite(){
         if(!cc.vv.tiledMapDemo){
-            Log.catch('err in embroideryMgr 98, cc.vv.tiledMapDemo::',cc.vv.tiledMapDemo);
+            Log.catch('err in embroideryMgr 113, cc.vv.tiledMapDemo::',cc.vv.tiledMapDemo);
             return;
         }
         this.map_com = this.source.addComponent(MapComponent);
@@ -129,10 +132,20 @@ cc.Class({
         // }
     },
 
+    initCutorSkin(){
+        if(cc.vv.skinMgr.try_UseNeedleInfo){
+            let info = cc.vv.skinMgr.try_UseNeedleInfo;
+            this.cutor.spriteFrame = cc.vv.needlesSkin[info.skin_try_icon];
+        }else{
+            let info = cc.vv.skinMgr.useNeedleInfo;
+            this.cutor.spriteFrame = cc.vv.needlesSkin[info.skin_try_icon];
+        }
+    },
+
     initLineList(){
         if(this.lineArr && this.lineArr.length){return}
         if(!cc.vv.linesAsset){
-            Log.catch('err in embroideryMgr 123, cc.vv.linesAsset::',cc.vv.linesAsset);
+            Log.catch('err in embroideryMgr 135, cc.vv.linesAsset::',cc.vv.linesAsset);
             return;
         }
         this.lineArr = [];

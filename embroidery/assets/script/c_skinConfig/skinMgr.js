@@ -1,18 +1,5 @@
 import Log from '../common/Log';
-// {
-//     "type": "皮肤类型：1剪刀 2笔刷 3刺针",
-//     "id": "唯一标识",
-//     "name": "皮肤名字",
-//     "skin_res_name": "皮肤对应的资源名称",
-//     "unlock_type": "解锁条件：0默认解锁，1金币手动兑换，2签到解锁，3视频解锁",
-//     "unlock_need": "解锁要消耗的数量",
-//     "skin_try_icon": "皮肤试用界面的icon",
-//     "skin_try_weight": "试用皮肤随机权重"
-// },
-
-// usePen: '',    //用着的笔 id
-// useneedle: '', //针
-// usescissor: '',//剪子
+import utils from '../common/utils';
 
 var skinMgr = {
 
@@ -89,28 +76,30 @@ var skinMgr = {
         }
     },
 
-    getSkinInfo(key, id, set){
-        if(!set){
-            switch(key){
-                case this.penKey:
-                    if(this.try_UsePenInfo){
-                        return this.try_UsePenInfo;
-                    }
-                break;
+    getTrySkinInfo(key){
+        switch(key){
+            case this.penKey:
+                if(this.try_UsePenInfo){
+                    return this.try_UsePenInfo;
+                }
+            break;
 
-                case this.needleKey:
-                    if(this.try_UseNeedleInfo){
-                        return this.try_UseNeedleInfo;
-                    }
-                break;
+            case this.needleKey:
+                if(this.try_UseNeedleInfo){
+                    return this.try_UseNeedleInfo;
+                }
+            break;
 
-                case this.scissorKey:
-                    if(this.try_UseScissorInfo){
-                        return this.try_UseScissorInfo;
-                    }
-                break;
-            }
+            case this.scissorKey:
+                if(this.try_UseScissorInfo){
+                    return this.try_UseScissorInfo;
+                }
+            break;
         }
+            return null;
+    },
+
+    getSkinInfo(key, id){        
         if(this.config && this.config[key]){
             let info = this.config[key];
             if(info.length){
@@ -201,40 +190,40 @@ var skinMgr = {
     //****set****//
     setUserUsePen(id){
         cc.vv.userMgr.setUserUsePen(id);
-        this.usePenInfo = this.getSkinInfo(this.penKey, id, true);
+        this.usePenInfo = this.getSkinInfo(this.penKey, id);
     },
 
     setUserPens(id){
         let pens = cc.vv.userInfo.userPens;
         cc.vv.userMgr.setUserPens(id);
         if(pens.indexOf(id)<0){
-            this.havePenInfo.push(this.getSkinInfo(this.penKey, id, true));
+            this.havePenInfo.push(this.getSkinInfo(this.penKey, id));
         }
     },
 
     setUserUseNeedle(id){
         cc.vv.userMgr.setUserUseNeedle(id);
-        this.useNeedleInfo = this.getSkinInfo(this.needleKey, id, true);
+        this.useNeedleInfo = this.getSkinInfo(this.needleKey, id);
     },
 
     setUserNeedles(id){
         let needles = cc.vv.userInfo.userNeedles;
         cc.vv.userMgr.setUserNeedles(id);
         if(needles.indexOf(id)<0){
-            this.haveNeedleInfo.push(this.getSkinInfo(this.needleKey, id, true));
+            this.haveNeedleInfo.push(this.getSkinInfo(this.needleKey, id));
         }
     },
 
     setUserUseScissor(id){
         cc.vv.userMgr.setUserUseScissor(id);
-        this.useScissorInfo = this.getSkinInfo(this.scissorKey, id, true);
+        this.useScissorInfo = this.getSkinInfo(this.scissorKey, id);
     },
 
     setUserScissors(id){
         let scissors = cc.vv.userInfo.userScissors;
         cc.vv.userMgr.setUserScissors(id);
         if(scissors.indexOf(id)<0){
-            this.haveScissorInfo.push(this.getSkinInfo(this.scissorKey, id, true));
+            this.haveScissorInfo.push(this.getSkinInfo(this.scissorKey, id));
         }
     },
 
@@ -324,7 +313,67 @@ var skinMgr = {
                 this.try_UseScissorInfo = info;
             break;
         }
-    }
+    },
+
+    clearTrySkin(){
+        this.try_UseNeedleInfo = null;
+        this.try_UsePenInfo = null;
+        this.try_UseScissorInfo = null;
+    },
+
+    //****预加载资源****/
+
+    pensSkinUrl     : './skin/pen',
+    needlesSkinUrl  : './skin/needle',
+    scissorsSkinUrl : './skin/scissor',
+
+    preLoadPensSkin(){
+        utils.loadDir(this.pensSkinUrl, cc.SpriteFrame).then((asset)=>{
+            if(!asset.length){
+                Log.catch('err in skinMgr 344',asset);
+                return
+            }
+            cc.vv.pensSkin = {};
+            asset.forEach(item => {
+                if(!cc.vv.pensSkin[item.name]){
+                    let key = item.name;
+                    cc.vv.pensSkin[key] = item;
+                }
+            })
+        })
+    },
+
+    preLoadNeedlesSkin(){
+        utils.loadDir(this.needlesSkinUrl, cc.SpriteFrame).then((asset)=>{
+            if(!asset.length){
+                Log.catch('err in skinMgr 360',asset);
+                return
+            }
+            cc.vv.needlesSkin = {};
+            asset.forEach(item => {
+                if(!cc.vv.needlesSkin[item.name]){
+                    let key = item.name;
+                    cc.vv.needlesSkin[key] = item;
+                }
+            })
+        })
+    },
+
+    preLoadScissorsSkin(){
+        utils.loadDir(this.scissorsSkinUrl, cc.SpriteFrame).then((asset)=>{
+            if(!asset.length){
+                Log.catch('err in skinMgr 378',asset);
+                return
+            }
+            cc.vv.scissorsSkin = {};
+            asset.forEach(item => {
+                if(!cc.vv.scissorsSkin[item.name]){
+                    let key = item.name;
+                    cc.vv.scissorsSkin[key] = item;
+                }
+            })
+        })
+    },
 }
 
 export default skinMgr;
