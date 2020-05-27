@@ -176,7 +176,7 @@ cc.Class({
     },
 
     closeAll(){
-        if(this.tailorTab){this.tailorTab.active   = false}
+        if(this.tailorTab){this.tailorTab.active = false}
         if(this.drawTab)  {
             this.drawTab.getComponent('drawTabMgr').setResultData();
             this.drawTab.active = false
