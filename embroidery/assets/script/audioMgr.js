@@ -80,6 +80,13 @@ var audioMgr = {
         }
     },
 
+    stopAllEffect(){
+        for(let key in audioMgr.effectId){
+            let id = audioMgr.effectId[key];
+            cc.audioEngine.stop(id);
+        }
+    },
+
     playBgm: ()=>{
         if(audioMgr.bgmId){
             cc.audioEngine.resume(audioMgr.bgmId);

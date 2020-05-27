@@ -186,5 +186,6 @@ cc.Class({
             this.embroideryTab.active = false
         }
         if(this.putClothesTab){this.putClothesTab.active = false}
+        cc.vv.audioMgr.stopAllEffect();
     }
 })

@@ -142,6 +142,7 @@ cc.Class({
 
     game_go_home(){
         Log.d('返回大厅');
+        cc.vv.audioMgr.stopAllEffect();
     },
 
     goHome(){
