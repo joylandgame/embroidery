@@ -4,7 +4,7 @@
 //  - https://docs.cocos.com/creator/manual/en/scripting/reference/attributes.html
 // Learn life-cycle callbacks:
 //  - https://docs.cocos.com/creator/manual/en/scripting/life-cycle-callbacks.html
-
+import signinMgr from './userInfo/signin';
 cc.Class({
     extends: cc.Component,
 
@@ -25,6 +25,7 @@ cc.Class({
 
 
         this.initUpLevelBtn();
+        this.initSigninBtn();
     },
 
     upLevelBtnCall(){
@@ -39,5 +40,16 @@ cc.Class({
         for(let i = 0; i < _lv.length; i++){
             this.upLevelBtnSprs[i].spriteFrame = this.numbersFrames[_lv[i]];
         }
+    },
+
+    initSigninBtn(){
+        let signinTimes = signinMgr.getSigninTimes();
+        if(signinTimes >= 7){
+            this.signinBtn.active = false;
+            return;
+        }
+        let todayIsSignin = signinMgr.todayIsSignin();
+        let tanHao = this.signinBtn.getChildByName('tanhao');
+        tanHao.active = !todayIsSignin;
     }
 });
