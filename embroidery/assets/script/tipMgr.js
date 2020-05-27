@@ -36,7 +36,18 @@ cc.Class({
     },
 
     openSigninView(){
-
+        if(this.signinView){
+            this.signinView.active = true;
+            return;
+        }
+        this.loading.active = true;
+        this.loadingAni.active = true;
+        utils.loadPrefab('./tipViewPrefab/signinTipView', this.node).then((node)=>{
+            this.loading.active = false;
+            this.loadingAni.active = false;
+            this.signinView = node;
+            this.signinView.getComponent('signinTipMgr').init();
+        })
     },
 
 

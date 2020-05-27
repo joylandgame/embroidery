@@ -24,7 +24,12 @@ cc.Class({
         this.isOver  = data.complete;
         this.goNextBtn.active = this.isOver;
         this.clipBtn.node.active   = false;
-        this.clipName = cc.vv.skinMgr.getUserUseScissor().skin_res_name + "_clip";
+        if(cc.vv.skinMgr.try_UseScissorInfo){
+            let icon = cc.vv.skinMgr.try_UseScissorInfo.skin_try_icon;
+            this.clipName = icon.split('_')[1] + "_clip";
+        }else{
+            this.clipName = cc.vv.skinMgr.getUserUseScissor().skin_res_name + "_clip";
+        }
         this.initView();
         this.addEvent();
         
@@ -155,20 +160,20 @@ cc.Class({
         if(this.clipsArr_1 && this.clipsArr_1.length){
             this.clipsArr_1.forEach(element=>{
                 let ro  = Math.random()<0.6?-Math.random()*40:Math.random()*40;
-                let ani = new cc.spawn(
+                let ani = new cc.sequence(cc.delayTime(0.5),cc.spawn(
                     cc.rotateBy(1, ro),
                     cc.moveBy(2,0,-1000),
-                )
+                )) 
                 element.runAction(ani);
             })
             this.clipsArr_1 = [];
         }else if(this.clipsArr_2 && this.clipsArr_2.length){
             this.clipsArr_2.forEach(element=>{
                 let ro  = Math.random()<0.6?-Math.random()*40:Math.random()*40;
-                let ani = new cc.spawn(
+                let ani = new cc.sequence(cc.delayTime(0.5),cc.spawn(
                     cc.rotateBy(1, ro),
                     cc.moveBy(2,0,-1000),
-                )
+                )) 
                 element.runAction(ani);
             })
             this.clipsArr_2 = [];
@@ -190,15 +195,19 @@ cc.Class({
         this.isCut = true;
         this.clipBtn.node.active = true;
         this.clipBtn.playAnimation(this.clipName);
+        cc.vv.audioMgr.playEffect('cut');
         this.clipBtn.node.runAction(cc.sequence(cc.moveTo(0.5, -this.clipBtn.node.x, this.clipBtn.node.y), cc.callFunc(()=>{
             this.isCut = false;
             this.clipBtn.node.active = false;
             this.clipBtn.node.angle  = -this.clipBtn.node.angle;
+            cc.vv.audioMgr.stopEffect('cut');
+            cc.vv.audioMgr.playEffect('throw');
             this.showGuide(1);
         },this)))
     },
 
     result(){
+        cc.vv.audioMgr.stopEffect('cut');
         cc.vv.userMgr.setUserGudie('0');
         cc.vv.eventMgr.emit(cc.vv.eventName.complete_one_game,this.gameID);
     },

@@ -63,8 +63,8 @@ cc.Class({
 
     _transition(loc) {
         let touchLoc = this.node.convertToNodeSpaceAR(loc);
-        touchLoc.x += this._width / 2;
-        touchLoc.y = this._height / 2 - touchLoc.y;
+        touchLoc.x += this._width / 2 - 45;
+        touchLoc.y = this._height / 2 - touchLoc.y -75;
         return touchLoc;
     },
 

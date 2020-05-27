@@ -85,7 +85,7 @@ cc.Class({
     },
 
     initTabView(){
-        this.tabMgr.openTab(this.openTabID);
+        this.tabMgr.showTrySkinTip(this.openTabID);
     },
 
     selectTab(evt,id){
@@ -164,6 +164,7 @@ cc.Class({
         cc.vv.userMgr.setUserLevel(userLv + 1);
         cc.vv.userMgr.clearUserGameInfo();
         cc.vv.gameMgr.clean();
+        cc.vv.skinMgr.clearTrySkin();
 
         cc.vv.clothesDemo      = null;
         cc.vv.clothesDemoWhite = null;

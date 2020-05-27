@@ -228,6 +228,9 @@ cc.Class({
         this.state = 1;
         
         this.start_pos = e.touch.getLocation();
+        if(this.runstate == 1){
+            cc.vv.audioMgr.playEffect('stitch');
+        }
         this.progress().then((res)=>{
             if(!res) {
                 return;

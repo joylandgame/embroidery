@@ -1,6 +1,7 @@
 
 import Log from '../common/Log';
 import utils from '../common/utils';
+import skinTryMgr from '../userInfo/skinTry';
 
 const tabDir = 'featuresPrefab/';
 
@@ -13,12 +14,14 @@ cc.Class({
     extends: cc.Component,
     properties: {
         loading: cc.Node,
+        tailorTabLayer: cc.Prefab
     },
 
     init(game){
         this.game = game;
         this.gameMgr = cc.vv.gameMgr;
-        this.openID = '';
+        this.openedID = '';
+        this.openID  = '';
         this.loading.active = false;
 
         this.tailorTab = null;
@@ -27,8 +30,22 @@ cc.Class({
         this.putClothesTab = null;
     },
 
-    openTab(id){
-        if(id === this.openID){return}
+    //在加载弹框前去展示试用皮肤
+    showTrySkinTip(id){
+        this.openID = id;
+        if(id == tailorTabID){
+            let info = skinTryMgr.getTrySkinInfo();
+            if(info){
+                this.openTrySkinTip(info, this.openTab.bind(this));
+                return;
+            }
+        }
+        this.openTab();
+    },
+
+    openTab(){
+        let id  = this.openID;
+        if(id === this.openedID){return}
         this.closeAll();
         switch(id){
             case tailorTabID:
@@ -62,7 +79,7 @@ cc.Class({
                 })
         }
 
-        this.openID = id;
+        this.openedID = id;
     },
 
     //加载 裁剪
@@ -71,12 +88,15 @@ cc.Class({
             this.tailorTab.active = true;
             return;
         }
-        this.loading.active = true;
-        utils.loadPrefab(tabDir + 'tailorTab', this.node).then((node)=>{
-            this.tailorTab = node;
-            this.tailorTab.getComponent('tailorTabMgr').init(data);
-            this.loading.active = false;
-        })
+        // this.loading.active = true;
+        // utils.loadPrefab(tabDir + 'tailorTab', this.node).then((node)=>{
+        //     this.tailorTab = node;
+        //     this.tailorTab.getComponent('tailorTabMgr').init(data);
+        //     this.loading.active = false;
+        // })
+        this.tailorTab = cc.instantiate(this.tailorTabLayer);
+        this.tailorTab.parent = this.node;
+        this.tailorTab.getComponent('tailorTabMgr').init(data);
     },
 
     //加载 上色
@@ -121,23 +141,20 @@ cc.Class({
         })
     },
 
+    openTrySkinTip(data, call){
+        if(this.trySkinTip){
+            this.trySkinTip.getComponent('tryTipMgr').init(data, call);
+            return;
+        }
+        this.loading.active = true;
+        utils.loadPrefab('./tipViewPrefab/trySkinTip', this.node).then((node)=>{
+            this.trySkinTip = node;
+            this.trySkinTip.getComponent('tryTipMgr').init(data, call);
+            this.loading.active = false;
+        })
+    },
+
     clearAllTab(){
-        // if(this.tailorTab){
-        //     let tailorTabMgr = this.tailorTab.getComponent('tailorTabMgr');
-        //     tailorTabMgr.clear();
-        // }
-        // if(this.drawTab){
-        //     let drawTabMgr = this.drawTab.getComponent('drawTabMgr');
-        //     drawTabMgr.clear();
-        // }
-        // if(this.embroideryTab){
-        //     let embroideryTabMgr = this.embroideryTab.getComponent('embroideryTabMgr');
-        //     embroideryTabMgr.clear();
-        // }
-        // if(this.putClothesTab){
-        //     let putClothesTabMgr = this.putClothesTab.getComponent('putClothesTabMgr');
-        //     putClothesTabMgr.clear();
-        // }
 
         if(this.tailorTab){
             this.tailorTab.destroy();

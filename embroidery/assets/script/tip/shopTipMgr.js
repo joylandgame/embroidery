@@ -98,6 +98,7 @@ cc.Class({
             })
         }
 
+        this.changeTabFrames();
         this.openSelectView();
         this.updateUserGold();
         this.node.active = true;

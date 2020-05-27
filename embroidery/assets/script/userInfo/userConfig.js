@@ -3,6 +3,10 @@ export default userConfig = {
     level: 1,
     gold: 0,
 
+    openBgm: 'true',
+    openEffect: 'true',
+    openVibration: 'true',
+
     clothesID: '', //用户当前衣服如果没有就随机一个 clothes
     mapID    : '', //用户当前的刺绣map
 

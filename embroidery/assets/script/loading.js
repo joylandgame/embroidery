@@ -14,6 +14,8 @@ import utils from './common/utils';
 
 import gameMgr from './gameMgr';
 
+import audioMgr from './audioMgr';
+
 import clothesMgr from './c_clothesConfig/clothesMgr';
 import tiledMapMgr from './c_tiledMapConfig/tiledMapMgr';
 import skinMgr from './c_skinConfig/skinMgr';
@@ -54,6 +56,9 @@ cc.Class({
             cc.vv.userMgr   = userMgr;
             cc.vv.userMgr.init(); //初始化userInfo
             cc.vv.userInfo  = userInfo;
+            //音效
+            cc.vv.audioMgr  = audioMgr;
+            cc.vv.audioMgr.init();
             //常驻节点
             cc.game.addPersistRootNode(this.commonTip);
             cc.vv.commonTipMgr = this.commonTip.getComponent('commonTipMgr');
@@ -64,7 +69,7 @@ cc.Class({
             Log.d(gameConfig.upgrade);
 
             cc.vv.upgrade      = gameConfig.upgrade;
-            cc.vv.signinInfo   = gameConfig.signinInfo;
+            cc.vv.signinInfo   = gameConfig.signin;
             cc.vv.skinInfo     = null;
             cc.vv.pensSkin     = null;
             cc.vv.needlesSkin  = null;

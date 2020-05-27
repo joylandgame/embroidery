@@ -54,6 +54,7 @@ cc.Class({
         this.node.on(cc.Node.EventType.TOUCH_START,this.drawBegin,this);
         this.node.on(cc.Node.EventType.TOUCH_MOVE,this.drawMove,this);
         this.node.on(cc.Node.EventType.TOUCH_END,this.drawEnd,this);
+        this.node.on(cc.Node.EventType.TOUCH_CANCEL,this.drawCancel,this)
     },
 
     game_go_home(){
@@ -203,7 +204,7 @@ cc.Class({
             if(this.map_com.runstate ==1) {
                 this.brusherase.active = true;
                 this.brushpink.active = false;
-                this.brusherase.position = cc.v2(this.brushpink.position.x,this.brushpink.position.y - 323);
+                this.brusherase.position = cc.v2(this.brushpink.position.x,this.brushpink.position.y - 363);
             }
             this.layDownLine();
             this.map_com.setRunState(2)
@@ -242,6 +243,7 @@ cc.Class({
         this.node.off(cc.Node.EventType.TOUCH_START,this.drawBegin,this);
         this.node.off(cc.Node.EventType.TOUCH_MOVE,this.drawMove,this);
         this.node.off(cc.Node.EventType.TOUCH_END,this.drawEnd,this);
+        this.node.off(cc.Node.EventType.TOUCH_CANCEL,this.drawCancel,this)
     },
 
     drawBegin(e) {
@@ -260,6 +262,13 @@ cc.Class({
         if(this.map_com) {
             this.map_com.drawEnd(e)
         }
+        cc.vv.audioMgr.stopEffect('stitch');
+    },
+    drawCancel(e){
+        if(this.map_com) {
+            this.map_com.drawEnd(e)
+        }
+        cc.vv.audioMgr.stopEffect('stitch');
     },
     drawNumOne(e) {
         if(this.map_com) {

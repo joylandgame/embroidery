@@ -21,6 +21,8 @@ cc.Class({
         btnLayer: cc.Node,
 
         guide: cc.Node,
+
+        pen: cc.Sprite,
     },
 
     init(data){
@@ -38,11 +40,43 @@ cc.Class({
     addEvent(){
         cc.vv.eventMgr.on(cc.vv.eventName.close_drawColor_guide, this.hideGuide, this);
         cc.vv.eventMgr.on(cc.vv.eventName.game_go_home, this.game_go_home, this);
+
+        this.drawSpr.node.on('touchstart', this.touchstart, this);
+        this.drawSpr.node.on('touchmove', this.touchmove, this);
+        this.drawSpr.node.on('touchend', this.touchend, this);
+        this.drawSpr.node.on('touchcancel', this.touchcancel, this);
     },
 
     onDestroy(){
         cc.vv.eventMgr.off(cc.vv.eventName.close_drawColor_guide, this.hideGuide, this);
         cc.vv.eventMgr.off(cc.vv.eventName.game_go_home, this.game_go_home, this);
+    },
+
+    touchstart(evt){
+        let p = evt.getLocation();
+        let p_1 = this.drawSpr.node.convertToNodeSpaceAR(p);
+        p_1.x += 21;
+        p_1.y += 63;
+        // let pp  = this.scaleBtn.convertToWorldSpaceAR(cc.v2(0,0));
+        this.pen.node.active = true;
+        this.pen.node.setPosition(p_1);
+        cc.vv.audioMgr.playEffect('spray');
+    },
+    touchmove(evt){
+        let p = evt.getLocation();
+        let p_1 = this.drawSpr.node.convertToNodeSpaceAR(p);
+        p_1.x += 21;
+        p_1.y += 63;
+        this.pen.node.setPosition(p_1);
+    },
+    touchend(evt){
+        this.pen.node.active = false;
+        cc.vv.audioMgr.stopEffect('spray');
+    },
+    touchcancel(evt){
+        this.pen.node.active = false;
+        cc.vv.audioMgr.stopEffect('spray');
+
     },
 
     game_go_home(){
@@ -72,6 +106,18 @@ cc.Class({
         this.showDemo();
         this.showDemoWhite();
         this.setUtilsView();
+        this.initCutorSkin();
+    },
+
+    initCutorSkin(){
+        if(cc.vv.skinMgr.try_UsePenInfo){
+            let info = cc.vv.skinMgr.try_UsePenInfo;
+            this.pen.spriteFrame = cc.vv.pensSkin[info.skin_try_icon];
+        }else{
+            let info = cc.vv.skinMgr.usePenInfo;
+            this.pen.spriteFrame = cc.vv.pensSkin[info.skin_try_icon];
+        }
+        this.pen.node.active = false;
     },
 
     setUtilsView(){

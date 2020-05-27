@@ -327,7 +327,7 @@
       }
     ],
     "_armatureName": "Armature",
-    "_animationName": "",
+    "_animationName": "s8_clip",
     "_preCacheMode": 0,
     "_cacheMode": 0,
     "playTimes": -1,
@@ -346,7 +346,7 @@
       "__uuid__": "d005cf01-5dc4-4fb7-bca0-a8e39863d3fe"
     },
     "_N$_defaultArmatureIndex": 0,
-    "_N$_animationIndex": 0,
+    "_N$_animationIndex": 8,
     "_N$_defaultCacheMode": 0,
     "_N$timeScale": 1,
     "_N$debugBones": false,

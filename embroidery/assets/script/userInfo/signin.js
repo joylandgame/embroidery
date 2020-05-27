@@ -9,7 +9,7 @@ var signinMgr = {
         let days  = signinMgr.getUserSigninInfo();
         if(days.length >= 7){return}
         days.push(today);
-        localSave.get(signinMgr.evt_signin_config, days);
+        localSave.set(signinMgr.evt_signin_config, days);
     },
 
     getUserSigninInfo(){
@@ -34,6 +34,8 @@ var signinMgr = {
     getSigninTimes(){
         let days = signinMgr.getUserSigninInfo();
         return days.length;
-    }
+    },
+
+    
 }
 export default signinMgr;

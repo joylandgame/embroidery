@@ -1,7 +1,6 @@
 const eventName = {
-    //系统提示
-    gold_not_enough: '金币不足',//金币不足
-    gold_enough    : '购买成功',
+    //系统事件
+    system_signin_over : 'system_signin_over', //累计签到完成
 
     //注册事件
     complete_one_game: 'complete_one_game',//玩家完成一项页签

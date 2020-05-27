@@ -33,7 +33,7 @@ const userMgr = {
     },
 
     addUserGold(number){
-        let gold = userInfo.gold + number;
+        let gold = userInfo.gold + Number(number);
         if(gold<0){
             return false;
         }
@@ -156,6 +156,17 @@ const userMgr = {
         localSave.set(userMgr.evt_user_config, dt);
     },
 
+    setOpenBgm(set){
+        userInfo.openBgm = set;
+        let dt = userInfo;
+        localSave.set(userMgr.evt_user_config, dt);
+    },
+
+    setOpenEffect(set){
+        userInfo.openEffect = set;
+        let dt = userInfo;
+        localSave.set(userMgr.evt_user_config, dt);
+    },
 }
 
 userMgr.init();

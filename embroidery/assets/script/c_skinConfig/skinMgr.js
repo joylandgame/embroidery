@@ -112,6 +112,19 @@ var skinMgr = {
         }
     },
 
+    getSkinInfoById(id){
+        if(this.config){
+            for(let key in this.config){
+                let info = this.config[key];
+                for(let i = 0; i < info.length; i++){
+                    if(info[i].id == id){
+                        return info[i];
+                    }
+                }
+            }
+        }
+    },
+
     //****get****/
     getUserUsePen(){
         let id = cc.vv.userInfo.usePen;
@@ -229,7 +242,8 @@ var skinMgr = {
 
     //****get_trySkin****/
     //get到一个随机皮肤后 在外部再调用set 将this的试用皮肤赋值
-    getTrySkin(){
+    //传入key 取得一个类型的随机皮肤 不传入key从三个类型里随机一个
+    getTrySkin(key){
         let havePens   = cc.vv.userInfo.userPens;
         let noHavePens = [];
         let configPens = this.config[this.penKey];
@@ -248,7 +262,7 @@ var skinMgr = {
         }
         let haveNeedles   = cc.vv.userInfo.userNeedles;
         let noHaveNeedles = [];
-        let configNeedles = this.config[this.scissorKey];
+        let configNeedles = this.config[this.needleKey];
         for(let i = 0; i < configNeedles.length; i++){
             if(haveNeedles.indexOf(configNeedles[i].id) < 0){
                 noHaveNeedles.push(configNeedles[i]);
@@ -259,17 +273,24 @@ var skinMgr = {
         let scissorWeight = 0;
         let needleWeight  = 0;
 
-        noHavePens.forEach(e=>{
-            penWeight += Number(e.skin_try_weight);
-        })
+        if(key == this.penKey || !key){
+            noHavePens.forEach(e=>{
+                penWeight += Number(e.skin_try_weight);
+            })
+        }
 
-        noHaveNeedles.forEach(e=>{
-            needleWeight += Number(e.skin_try_weight);
-        })
+        if(key == this.needleKey || !key){
+            noHaveNeedles.forEach(e=>{
+                needleWeight += Number(e.skin_try_weight);
+            })
+        }
 
-        noHaveScissors.forEach(e=>{
-            scissorWeight += Number(e.skin_try_weight);
-        })
+        if(key == this.scissorKey || !key){
+            noHaveScissors.forEach(e=>{
+                scissorWeight += Number(e.skin_try_weight);
+            })
+        }
+
 
         let allWeight = penWeight+scissorWeight+needleWeight;
         if(allWeight == 0){return null}
@@ -279,7 +300,7 @@ var skinMgr = {
         let randomWeight = Math.random()*allWeight;
         let addWeight    = 0;
         for(let index = 0; index < 3; index++){
-            addWeight += [penWeight,scissorWeight,needleWeight][index];
+            addWeight += [penWeight,needleWeight,scissorWeight][index];
             if(addWeight >= randomWeight){
                 let info = infoArr[index];
                 let _allWeight = 0;
@@ -305,12 +326,12 @@ var skinMgr = {
                 this.try_UseScissorInfo = info;
             break;
 
-            case this.needleKey:
-                this.try_UseNeedleInfo = info;
+            case this.penKey:
+                this.try_UsePenInfo = info;
             break;
 
-            case this.scissorKey:
-                this.try_UseScissorInfo = info;
+            case this.needleKey:
+                this.try_UseNeedleInfo = info;
             break;
         }
     },

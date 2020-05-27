@@ -22,7 +22,7 @@
         "id": "2",
         "name": "金币X2500+限定皮肤",
         "reward_gold": "2500",
-        "reward_skinid": "19",
+        "reward_skinid": "35",
         "destext": "恭喜获得 金币X2500+限定皮肤",
         "destext_double": "恭喜获得 金币X5000+限定皮肤"
     },
@@ -67,7 +67,7 @@
         "id": "7",
         "name": "金币X17000+限定皮肤",
         "reward_gold": "17000",
-        "reward_skinid": "35",
+        "reward_skinid": "19",
         "destext": "恭喜获得 金币X17000+限定皮肤",
         "destext_double": "恭喜获得 金币X34000+限定皮肤"
     }

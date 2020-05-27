@@ -21,9 +21,9 @@ cc.Class({
     },
 
     init(){
+        cc.vv.eventMgr.on(cc.vv.eventName.system_signin_over, this.initSigninBtn, this);
+
         this.numbersFrames = this.numbers.getSpriteFrames();
-
-
         this.initUpLevelBtn();
         this.initSigninBtn();
     },
@@ -51,5 +51,10 @@ cc.Class({
         let todayIsSignin = signinMgr.todayIsSignin();
         let tanHao = this.signinBtn.getChildByName('tanhao');
         tanHao.active = !todayIsSignin;
+    },
+
+    onDestroy(){
+        cc.vv.eventMgr.off(cc.vv.eventName.system_signin_over, this.initSigninBtn, this);
+
     }
 });

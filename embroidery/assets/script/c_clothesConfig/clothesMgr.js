@@ -69,6 +69,7 @@ var clothesMgr = {
             let name    = clothes.resource;
             let id      = clothes.id;
             let url     = 'clothes/' + name;
+
             utils.loadDir(url).then((asset)=>{
                 if(!asset || !asset.length){
                     Log.catch('err in home 74, 预加载资源[]/err');
@@ -96,6 +97,8 @@ var clothesMgr = {
                 Log.d(cc.vv.clothesClipArr);
                 resolve();
             })
+
+
             cc.vv.userMgr.setUserClothes(id);
         })
     },

@@ -22,6 +22,8 @@ export default class gameMgr {
 
         this.performDrawData = null;
         this.performEmbroideryData = null;
+
+        this.comeInLevelFirst = true; 
     }
 
     clean(){

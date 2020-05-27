@@ -44,6 +44,9 @@ const utils = {
                     Log.catch(err);
                     return;
                 }
+                if(!data){
+                    Log.warn('资源为空', url, parent, call, data);
+                }
                 if(parent){
                     let node = cc.instantiate(data);
                     node.parent = parent;

@@ -239,7 +239,12 @@ cc.Class({
         let putX     = this.embroidery.node.x - 21;
         let putY     = this.embroidery.node.y - 63;
         let putScale = this.embroidery.node.scale;
-
+        cc.vv.gameMgr.setPutEmbroideryData({
+            putAngle: putAngle,
+            putX: putX,
+            putY: putY,
+            putScale: putScale,
+        });
         Log.d(
             "randomAngle - putAngle " + randomAngle + " - " + putAngle + "\n",
             "randomX - putX " + randomX + " - " + putX + "\n",
