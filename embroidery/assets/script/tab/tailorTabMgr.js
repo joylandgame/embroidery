@@ -3,6 +3,9 @@ import utils from '../common/utils';
 // cc.vv.clothesDemo       // texture
 // cc.vv.clothesDemoWhite  // texture
 // cc.vv.clothesClipArr    // [ texture ]
+const redColor = cc.color(212,0,210,255)
+const grayColor = cc.color(182,165,165,255);
+
 cc.Class({
     extends: cc.Component,
 
@@ -16,6 +19,7 @@ cc.Class({
 
         headGuide: cc.Node,
         goNextBtn: cc.Node,
+        material:cc.Material,
     },
 
     init(data){
@@ -57,7 +61,9 @@ cc.Class({
 
     initView(){
         this.showDemo();
+        
         if(!this.isOver){this.showClips();}
+        
     },
 
     //展示需要裁减的部分
@@ -93,6 +99,20 @@ cc.Class({
                     }
                 }else{
                     node.zIndex = 0;
+                    
+                    console.log("frame==============",frame)
+                    console.log("sprite====",sprite)
+
+                    sprite.setMaterial(0,this.material);
+                    sprite.getMaterial(0).setProperty("redcolor",redColor);
+                    sprite.getMaterial(0).setProperty("graycolor",grayColor);
+                    node.on(cc.Node.EventType.TOUCH_START,this.clipCut,this)
+                    let width = parseInt(element.name.split('_')[4])
+                    let height = parseInt(element.name.split('_')[5])
+                    console.log("width,height===============",width,height)
+
+                    //////node.setContentSize(cc.size(width,height))
+
                     if(element.name.split('_')[3]){
                         if(element.name.split('_')[3] == '0'){
                             this.clipsArr_1.push(node);
@@ -114,7 +134,9 @@ cc.Class({
 
     //展示正确的衣服 正确衣服和裁减部分拼接
     showDemo(){
+        
         if(!this.clipBaseNode){ //基础的衣服 white模板
+            
             if(!cc.vv.clothesDemoWhite){
                 Log.catch('in tailorTabMgr 40',cc.vv.clothesDemoWhite);
                 return;
@@ -126,7 +148,9 @@ cc.Class({
             sprite.trim = false;
             sprite.spriteFrame = frame;
             node.parent = this.rawMaterial;
+            
         }
+        
         if(!this.demoTip_spr.spriteFrame){
             if(!cc.vv.clothesDemo){
                 Log.catch('in tailorTabMgr 40',cc.vv.clothesDemo);
@@ -141,9 +165,29 @@ cc.Class({
             },0.018)
             this.demoTip_spr.spriteFrame = new cc.SpriteFrame(cc.vv.clothesDemo);
         }
+    
     },
 
+    clipCut(e) {
+        console.log("clipcut======= one")
+       let touchnode = e.target
+       if (!touchnode.active) {
+           return;
+       } 
+
+       let texture = touchnode.getComponent(cc.Sprite).spriteFrame.getTexture()
+       console.log("texture=============",texture)
+       let ro  = Math.random()<0.6?-Math.random()*40:Math.random()*40;
+       let ani = new cc.sequence(cc.delayTime(0.1),cc.spawn(
+           cc.rotateBy(1, ro),
+           cc.moveBy(2,0,-1000),
+       )) 
+       touchnode.runAction(ani);
+
+    },
     cutCallBack(){
+        /*
+        console.log("cutCallback")
         if(this.isOver || this.isCut){return}
         this.hideGuide();
         if(this.linesArr_1 && this.linesArr_1.length){
@@ -189,6 +233,7 @@ cc.Class({
                 this.result();
             }, 5)
         }
+        */
     },
 
     clipBtnAni(){

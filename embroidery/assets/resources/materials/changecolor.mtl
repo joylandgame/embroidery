@@ -1,0 +1,22 @@
+{
+  "__type__": "cc.Material",
+  "_name": "changecolor",
+  "_objFlags": 0,
+  "_native": "",
+  "_effectAsset": {
+    "__uuid__": "8857fe4d-0ef9-468f-bc36-21683f80313f"
+  },
+  "_techniqueIndex": 0,
+  "_techniqueData": {
+    "0": {
+      "defines": {
+        "USE_TEXTURE": true
+      },
+      "props": {
+        "texture": {
+          "__uuid__": "2f4bde61-aeb5-4bd1-9bd0-c657c750e9e4"
+        }
+      }
+    }
+  }
+}
