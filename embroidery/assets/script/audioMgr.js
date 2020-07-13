@@ -1,4 +1,5 @@
 
+
 var audioMgr = {
     bgm: '',
     bgmId: '',
