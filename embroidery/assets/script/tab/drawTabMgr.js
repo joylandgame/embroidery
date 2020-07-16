@@ -15,6 +15,7 @@ cc.Class({
         demoSpr: cc.Sprite,
 
         drawSpr: cc.Sprite,
+        drawHint:cc.Sprite,
 
         pens: cc.Node,
         penItem: cc.Node,
@@ -105,6 +106,7 @@ cc.Class({
     initView(){
         this.showDemo();
         this.showDemoWhite();
+        this.showDemoHint();
         this.setUtilsView();
         this.initCutorSkin();
     },
@@ -137,6 +139,7 @@ cc.Class({
                 Log.catch('in drawTabMgr 87',cc.vv.clothesDemo);
                 return;
             }
+           
             let rt = new cc.RenderTexture();
             rt.initWithSize(texture.width, texture.height);
             rt.drawTextureAt(texture, 0, 0);
@@ -165,6 +168,8 @@ cc.Class({
                 Log.catch('in drawTabMgr 111', cc.vv.clothesDemoWhite);
                 return;
             }
+            console.log("showDemoWhite",cc.vv.clothesDemoWhite);
+
             let frame = new cc.SpriteFrame(texture);
             let rt = new cc.RenderTexture();
             rt.initWithSize(texture.width, texture.height);
@@ -178,6 +183,17 @@ cc.Class({
         }
     },
 
+    showDemoHint() {
+        if(!this.drawHint.spriteFrame) {
+            let texture = cc.vv.clothesDemoHint;
+            if (!texture) {
+                Log.catch("in drawTabMgr showDemoHint",cc.vv.clothesDemoHint);
+                return;
+            }
+            let frame = new cc.SpriteFrame(texture);
+            this.drawHint.spriteFrame = frame;
+        }
+    },
     initDrawMgr(){
         let node = this.drawSpr.node;
         let data = cc.vv.gameMgr.getDrawData();

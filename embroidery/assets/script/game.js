@@ -173,7 +173,9 @@ cc.Class({
         cc.vv.tiledMapDemo     = null;
         cc.vv.clothesConfig    = null;
         cc.vv.tiledMapConfig   = null;
-
+        cc.vv.clothesDemoHint  = null; 
+        cc.vv.resourceUrl = "";
+        
         this.tabMgr.clearAllTab();
 
         Promise.all([

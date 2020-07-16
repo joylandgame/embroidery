@@ -161,7 +161,7 @@ var skinMgr = {
     getUserPens(){
         let idArr = cc.vv.userInfo.userPens;
         if(!idArr||!idArr.length){
-            addId = this.defaultPen.id;
+            let addId = this.defaultPen.id;
             cc.vv.userMgr.setUserPens(addId);
             return [this.defaultPen];
         }
@@ -175,7 +175,7 @@ var skinMgr = {
     getUserNeedles(){
         let idArr = cc.vv.userInfo.userNeedles;
         if(!idArr||!idArr.length){
-            addId = this.defaultNeedle.id;
+            let addId = this.defaultNeedle.id;
             cc.vv.userMgr.setUserNeedles(addId);
             return [this.defaultNeedle];
         }
@@ -189,7 +189,7 @@ var skinMgr = {
     getUserScissors(){
         let idArr = cc.vv.userInfo.userScissors;
         if(!idArr||!idArr.length){
-            addId = this.defaultScissor.id;
+            let addId = this.defaultScissor.id;
             cc.vv.userMgr.setUserScissors(addId);
             return [this.defaultScissor];
         }

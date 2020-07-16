@@ -81,7 +81,8 @@ cc.Class({
             cc.vv.clothesDemo      = null;  /**texture                */
             cc.vv.clothesDemoWhite = null;  /**texture                */
             cc.vv.clothesClipArr   = [];    /**[texture]              */
-
+            cc.vv.resourceUrl = "";
+            
             cc.vv.clothesConfig = null;
             cc.vv.pensAsset     = null;      // {key: spriteFrame}
             cc.vv.clothesMgr    = clothesMgr;

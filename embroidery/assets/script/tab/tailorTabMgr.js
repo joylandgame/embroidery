@@ -68,6 +68,7 @@ cc.Class({
 
     //展示需要裁减的部分
     showClips(){
+        /*
         if(!this.linesArr_1 && !this.linesArr_2){ //放入裁剪的数组
             if(!cc.vv.clothesClipArr.length){
                 Log.catch('in tailorTabMgr 61',cc.vv.clothesClipArr);
@@ -78,6 +79,7 @@ cc.Class({
             this.linesArr_1 = [];
             this.linesArr_2 = [];
             cc.vv.clothesClipArr.forEach(element => {
+                console.log("element======================",element);
                 let frame  = new cc.SpriteFrame(element);
                 let node   = new cc.Node();
                 let sprite = node.addComponent(cc.Sprite);
@@ -106,10 +108,10 @@ cc.Class({
                     sprite.setMaterial(0,this.material);
                     sprite.getMaterial(0).setProperty("redcolor",redColor);
                     sprite.getMaterial(0).setProperty("graycolor",grayColor);
+                    
                     node.on(cc.Node.EventType.TOUCH_START,this.clipCut,this)
-                    let width = parseInt(element.name.split('_')[4])
-                    let height = parseInt(element.name.split('_')[5])
-                    console.log("width,height===============",width,height)
+                   
+                   
 
                     //////node.setContentSize(cc.size(width,height))
 
@@ -123,6 +125,7 @@ cc.Class({
                     }else{
                         this.clipsArr_1.push(node);
                     }
+                    
                 }
             });
             // this.scheduleOnce(()=>{
@@ -130,13 +133,17 @@ cc.Class({
             // }, 0.1)
             
         }
+        */
     },
 
     //展示正确的衣服 正确衣服和裁减部分拼接
     showDemo(){
         
-        if(!this.clipBaseNode){ //基础的衣服 white模板
+        ////if(!this.clipBaseNode){ //基础的衣服 white模板
             
+            utils.loadPrefab(cc.vv.resourceUrl + "cut",this.rawMaterial);
+           
+            /*
             if(!cc.vv.clothesDemoWhite){
                 Log.catch('in tailorTabMgr 40',cc.vv.clothesDemoWhite);
                 return;
@@ -148,9 +155,11 @@ cc.Class({
             sprite.trim = false;
             sprite.spriteFrame = frame;
             node.parent = this.rawMaterial;
+            */
             
-        }
+      ///  }
         
+    
         if(!this.demoTip_spr.spriteFrame){
             if(!cc.vv.clothesDemo){
                 Log.catch('in tailorTabMgr 40',cc.vv.clothesDemo);
@@ -169,14 +178,12 @@ cc.Class({
     },
 
     clipCut(e) {
-        console.log("clipcut======= one")
        let touchnode = e.target
        if (!touchnode.active) {
            return;
        } 
 
        let texture = touchnode.getComponent(cc.Sprite).spriteFrame.getTexture()
-       console.log("texture=============",texture)
        let ro  = Math.random()<0.6?-Math.random()*40:Math.random()*40;
        let ani = new cc.sequence(cc.delayTime(0.1),cc.spawn(
            cc.rotateBy(1, ro),

@@ -131,7 +131,7 @@
       "__type__": "TypedArray",
       "ctor": "Float64Array",
       "array": [
-        0,
+        1.186,
         0,
         0,
         0,
@@ -955,6 +955,9 @@
     },
     "goNextBtn": {
       "__id__": 15
+    },
+    "material": {
+      "__uuid__": "c228dc1f-187b-462c-8b2c-d9238d94f6bb"
     },
     "_id": ""
   },

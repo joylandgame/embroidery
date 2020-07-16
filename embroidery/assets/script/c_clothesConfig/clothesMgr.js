@@ -25,6 +25,17 @@ var clothesMgr = {
 
     getClothes(){
         let clothesID = cc.vv.userInfo.clothesID;
+       //// clothesID = "96";
+        /*
+        for(let key in this.config){
+          
+            for(let i = 0; i < this.config[key].length; i++){
+                
+               console.log("info:======",this.config[key][i].resource,this.config[key][i].id,typeof(this.config[key][i].id));
+            }
+        }*/
+
+        console.log("clothesID===============",clothesID);
         if(!clothesID){
             return this.getClothesByLevel();
         }
@@ -55,6 +66,7 @@ var clothesMgr = {
         for(let i = 0; i < info.length; i++){
             addWeight += Number(info[i].weight);
             if(addWeight >= random){
+                console.log("info========================",info[i]);
                 return info[i];
             }
         }
@@ -66,16 +78,21 @@ var clothesMgr = {
     preLoadClothes(){
         return new Promise((resolve,reject)=>{
             let clothes = cc.vv.clothesConfig = cc.vv.clothesConfig || this.getClothes();
-            let name    = clothes.resource;
+            ////let name    = clothes.resource;
+            let name = "dress1"
             let id      = clothes.id;
             let url     = 'clothes/' + name;
+            cc.vv.resourceUrl = url + "/";
 
+            console.log("url=====================",url);
             utils.loadDir(url).then((asset)=>{
                 if(!asset || !asset.length){
                     Log.catch('err in home 74, 预加载资源[]/err');
                     return;
                 }
+                
                 for(let i = 0; i < asset.length; i++){
+                    console.log("asset name===========",asset[i].name)
                     if(asset[i].name == name){
                         cc.vv.clothesDemo = asset[i];
                         continue;
@@ -89,7 +106,12 @@ var clothesMgr = {
                         cc.vv.clothesClipArr.push(asset[i]);
                         continue;
                     }
-                    Log.warn('加载资源时warn', asset[i]);
+                    
+                    if(asset[i].name == "hint") {
+                        cc.vv.clothesDemoHint = asset[i];
+                        continue;
+                    }
+                    Log.warn('加载资源时warn', asset[i],asset[i].name);
                 }
                 //全部是 texture2d 不是spriteFrame
                 Log.d(cc.vv.clothesDemo);
