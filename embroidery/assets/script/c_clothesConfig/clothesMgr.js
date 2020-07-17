@@ -78,8 +78,8 @@ var clothesMgr = {
     preLoadClothes(){
         return new Promise((resolve,reject)=>{
             let clothes = cc.vv.clothesConfig = cc.vv.clothesConfig || this.getClothes();
-            ///let name    = clothes.resource;
-            let name = "dress9"
+            let name    = clothes.resource;
+            /////let name = "dress1"
             let id      = clothes.id;
             let url     = 'clothes/' + name;
             cc.vv.resourceUrl = url + "/";
