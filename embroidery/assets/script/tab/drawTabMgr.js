@@ -4,8 +4,12 @@ import utils from '../common/utils';
 import {drawUtilsMgr,drawConfig} from '../draw2D/drawConfig';
 import calculate from '../draw2D/calculateScore';
 
+const state_none = 0;
+const state_begin_draw = 1;
+
 cc.Class({
     extends: cc.Component,
+    name:"drawTabMgr",
     properties: {
         drawCamera: cc.Camera,
         drawNode: cc.Node,
@@ -22,15 +26,17 @@ cc.Class({
         btnLayer: cc.Node,
 
         guide: cc.Node,
-
+        handguide:cc.Node,   //手型
         pen: cc.Sprite,
+        progressnode:cc.Node,    //进度条
+        goNextBtn:cc.Node,       //下一步
     },
 
     init(data){
         this.game    = data.game;
         this.gameID  = data.id;
         this.isOver  = data.complete;
-
+        this._state = state_none;
         this.drawMgr = this.drawNode.getComponent('drawMgr');
         this.drawMgr.init(this.game);
 
@@ -56,24 +62,61 @@ cc.Class({
     touchstart(evt){
         let p = evt.getLocation();
         let p_1 = this.drawSpr.node.convertToNodeSpaceAR(p);
+        this.pen.node.active = true;
+        this.pen.node.setPosition(p_1);
+        /*
+        if(this.progressnode.active) {
+            this.progressnode.position = p_1;
+        }
+        */
+        this.progress().then(()=>{
+            this._state = state_begin_draw;
+        })
+        /*
+        let p = evt.getLocation();
+        let p_1 = this.drawSpr.node.convertToNodeSpaceAR(p);
         p_1.x += 21;
         p_1.y += 63;
         // let pp  = this.scaleBtn.convertToWorldSpaceAR(cc.v2(0,0));
         this.pen.node.active = true;
         this.pen.node.setPosition(p_1);
         cc.vv.audioMgr.playEffect('spray');
+        */
     },
+
+    progress() {
+        return new Promise((resolved,rejected)=>{
+            this.progressnode.active = true;
+            let procom = this.progressnode.getComponent(cc.ProgressBar);
+            procom.progress = 0;
+            let slot = setInterval(()=>{
+                procom.progress = procom.progress + 0.03;
+                if (procom.progress >=1) {
+                    clearInterval(slot);
+                    ///this.progressnode.active = false;
+                    resolved(true);
+                }
+            },30)
+        })
+    },
+
     touchmove(evt){
+    
         let p = evt.getLocation();
         let p_1 = this.drawSpr.node.convertToNodeSpaceAR(p);
+       
+
         p_1.x += 21;
         p_1.y += 63;
         this.pen.node.setPosition(p_1);
+    
     },
     touchend(evt){
+        this._state = state_none;
         this.pen.node.active = false;
         cc.vv.audioMgr.stopEffect('spray');
     },
+
     touchcancel(evt){
         this.pen.node.active = false;
         cc.vv.audioMgr.stopEffect('spray');
@@ -84,7 +127,9 @@ cc.Class({
         let data = this.drawMgr.getData();
         cc.vv.gameMgr.setDrawData(data);
     },
-
+    canMove() {
+        return this._state == state_begin_draw;
+    },
     clear(){
         if(this.penArr && this.penArr.length){
             this.penArr.forEach(item => {
@@ -206,6 +251,7 @@ cc.Class({
         let pensColor = cc.vv.clothesConfig.color;
         let colors    = pensColor.split(',');
         this.penArr = [];
+        this.check_selected_pen_list = [];
         for(let i = 0; i < colors.length; i++){
             let item  = cc.instantiate(this.penItem);
             let color = colors[i];
@@ -244,6 +290,25 @@ cc.Class({
             new cc.Color(color.getR(), color.getG(), color.getB(), 255)
         )
         this.takeUpPen();
+
+        this.checkSelectAllPen();
+    },
+    checkSelectAllPen() {
+        let find = false;
+        for (let i=0;i<this.check_selected_pen_list.length;i++) {
+            let check = this.check_selected_pen_list[i]
+            if(check == this.selectPen) {
+                find = true;
+            }
+        }
+        if (!find) {
+            this.check_selected_pen_list.push(this.selectPen);
+            if(this.check_selected_pen_list.length == this.penArr.length) {
+                setTimeout(() => {
+                    this.showHandGuild();            
+                }, 3000);
+            }
+        }
     },
 
     takeUpPen(){
@@ -269,6 +334,7 @@ cc.Class({
     //算分
     toNextGame(){
         cc.vv.eventMgr.emit(cc.vv.eventName.complete_one_game,this.gameID);
+        cc.vv.userMgr.setUserGudie('4');
     },
 
     result(){
@@ -417,5 +483,13 @@ cc.Class({
     hideGuide(){
         this.guide.active = false;
         cc.vv.userMgr.setUserGudie('1');
+    },
+
+    showHandGuild() {
+        if(cc.vv.userInfo.guide && cc.vv.userInfo.guide['4']) {
+            return 
+        } else {
+            this.handguide.active = true;
+        }
     }
 })

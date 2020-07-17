@@ -64,8 +64,7 @@ CCProgram fs %{
   #endif
 
   uniform FragConstants{
-      vec4 redcolor;
-      vec4 graycolor;
+      vec4 color;
   };
 
 
@@ -74,12 +73,10 @@ void main()
 { 
   vec4 cur_gl_frag_color = texture2D(texture, v_uv0);
     if(cur_gl_frag_color.a > 0.0) {
-        float xtime = mod(cc_time.x,2.0);
-        if (xtime >=1.0) {
-             gl_FragColor = redcolor;
-        } else {
-            gl_FragColor = graycolor;
-        } 
+        
+     
+        gl_FragColor = color;
+       
         return;
     }
 

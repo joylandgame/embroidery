@@ -64,8 +64,8 @@
       "__type__": "TypedArray",
       "ctor": "Float64Array",
       "array": [
-        0,
-        0,
+        902,
+        539,
         0,
         0,
         0,
@@ -128,8 +128,8 @@
       "__type__": "TypedArray",
       "ctor": "Float64Array",
       "array": [
-        -136,
-        -533,
+        0,
+        0,
         0,
         0,
         0,
@@ -193,7 +193,7 @@
     "asset": {
       "__id__": 0
     },
-    "fileId": "fdyayS0MlNf4xF9z8K/EYF",
+    "fileId": "f6mZZs+wNM+KBqLzH96Z/d",
     "sync": false
   },
   {
@@ -235,8 +235,8 @@
       "__type__": "TypedArray",
       "ctor": "Float64Array",
       "array": [
-        -323.268,
-        -477.546,
+        -188.906,
+        56.367,
         0,
         0,
         0,
@@ -300,7 +300,7 @@
     "asset": {
       "__id__": 0
     },
-    "fileId": "eeaq+05FhGa5T0KWF4Y5W2",
+    "fileId": "75A9O0NlBI/6AztreJz6Hf",
     "sync": false
   },
   {
@@ -342,8 +342,8 @@
       "__type__": "TypedArray",
       "ctor": "Float64Array",
       "array": [
-        55.97,
-        -478.974,
+        192.142,
+        54.041,
         0,
         0,
         0,
@@ -407,7 +407,7 @@
     "asset": {
       "__id__": 0
     },
-    "fileId": "3bMolhb1xCWYj9F6oBa8jY",
+    "fileId": "25qQCnHG5Ac78d7NweO4tr",
     "sync": false
   },
   {
@@ -449,8 +449,8 @@
       "__type__": "TypedArray",
       "ctor": "Float64Array",
       "array": [
-        -315.599,
-        -470.816,
+        -181.237,
+        63.097,
         0,
         0,
         0,
@@ -514,7 +514,7 @@
     "asset": {
       "__id__": 0
     },
-    "fileId": "755jwIt4dO7am8Wbcwcs/6",
+    "fileId": "7fXvqenSxEpqP2pCYbsLU7",
     "sync": false
   },
   {
@@ -556,8 +556,8 @@
       "__type__": "TypedArray",
       "ctor": "Float64Array",
       "array": [
-        46.661,
-        -469.927,
+        182.833,
+        63.088,
         0,
         0,
         0,
@@ -621,7 +621,7 @@
     "asset": {
       "__id__": 0
     },
-    "fileId": "72vIZW3EJJOLB5NGarDA3E",
+    "fileId": "e83lcwN/tGdagmIxsTopa3",
     "sync": false
   },
   {
@@ -661,7 +661,7 @@
     "asset": {
       "__id__": 0
     },
-    "fileId": "9altsD85tOpbRGC8Va6URJ",
+    "fileId": "3fLUCotM9I3rfzZN6sLyoL",
     "sync": false
   }
 ]

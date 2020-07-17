@@ -70,8 +70,8 @@
       "__type__": "TypedArray",
       "ctor": "Float64Array",
       "array": [
-        415,
-        54,
+        269,
+        268,
         0,
         0,
         0,
@@ -97,7 +97,7 @@
   },
   {
     "__type__": "cc.Node",
-    "_name": "sweater11_white",
+    "_name": "sweater8_white",
     "_objFlags": 0,
     "_parent": {
       "__id__": 1
@@ -123,7 +123,7 @@
     "_contentSize": {
       "__type__": "cc.Size",
       "width": 354,
-      "height": 375
+      "height": 327
     },
     "_anchorPoint": {
       "__type__": "cc.Vec2",
@@ -175,7 +175,7 @@
     "_srcBlendFactor": 770,
     "_dstBlendFactor": 771,
     "_spriteFrame": {
-      "__uuid__": "a5e53511-c305-4122-903a-96bbfb814e09"
+      "__uuid__": "be2063b3-6125-4b7a-825b-aa3935bbac53"
     },
     "_type": 0,
     "_sizeMode": 1,
@@ -199,12 +199,12 @@
     "asset": {
       "__id__": 0
     },
-    "fileId": "01J6WLWmRCVb0REzh+dr8t",
+    "fileId": "a90kpYTnlP+7p/XaUObADO",
     "sync": false
   },
   {
     "__type__": "cc.Node",
-    "_name": "sweater11_clip_1",
+    "_name": "sweater8_clip_1",
     "_objFlags": 0,
     "_parent": {
       "__id__": 1
@@ -229,8 +229,8 @@
     },
     "_contentSize": {
       "__type__": "cc.Size",
-      "width": 43,
-      "height": 37
+      "width": 112,
+      "height": 40
     },
     "_anchorPoint": {
       "__type__": "cc.Vec2",
@@ -241,8 +241,8 @@
       "__type__": "TypedArray",
       "ctor": "Float64Array",
       "array": [
-        136.517,
-        -200.647,
+        1,
+        174,
         0,
         0,
         0,
@@ -282,7 +282,7 @@
     "_srcBlendFactor": 770,
     "_dstBlendFactor": 771,
     "_spriteFrame": {
-      "__uuid__": "ca740898-2068-4662-80ce-853b2cf06905"
+      "__uuid__": "1ca01471-9076-40eb-a241-62b86b63eb4a"
     },
     "_type": 0,
     "_sizeMode": 1,
@@ -306,12 +306,12 @@
     "asset": {
       "__id__": 0
     },
-    "fileId": "373S3SD3VArqwMboO9VtP3",
+    "fileId": "8aP10mp0BHJYzRQJsWlDdl",
     "sync": false
   },
   {
     "__type__": "cc.Node",
-    "_name": "sweater11_clip_2",
+    "_name": "sweater8_clip_2",
     "_objFlags": 0,
     "_parent": {
       "__id__": 1
@@ -336,8 +336,8 @@
     },
     "_contentSize": {
       "__type__": "cc.Size",
-      "width": 46,
-      "height": 36
+      "width": 73,
+      "height": 95
     },
     "_anchorPoint": {
       "__type__": "cc.Vec2",
@@ -348,8 +348,8 @@
       "__type__": "TypedArray",
       "ctor": "Float64Array",
       "array": [
-        -134.764,
-        -196.278,
+        -131,
+        -130,
         0,
         0,
         0,
@@ -389,7 +389,7 @@
     "_srcBlendFactor": 770,
     "_dstBlendFactor": 771,
     "_spriteFrame": {
-      "__uuid__": "f59227f5-6e0d-4e74-9428-4f483066ce43"
+      "__uuid__": "1f8cb462-ac01-40d6-b22e-f7148748ab28"
     },
     "_type": 0,
     "_sizeMode": 1,
@@ -413,12 +413,12 @@
     "asset": {
       "__id__": 0
     },
-    "fileId": "f14HesdvFJtZcEn+ZJEcgE",
+    "fileId": "ddLnjWxc9DlZkZUgJy25uG",
     "sync": false
   },
   {
     "__type__": "cc.Node",
-    "_name": "sweater11_clip_3_1",
+    "_name": "sweater8_clip_3",
     "_objFlags": 0,
     "_parent": {
       "__id__": 1
@@ -443,8 +443,8 @@
     },
     "_contentSize": {
       "__type__": "cc.Size",
-      "width": 195,
-      "height": 37
+      "width": 56,
+      "height": 98
     },
     "_anchorPoint": {
       "__type__": "cc.Vec2",
@@ -455,8 +455,8 @@
       "__type__": "TypedArray",
       "ctor": "Float64Array",
       "array": [
-        1.348,
-        -187.982,
+        143.733,
+        -127.819,
         0,
         0,
         0,
@@ -496,7 +496,7 @@
     "_srcBlendFactor": 770,
     "_dstBlendFactor": 771,
     "_spriteFrame": {
-      "__uuid__": "8aae64a2-c919-4e65-b6bd-06f2d37d17e7"
+      "__uuid__": "5c3196cc-2534-46ce-97d8-5c1f98a184e1"
     },
     "_type": 0,
     "_sizeMode": 1,
@@ -520,12 +520,12 @@
     "asset": {
       "__id__": 0
     },
-    "fileId": "6fb60B6J9IPYu4WoZ3v9s2",
+    "fileId": "d4qlPKbtZKsLM/aRmVik8g",
     "sync": false
   },
   {
     "__type__": "cc.Node",
-    "_name": "sweater11_line_1",
+    "_name": "sweater8_line_1",
     "_objFlags": 0,
     "_parent": {
       "__id__": 1
@@ -550,8 +550,8 @@
     },
     "_contentSize": {
       "__type__": "cc.Size",
-      "width": 41,
-      "height": 7
+      "width": 93,
+      "height": 10
     },
     "_anchorPoint": {
       "__type__": "cc.Vec2",
@@ -562,8 +562,8 @@
       "__type__": "TypedArray",
       "ctor": "Float64Array",
       "array": [
-        136.728,
-        -185.69,
+        1.076,
+        158.028,
         0,
         0,
         0,
@@ -603,7 +603,7 @@
     "_srcBlendFactor": 770,
     "_dstBlendFactor": 771,
     "_spriteFrame": {
-      "__uuid__": "94b72be3-4ccb-4f62-86bc-4baae71d2aac"
+      "__uuid__": "3978617b-06d1-48ee-bf01-50ca2e7d35b2"
     },
     "_type": 0,
     "_sizeMode": 1,
@@ -627,12 +627,12 @@
     "asset": {
       "__id__": 0
     },
-    "fileId": "7dTPYUDEZMH68+qcpPSwfo",
+    "fileId": "8aEmKTgSZCAJUL3fux1GAT",
     "sync": false
   },
   {
     "__type__": "cc.Node",
-    "_name": "sweater11_line_2",
+    "_name": "sweater8_line_2",
     "_objFlags": 0,
     "_parent": {
       "__id__": 1
@@ -657,8 +657,8 @@
     },
     "_contentSize": {
       "__type__": "cc.Size",
-      "width": 41,
-      "height": 4
+      "width": 50,
+      "height": 2
     },
     "_anchorPoint": {
       "__type__": "cc.Vec2",
@@ -669,8 +669,8 @@
       "__type__": "TypedArray",
       "ctor": "Float64Array",
       "array": [
-        -134.359,
-        -186.379,
+        -141.888,
+        -80.886,
         0,
         0,
         0,
@@ -710,7 +710,7 @@
     "_srcBlendFactor": 770,
     "_dstBlendFactor": 771,
     "_spriteFrame": {
-      "__uuid__": "8c4b60ef-8fb7-4299-933e-6c886f27de10"
+      "__uuid__": "bd811ad8-a76c-4f14-a7bd-704266584a24"
     },
     "_type": 0,
     "_sizeMode": 1,
@@ -734,12 +734,12 @@
     "asset": {
       "__id__": 0
     },
-    "fileId": "29/1WH7alIJbL0NJWGNn1S",
+    "fileId": "5fhaR25SpP8ZjS+ckIP4iF",
     "sync": false
   },
   {
     "__type__": "cc.Node",
-    "_name": "sweater11_line_3_1",
+    "_name": "sweater8_line_3",
     "_objFlags": 0,
     "_parent": {
       "__id__": 1
@@ -764,8 +764,8 @@
     },
     "_contentSize": {
       "__type__": "cc.Size",
-      "width": 193,
-      "height": 3
+      "width": 51,
+      "height": 2
     },
     "_anchorPoint": {
       "__type__": "cc.Vec2",
@@ -776,8 +776,8 @@
       "__type__": "TypedArray",
       "ctor": "Float64Array",
       "array": [
-        0.792,
-        -169.678,
+        147.01,
+        -73.389,
         0,
         0,
         0,
@@ -817,7 +817,7 @@
     "_srcBlendFactor": 770,
     "_dstBlendFactor": 771,
     "_spriteFrame": {
-      "__uuid__": "9e415a25-87f9-4a5b-b918-32ee87fcb624"
+      "__uuid__": "90969128-8716-473f-a2c9-f4c77d9211e0"
     },
     "_type": 0,
     "_sizeMode": 1,
@@ -841,7 +841,7 @@
     "asset": {
       "__id__": 0
     },
-    "fileId": "d0LyWeA25NNoV+8Fb47zst",
+    "fileId": "c1DcjzbAxFepc6X71IwMT+",
     "sync": false
   },
   {
@@ -887,7 +887,7 @@
     "asset": {
       "__id__": 0
     },
-    "fileId": "683OpGpORMzpiyikfT/zl7",
+    "fileId": "bar2L69lxD85yquznYTHl5",
     "sync": false
   }
 ]

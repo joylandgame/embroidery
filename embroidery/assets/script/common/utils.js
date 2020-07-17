@@ -51,6 +51,7 @@ const utils = {
                     let node = cc.instantiate(data);
                     node.parent = parent;
                     resolve(node);
+                  
                     return;
                 }
                 resolve(data);

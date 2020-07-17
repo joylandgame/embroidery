@@ -12,6 +12,7 @@ cc.Class({
 
     //传入画布
     init(draw) {
+        
         this.drawMgr = draw;
         this._drawUint8Array = draw.drawUint8Array;
         this._drawSprite = draw.drawSprite;
@@ -22,6 +23,8 @@ cc.Class({
         this.node.on(cc.Node.EventType.TOUCH_MOVE, this.onTouchMove, this);
         this.node.on(cc.Node.EventType.TOUCH_CANCEL, this.onTouchCancel, this);
         this.node.on(cc.Node.EventType.TOUCH_END, this.onTouchEnd, this);
+
+        this.drawTabMgr = this.node.parent.parent.getComponent("drawTabMgr");
     },
 
     removeEvent(){
@@ -32,8 +35,13 @@ cc.Class({
     },
 
     onTouchStart(evt) {
+        ////let mgr = this.node.parent.getComponent("drawTabMgr");
+
         cc.vv.eventMgr.emit(cc.vv.eventName.close_drawColor_guide);
-        if(!this._drawUtils){return Log.d('当前无画笔')}        
+        if(!this._drawUtils){return Log.d('当前无画笔')}  
+        if(!this.drawTabMgr) {return}
+        if(!this.drawTabMgr.canMove()) {return}
+
         let loc = evt.getLocation();
         let drawLoc = this._transition(loc);
         this._drawUint8Array.moveTo(drawLoc.x , drawLoc.y);
@@ -49,6 +57,8 @@ cc.Class({
 
     onTouchMove(evt) {
         if(!this._drawUtils){return}
+        if(!this.drawTabMgr) {return}
+        if(!this.drawTabMgr.canMove()) {return}
         let touchLoc = evt.getLocation();
         let drawLoc = this._transition(touchLoc);
         if(!this._drawUtils.haveColor){
@@ -56,6 +66,7 @@ cc.Class({
         }else{
             this.drawColor(drawLoc);
         }
+     
     },
 
     onTouchEnd(evt) {},

@@ -16,6 +16,9 @@ const eventName = {
     close_drawColor_guide: 'close_drawColor_guide',
     //关闭摆位置引导
     close_moveScale_guide: 'close_moveScale_guide',
+
+    //需要切的条为空
+    clear_tailor_list:'clear_tailor_list',
 }
 
 export default eventName;

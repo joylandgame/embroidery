@@ -105,7 +105,7 @@ cc.Class({
 
         this.jiage.string    = String(Math.ceil(this.basePrice*this.scoreRatio)); 
         this.zuizhong.string = String(this._price);
-        this.add.string      = String(cc.vv.userInfo.bonus);
+        this.add.string      = String(cc.vv.userInfo.bonus) + "%";
 
         this.paiMai.active = false;
         this.result.active = true;

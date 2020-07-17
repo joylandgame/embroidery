@@ -151,6 +151,7 @@ cc.Class({
 
     
     init(tileaset) {
+        this.allNumber = 0;
         Log.d("group===========",cc.game.groupList)
         this.tile_com.tmxAsset = tileaset;
         let render_texture_node = this.tile_com.getLayer("layer2");
@@ -308,8 +309,11 @@ cc.Class({
                 }
                 procom.progress = procom.progress + 0.05;
                 if(procom.progress >= 1) {
-                    clearInterval(slot)
-                    this.progressnode.active = false;
+                    if (this.runstate ==1) {
+                        this.progressnode.active = false;
+                    }
+
+                    clearInterval(slot);
                     if(this.state !=1) {
                         Log.d("resolve state not one====")
                         resolved(false)
@@ -364,7 +368,12 @@ cc.Class({
                 }
             }
         } 
-       
+        
+        let score = this.calcScore();
+        if(score >= 80) {
+            let embroid = this.node.parent.getComponent("embroideryTabMgr");
+            embroid.checkHandGuide();
+        }
         return change;  
     },
     checkEraseGrid(worlddist) {
@@ -411,6 +420,8 @@ cc.Class({
         this.runstate = runstate;
         if(this.runstate ==1) {
             this.setUtils();
+
+            this.progressnode.active = false;
         }
     },
 
@@ -423,6 +434,7 @@ cc.Class({
             this.pinkpartile.endColor = linecolor;
             let line = this.linenode.getComponent(cc.Sprite);
             let mat = line.getMaterial(0);
+            console.log("line mat===",mat)
             mat.setProperty("defalutcolor",linecolor);
         }else{
             this.linenode.active = false;
@@ -461,20 +473,49 @@ cc.Class({
         let layertemplate = this.tile_com.getLayer("layer1");
         let drawData      = this.layer_draw._tiles;
         let demoData      = layertemplate._tiles;
-        let allNumber     = demoData.length;
+        ////let allNumber     = demoData.length;
+      
+        if(this.allNumber == 0) {
+            let allNumber = 0;
+
+            for (let i=0;i<demoData.length;i++) {
+                let draw = demoData[i];
+                if(draw !=0) {
+                    allNumber++;
+                }
+            }
+            this.allNumber = allNumber;
+        }
+       
         let rightNumber   = 0;
         for(let index = 0; index < demoData.length; index++){
             let draw = drawData[index];
             let demo = demoData[index];
+            if (demo !=0) {
+                if (demo == draw) {
+                    rightNumber++;
+                }
+            } else {
+                if (demo != draw && draw != 14) {
+                    rightNumber--;
+                }
+            }
+            /*
             if(demo != 0 && demo == draw){
                 rightNumber++;
             }
-            if(demo == 0 && demo != draw && draw == 14){
+            
+            if(demo == 0 && demo != draw){
                 rightNumber--;
             }
+            */
         }
         rightNumber = rightNumber < 0 ? 0 : rightNumber;
-        return Math.ceil(rightNumber / allNumber * 100);
+        if(this.allNumber == 0) {
+            this.allNumber = demoData.length;
+        }
+        
+        return Math.ceil(rightNumber / this.allNumber * 100);
     },
 
     /******************************tab Control*********************************/

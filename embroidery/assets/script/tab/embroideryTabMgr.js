@@ -33,6 +33,9 @@ cc.Class({
         btnDone : cc.Node,
 
         guide: cc.Node,
+        handGuide:cc.Node,
+        erase:cc.Node,          //笔擦按钮     
+        toast:cc.Node,          //提示框
     },
 
     ctor() {this.map_com = null;}, 
@@ -54,7 +57,8 @@ cc.Class({
         this.node.on(cc.Node.EventType.TOUCH_START,this.drawBegin,this);
         this.node.on(cc.Node.EventType.TOUCH_MOVE,this.drawMove,this);
         this.node.on(cc.Node.EventType.TOUCH_END,this.drawEnd,this);
-        this.node.on(cc.Node.EventType.TOUCH_CANCEL,this.drawCancel,this)
+        this.node.on(cc.Node.EventType.TOUCH_CANCEL,this.drawCancel,this);
+        this.erase.on(cc.Node.EventType.TOUCH_START,this.showEraseTip,this);
     },
 
     game_go_home(){
@@ -172,6 +176,8 @@ cc.Class({
             }
             this.layDownLine();
         }
+       
+
         this.selectLine = evt.target;
         let gid = this.selectLine.gid;
         mapinfo.setGid(gid);
@@ -182,12 +188,24 @@ cc.Class({
         }
         this.map_com.setRunState(1);
         this.takeUpLine();
+        for (let i=0;i<this.lineArr.length;i++) {
+            let other = this.lineArr[i]
+            if(other != this.selectLine) {
+                console.log("other============")
+            }
+        }
+        /*
+        let sp = this.selectLine.getComponent(cc.Sprite);
+        let mat = sp.getMaterial(0)
+        console.log("mat=========xxxx",mat.getProperty("a_color"),mat.getProperty("color"));
+        mat.setProperty("a_color",cc.color(255,255,255,255));
+        */
     },
 
     takeUpLine(){
         if(this.selectLine){
             this.selectLine.y = 10;
-            this.selectLine.setScale(cc.v2(1.1,1.1));
+            this.selectLine.setScale(cc.v2(1.5,1.5));
         }
     },
 
@@ -200,6 +218,7 @@ cc.Class({
     },
 
     onErase(e) {
+        
         if(this.map_com) {
             if(this.map_com.runstate ==1) {
                 this.brusherase.active = true;
@@ -209,12 +228,14 @@ cc.Class({
             this.layDownLine();
             this.map_com.setRunState(2)
         }
+    
     },
 
     onDone() {
         // if(this.map_com) {
             // this.isOver = true;
             // this.setUtilsView();
+            cc.vv.userMgr.setUserGudie('5');
             cc.vv.eventMgr.emit(cc.vv.eventName.complete_one_game,this.gameID);
         // }
     },
@@ -243,11 +264,11 @@ cc.Class({
         this.node.off(cc.Node.EventType.TOUCH_START,this.drawBegin,this);
         this.node.off(cc.Node.EventType.TOUCH_MOVE,this.drawMove,this);
         this.node.off(cc.Node.EventType.TOUCH_END,this.drawEnd,this);
-        this.node.off(cc.Node.EventType.TOUCH_CANCEL,this.drawCancel,this)
+        this.node.off(cc.Node.EventType.TOUCH_MOVE,this.drawCancel,this)
+        this.erase.off(cc.Node.EventType.TOUCH_START,this.showEraseTip,this);
     },
 
     drawBegin(e) {
-        Log.d("drawBegin===")
         if(this.map_com) {
             this.map_com.drawBegin(e)
         }
@@ -293,5 +314,26 @@ cc.Class({
     hideGuide(){
         this.guide.active = false;
         cc.vv.userMgr.setUserGudie('2');
+    },
+    checkHandGuide() {
+        if(cc.vv.userInfo.guide && cc.vv.userInfo.guide['5']) {
+            return 
+        } else {
+            this.handGuide.active = true;
+        }
+    },
+
+    showEraseTip() {
+        this.toast.active = true;
+        
+    },
+
+    toastOK() {
+        this.onErase();
+        this.toastClose();
+    },
+
+    toastClose() {
+        this.toast.active = false;
     }
 });

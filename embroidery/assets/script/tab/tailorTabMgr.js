@@ -20,6 +20,7 @@ cc.Class({
         headGuide: cc.Node,
         goNextBtn: cc.Node,
         material:cc.Material,
+        hint:cc.Sprite,
     },
 
     init(data){
@@ -34,6 +35,7 @@ cc.Class({
         }else{
             this.clipName = cc.vv.skinMgr.getUserUseScissor().skin_res_name + "_clip";
         }
+        console.log("this.clipName=======",this.clipName);
         this.initView();
         this.addEvent();
         
@@ -41,10 +43,12 @@ cc.Class({
 
     addEvent(){
         cc.vv.eventMgr.on(cc.vv.eventName.game_go_home, this.game_go_home, this);
+        cc.vv.eventMgr.on(cc.vv.eventName.clear_tailor_list,this.game_on_end,this);
     },
 
     onDestroy(){
         cc.vv.eventMgr.off(cc.vv.eventName.game_go_home, this.game_go_home, this);
+        cc.vv.eventMgr.off(cc.vv.eventName.clear_tailor_list,this.game_on_end,this);
     },
 
     game_go_home(){
@@ -141,7 +145,22 @@ cc.Class({
         
         ////if(!this.clipBaseNode){ //基础的衣服 white模板
             
-            utils.loadPrefab(cc.vv.resourceUrl + "cut",this.rawMaterial);
+            utils.loadPrefab(cc.vv.resourceUrl + "cut",this.rawMaterial).then((node)=>{
+                node.position = cc.v2(0,0);
+                /*
+                if(!this.hint.spriteFrame) {
+                    console.log("hint===========================")
+                    let texture = cc.vv.clothesDemoHint;
+                    if (!texture) {
+                        Log.catch("in drawTabMgr showDemoHint",cc.vv.clothesDemoHint);
+                        return;
+                    }
+                    console.log("hint 2222",texture);
+                    let frame = new cc.SpriteFrame(texture);
+                    this.hint.spriteFrame = frame;
+                }
+                */
+            });
            
             /*
             if(!cc.vv.clothesDemoWhite){
@@ -243,11 +262,31 @@ cc.Class({
         */
     },
 
+    game_on_end() {
+        this.clipBtnAni();
+        this.isOver = true;
+        this.goNextBtn.active = true;
+        this.showGuide(2);
+        this.scheduleOnce(()=>{
+            this.result();
+        }, 5)
+    },
+
     clipBtnAni(){
         this.isCut = true;
-        this.clipBtn.node.active = true;
-        this.clipBtn.playAnimation(this.clipName);
+        ////this.clipBtn.node.active = true;
+        ///this.clipBtn.playAnimation(this.clipName);
         cc.vv.audioMgr.playEffect('cut');
+
+        this.clipBtn.node.runAction(new cc.sequence(cc.delayTime(0.1),cc.callFunc(()=>{
+            this.isCut = false;
+            /////this.clipBtn.node.active = false;
+            this.clipBtn.node.angle  = -this.clipBtn.node.angle;
+            cc.vv.audioMgr.stopEffect('cut');
+            cc.vv.audioMgr.playEffect('throw');
+            this.showGuide(1);
+        },this)))
+        /*
         this.clipBtn.node.runAction(cc.sequence(cc.moveTo(0.5, -this.clipBtn.node.x, this.clipBtn.node.y), cc.callFunc(()=>{
             this.isCut = false;
             this.clipBtn.node.active = false;
@@ -256,6 +295,8 @@ cc.Class({
             cc.vv.audioMgr.playEffect('throw');
             this.showGuide(1);
         },this)))
+        */
+        
     },
 
     result(){
@@ -270,10 +311,10 @@ cc.Class({
             return;
         }
         if(index == 1){
-            if(this.clipsArr_1.length || this.clipsArr_2.length){
+            ///if(this.clipsArr_1.length || this.clipsArr_2.length){
                 this.headGuide.active = true;
                 this.headGuide.setPosition(cc.v2(0,0));
-            }
+            ////}
         }
 
         if(index == 2){
