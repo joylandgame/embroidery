@@ -24,7 +24,7 @@ var calculateMgr = {
 
     calculateObj(obj_1, obj_2){
         for(let key in obj_1){
-            console.log("key============",key);
+          
             if(!obj_2.hasOwnProperty(key)){
                 if(mandatory){
                     Log.warn('in calculateMgr 26,俩个传入的对象属性上有差异/尝试将_mandatory参数去掉');

@@ -38,6 +38,7 @@ cc.Class({
 
     onLoad(){
         this.tabMgr = this.tabNodes.getComponent('tabMgr');
+        this.node.getChildByName("tipView").getComponent("tipMgr").initGame();
         this.tabMgr.init(this);
         this.initView();
         this.addEvent();
@@ -45,7 +46,10 @@ cc.Class({
 
     initView(){
         let can = cc.vv.gameMgr.canSelect();
-        this.openTabID = can ? drawTabID : tailorTabID;
+        /////this.openTabID = can ? drawTabID : tailorTabID;
+        this.openTabID = '0';
+        this.tabBtns.active   = true;
+        this.goHomeBtn.active = true;
         this.initTabBtn();
         this.initTabView();
     },
@@ -55,6 +59,7 @@ cc.Class({
         cc.vv.eventMgr.on(cc.vv.eventName.complete_one_game, this.complete_one_game, this);
         cc.vv.eventMgr.on(cc.vv.eventName.game_go_home, this.game_go_home, this);
         cc.vv.eventMgr.on(cc.vv.eventName.game_settle_accounts, this.game_settle_accounts, this);
+        cc.vv.eventMgr.on(cc.vv.eventName.last_game_done,this.lastGameDone,this);
     },
 
     onDestroy(){
@@ -62,14 +67,18 @@ cc.Class({
         cc.vv.eventMgr.off(cc.vv.eventName.complete_one_game, this.complete_one_game, this);
         cc.vv.eventMgr.off(cc.vv.eventName.game_go_home, this.game_go_home, this);
         cc.vv.eventMgr.off(cc.vv.eventName.game_settle_accounts, this.game_settle_accounts, this);
+        cc.vv.eventMgr.off(cc.vv.eventName.last_game_done,this.lastGameDone,this);
 
     },
 
 
     initTabBtn(){
         let can = cc.vv.gameMgr.canSelect();
+        /*
         this.tailorIcon.active = !can;
         this.tabBtns.active = can;
+        */
+        /*
         if(can){
             for (let index = 0; index < this.tabBgs.length; index++){
                 this.tabBgs[index].spriteFrame = this.tabBgSpr[0];
@@ -81,6 +90,28 @@ cc.Class({
             this.tabBgs[id].spriteFrame = this.tabBgSpr[1];
             this.tabIcons[id].spriteFrame = this.tabBtnFrames_s[id];
         }
+        */
+       ///let info = cc.vv.gameMgr.confirmGameCompletion();
+
+        for (let index = 0; index < this.tabBgs.length; index++){
+            this.tabBgs[index].spriteFrame = this.tabBgSpr[0];
+        }
+        for (let index = 0; index < this.tabIcons.length; index++) {
+            this.tabIcons[index].spriteFrame = this.tabBtnFrames_n[index];
+        }
+
+        ////console.log("info============",info)
+        /*
+        if (info.finalStep >=0) {
+            console.log("xxxxxxxxxxxxxxxxxxxxxxxxxx have")
+            this.tabIcons[info.finalStep].spriteFrame = this.tabBtnFrames_s[info.finalStep];
+            this.tabBgs[info.finalStep].spriteFrame = this.tabBgSpr[1];
+        }
+        */
+        if (this.openTabID) {
+            this.tabIcons[this.openTabID].spriteFrame = this.tabBtnFrames_s[this.openTabID];
+            this.tabBgs[this.openTabID].spriteFrame = this.tabBgSpr[1];
+        }        
         this.goHomeBtn.active = true;
     },
 
@@ -89,6 +120,8 @@ cc.Class({
     },
 
     selectTab(evt,id){
+        let info = cc.vv.gameMgr.confirmGameCompletion();
+        if (id > info.finalStep) {return}
         if(this.openTabID == id){return}
         // let selectID = -1;
         // switch(id){
@@ -132,14 +165,18 @@ cc.Class({
             Log.d('当前游戏关卡 游戏结束！')
             //准备下一个关卡
             // this.readyGoNext();
+            console.log("===============================")
         }
     },
 
     complete_all_game(){
+        console.log("complete_all_game=====")
         this.tabBtns.active   = false;
         this.goHomeBtn.active = false;
     },
-
+    lastGameDone() {
+        this.complete_all_game();
+    },
     game_go_home(){
         Log.d('返回大厅');
         cc.vv.audioMgr.stopAllEffect();
@@ -161,6 +198,7 @@ cc.Class({
     },
 
     readyGoNext(){
+        console.log("readyGoNext=====")
         let userLv = cc.vv.userInfo.level;
         cc.vv.userMgr.setUserLevel(userLv + 1);
         cc.vv.userMgr.clearUserGameInfo();

@@ -348,8 +348,8 @@ var skinMgr = {
     needlesSkinUrl  : './skin/needle',
     scissorsSkinUrl : './skin/scissor',
 
-    preLoadPensSkin(){
-        utils.loadDir(this.pensSkinUrl, cc.SpriteFrame).then((asset)=>{
+    preLoadPensSkin(progress){
+        utils.loadDir(this.pensSkinUrl, cc.SpriteFrame,progress).then((asset)=>{
             if(!asset.length){
                 Log.catch('err in skinMgr 344',asset);
                 return
@@ -364,8 +364,8 @@ var skinMgr = {
         })
     },
 
-    preLoadNeedlesSkin(){
-        utils.loadDir(this.needlesSkinUrl, cc.SpriteFrame).then((asset)=>{
+    preLoadNeedlesSkin(progress){
+        utils.loadDir(this.needlesSkinUrl, cc.SpriteFrame,progress).then((asset)=>{
             if(!asset.length){
                 Log.catch('err in skinMgr 360',asset);
                 return
@@ -380,8 +380,8 @@ var skinMgr = {
         })
     },
 
-    preLoadScissorsSkin(){
-        utils.loadDir(this.scissorsSkinUrl, cc.SpriteFrame).then((asset)=>{
+    preLoadScissorsSkin(progress){
+        utils.loadDir(this.scissorsSkinUrl, cc.SpriteFrame,progress).then((asset)=>{
             if(!asset.length){
                 Log.catch('err in skinMgr 378',asset);
                 return

@@ -60,13 +60,13 @@ var tiledMapMgr = {
         Log.d('getTiledMapByLevel::',info);
     },
 
-    preLoadTiledMap(){
+    preLoadTiledMap(progress){
         return new Promise((resolve,reject)=>{
             let map     = cc.vv.tiledMapConfig = cc.vv.tiledMapConfig || this.getTiledMap();
             let name    = map.resource;
             let id      = map.id;
             let url     = './tilemap/' + name + ".tmx";
-            utils.loadTexture(url).then((map)=>{
+            utils.loadTexture(url,null,progress).then((map)=>{
                 if(!map){
                     Log.catch('err in tiledMapMgr 71, 预加载资源 url:',url);
                     return;

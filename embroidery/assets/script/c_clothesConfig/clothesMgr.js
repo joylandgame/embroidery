@@ -24,6 +24,7 @@ var clothesMgr = {
     },
 
     getClothes(){
+       
         let clothesID = cc.vv.userInfo.clothesID;
        //// clothesID = "96";
         /*
@@ -34,8 +35,8 @@ var clothesMgr = {
                console.log("info:======",this.config[key][i].resource,this.config[key][i].id,typeof(this.config[key][i].id));
             }
         }*/
-
-        console.log("clothesID===============",clothesID);
+        
+      
         if(!clothesID){
             return this.getClothesByLevel();
         }
@@ -52,9 +53,23 @@ var clothesMgr = {
     getClothesByLevel(){
         let lv   = cc.vv.userInfo.level;
         let info = [];
+      
         for(let key in this.config){
+
+          
             if(Number(key)<=lv){
-                info = info.concat(this.config[key]);
+                if (lv ==1) {
+                   let check = this.config[key] 
+                   for (let i=0;i<check.length;i++) {
+                    
+                       if(check[i].resource == "sleeve1") {
+                            info = info.concat([check[i]])
+                       }
+                   }
+                } else {
+                    info = info.concat(this.config[key]);
+                }
+                
             }
         }
         let allWeight = 0;
@@ -66,7 +81,7 @@ var clothesMgr = {
         for(let i = 0; i < info.length; i++){
             addWeight += Number(info[i].weight);
             if(addWeight >= random){
-                console.log("info========================",info[i]);
+               
                 return info[i];
             }
         }
@@ -75,7 +90,7 @@ var clothesMgr = {
 
 
     //找到资源对资源进行预加载或者重置资源
-    preLoadClothes(){
+    preLoadClothes(progress){
         return new Promise((resolve,reject)=>{
             let clothes = cc.vv.clothesConfig = cc.vv.clothesConfig || this.getClothes();
             let name    = clothes.resource;
@@ -84,15 +99,15 @@ var clothesMgr = {
             let url     = 'clothes/' + name;
             cc.vv.resourceUrl = url + "/";
 
-            console.log("url=====================",url);
-            utils.loadDir(url).then((asset)=>{
+         
+            utils.loadDir(url,cc.Texture2D,progress).then((asset)=>{
                 if(!asset || !asset.length){
                     Log.catch('err in home 74, 预加载资源[]/err');
                     return;
                 }
                 
                 for(let i = 0; i < asset.length; i++){
-                    console.log("asset name===========",asset[i].name)
+                    
                     if(asset[i].name == name){
                         cc.vv.clothesDemo = asset[i];
                         continue;

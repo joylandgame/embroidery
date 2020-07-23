@@ -1,6 +1,6 @@
 {
   "ver": "2.3.4",
-  "uuid": "0241cf60-8448-4c97-8772-17ceacbf75a2",
+  "uuid": "5379d33d-0542-4810-a901-d0d492254ab6",
   "type": "sprite",
   "wrapMode": "clamp",
   "filterMode": "bilinear",
@@ -11,10 +11,10 @@
   "height": 81,
   "platformSettings": {},
   "subMetas": {
-    "爆款": {
+    "xinkuan": {
       "ver": "1.0.4",
-      "uuid": "0b861985-edaf-4206-b600-09794ddfca92",
-      "rawTextureUuid": "0241cf60-8448-4c97-8772-17ceacbf75a2",
+      "uuid": "1e077aa1-5ecd-4769-9b73-3093fe40a8fb",
+      "rawTextureUuid": "5379d33d-0542-4810-a901-d0d492254ab6",
       "trimType": "auto",
       "trimThreshold": 1,
       "rotated": false,

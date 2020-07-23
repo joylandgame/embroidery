@@ -22,7 +22,7 @@ cc.Class({
         drawHint:cc.Sprite,
 
         pens: cc.Node,
-        penItem: cc.Node,
+        penItem: cc.Prefab,
         btnLayer: cc.Node,
 
         guide: cc.Node,
@@ -30,6 +30,7 @@ cc.Class({
         pen: cc.Sprite,
         progressnode:cc.Node,    //进度条
         goNextBtn:cc.Node,       //下一步
+        material:cc.Material,
     },
 
     init(data){
@@ -42,12 +43,15 @@ cc.Class({
 
         this.initView();
         this.addEvent();
+
+        this.pen.node.active = true
+        this.goNextBtn.active = false
     },
 
     addEvent(){
         cc.vv.eventMgr.on(cc.vv.eventName.close_drawColor_guide, this.hideGuide, this);
         cc.vv.eventMgr.on(cc.vv.eventName.game_go_home, this.game_go_home, this);
-
+    
         this.drawSpr.node.on('touchstart', this.touchstart, this);
         this.drawSpr.node.on('touchmove', this.touchmove, this);
         this.drawSpr.node.on('touchend', this.touchend, this);
@@ -62,7 +66,7 @@ cc.Class({
     touchstart(evt){
         let p = evt.getLocation();
         let p_1 = this.drawSpr.node.convertToNodeSpaceAR(p);
-        this.pen.node.active = true;
+        ////////this.pen.node.active = true;
         this.pen.node.setPosition(p_1);
         /*
         if(this.progressnode.active) {
@@ -82,6 +86,8 @@ cc.Class({
         this.pen.node.setPosition(p_1);
         cc.vv.audioMgr.playEffect('spray');
         */
+     
+
     },
 
     progress() {
@@ -112,13 +118,14 @@ cc.Class({
     
     },
     touchend(evt){
+
         this._state = state_none;
-        this.pen.node.active = false;
+        /////this.pen.node.active = false;
         cc.vv.audioMgr.stopEffect('spray');
     },
 
     touchcancel(evt){
-        this.pen.node.active = false;
+        //////this.pen.node.active = false;
         cc.vv.audioMgr.stopEffect('spray');
 
     },
@@ -164,7 +171,7 @@ cc.Class({
             let info = cc.vv.skinMgr.usePenInfo;
             this.pen.spriteFrame = cc.vv.pensSkin[info.skin_try_icon];
         }
-        this.pen.node.active = false;
+        //////this.pen.node.active = false;
     },
 
     setUtilsView(){
@@ -213,7 +220,7 @@ cc.Class({
                 Log.catch('in drawTabMgr 111', cc.vv.clothesDemoWhite);
                 return;
             }
-            console.log("showDemoWhite",cc.vv.clothesDemoWhite);
+          
 
             let frame = new cc.SpriteFrame(texture);
             let rt = new cc.RenderTexture();
@@ -255,12 +262,16 @@ cc.Class({
         for(let i = 0; i < colors.length; i++){
             let item  = cc.instantiate(this.penItem);
             let color = colors[i];
-            item.getComponent(cc.Sprite).spriteFrame = cc.vv.pensAsset[color];
+            let dstcolor =  new cc.Color().fromHEX("#"+color)
+
+            item.getComponent(cc.Sprite).setMaterial(0,this.material);
+            item.getComponent(cc.Sprite).getMaterial(0).setProperty("color",dstcolor);
             item.id   = i.toString();
             item.color_hex = '#'+color;
             item.parent = this.pens;
             item.active = true;
             this.penArr.push(item);
+            item.on(cc.Node.EventType.TOUCH_START,this.selectPenCallBack,this)
         }
         this.selectPenCallBack({target: this.penArr[0]});
         this.showGuide(1);
@@ -276,8 +287,10 @@ cc.Class({
 
     //选择一个笔 不包括橡皮
     selectPenCallBack(evt){
+        
         if(this.selectPen){
             if (evt.target.id == this.selectPen.id) {
+                this.setPenColor();
                 return;
             }
             this.layDownPen();
@@ -285,13 +298,25 @@ cc.Class({
         this.selectPen = evt.target;
         let hex = this.selectPen.color_hex;
         let color = new cc.Color().fromHEX(hex);
+     
         this.drawMgr.setDrawUtils(
             drawConfig.circlePen, 
             new cc.Color(color.getR(), color.getG(), color.getB(), 255)
         )
+    
         this.takeUpPen();
 
         this.checkSelectAllPen();
+    },
+
+    setPenColor() {
+        if(!this.selectPen) {
+            return;
+        }
+        let hex = this.selectPen.color_hex;
+      
+        let color = new cc.Color().fromHEX(hex);
+        this.selectPen.getComponent(cc.Sprite).getMaterial(0).setProperty("color",color);
     },
     checkSelectAllPen() {
         let find = false;
@@ -304,9 +329,18 @@ cc.Class({
         if (!find) {
             this.check_selected_pen_list.push(this.selectPen);
             if(this.check_selected_pen_list.length == this.penArr.length) {
+                /*
                 setTimeout(() => {
                     this.showHandGuild();            
                 }, 3000);
+                */
+
+               if(!this.goNextBtn.active) {
+                    this.scheduleOnce(()=>{
+                        this.goNextBtn.active = true;
+                        this.showHandGuild(); 
+                    },10)
+                }
             }
         }
     },
@@ -314,6 +348,11 @@ cc.Class({
     takeUpPen(){
         if(this.selectPen){
             this.selectPen.y = 10;
+          
+            let hex = this.selectPen.color_hex;
+          
+            let color = new cc.Color().fromHEX(hex);
+            this.selectPen.getComponent(cc.Sprite).getMaterial(0).setProperty("color",color);
             this.selectPen.setScale(cc.v2(1.1,1.1));
         }
     },
@@ -321,6 +360,10 @@ cc.Class({
     layDownPen(){
         if(this.selectPen){
             this.selectPen.y = 0;
+            let hex = this.selectPen.color_hex;
+            let color = new cc.Color().fromHEX(hex);
+       
+            this.selectPen.getComponent(cc.Sprite).getMaterial(0).setProperty("color",color);
             this.selectPen.setScale(cc.v2(1,1));
             this.selectPen = null;
         }

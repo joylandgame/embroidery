@@ -72,6 +72,7 @@ cc.Class({
         this.initDemo();
         this.initPutDemoTip();
         this.addEvent();
+        
     },
 
     addEvent(){
@@ -130,7 +131,7 @@ cc.Class({
         texture.initWithSize(640,640,cc.gfx.RB_FMT_S8);
         this.readMapCamera.targetTexture = texture;
 
-        this.showGuide(1);
+       
     },
 
     initPutDemoTip(){
@@ -194,17 +195,20 @@ cc.Class({
                     break;
             }
 
+        
             this.resultTip_tiledMap.node.x = data.pos[0];
             this.resultTip_tiledMap.node.y = data.pos[1];
             this.resultTip_tiledMap.node.setScale(cc.v2(data.scale, data.scale));
             this.resultTip_tiledMap.node.angle = data.angle;
-
+            
+            
             this.resultIcon_demo.spriteFrame = frame;
             this.resultIcon_demo.node.x   = data.pos[0];
             this.resultIcon_demo.node.y   = data.pos[1];
             this.resultIcon_demo.node.setScale(cc.v2(data.scale, data.scale));
             this.resultIcon_demo.node.angle = data.angle;
-
+                       
+            
             this.randomPutData = data;
             Log.d('random scale :', data);
 
@@ -213,17 +217,20 @@ cc.Class({
 
             this.scheduleOnce(()=>{
                 this.resultTip.y = cc.winSize.height / 2;
-                let offset     = this.resultTip.y - this.resultTip.height + 60
+                ////let offset     = this.resultTip.y - this.resultTip.height + 60
+                let offset     = this.resultTip.y - this.resultTip.height
                 this.resultTip.runAction(
                     cc.moveTo(0.5,this.resultTip.x,offset).easing(cc.easeBackOut())
                 )
             },0.018)
+            this.embroidery.getComponent("locatingPlace").init(data);
+            this.showGuide(1);
         }, 0)
         
     },
 
     resultCallBack(){
-        
+        this.hideGuide();
         cc.vv.eventMgr.emit(cc.vv.eventName.complete_all_game);
 
         this.resultAniNode.active   = false;
@@ -266,6 +273,7 @@ cc.Class({
         },this);
         resultAni.play();
         this.resultAniNode.active   = true;
+        cc.vv.eventMgr.emit(cc.vv.eventName.last_game_done);
     },
 
     scoreRun(){
@@ -286,6 +294,7 @@ cc.Class({
     },
 
     gameOverCallBack(){
+        console.log("account=======================")
         cc.vv.eventMgr.emit(cc.vv.eventName.game_settle_accounts, this.score / 100);
     },
 
@@ -299,7 +308,24 @@ cc.Class({
             return;
         }
         if(index == 1){
+            console.log("showGuide======",this.embroidery.node.y)
+            this.guide.x = this.embroidery.node.x;
+            this.guide.y = this.embroidery.node.y;
+            let srcx = this.embroidery.node.x;
+            let srcy = this.embroidery.node.y;
+
             this.guide.active = true;
+            let seq = cc.sequence(
+                cc.moveTo(0.5,srcx,srcy + 90),
+                cc.callFunc(()=>{
+                    console.log("call==============")
+                    this.guide.x = srcx;
+                    this.guide.y = srcy;
+                }),
+                cc.delayTime(0.1)
+            )
+            this.guide.runAction(cc.repeatForever(seq));    
+            ////this.guide.runAction(cc.repeatForever(cc.seqence(cc.moveTo(0.5,this.guide.x,this.guide.y + 90)))
         }
     },
 

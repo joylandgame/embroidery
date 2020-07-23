@@ -20,6 +20,8 @@ const eraseworld = new cc.Vec2();
 const gridsize = scale * 32;
 const pink_y_diff = -323
 const movespd = 200
+const normal_moveSpd = 320
+
 ///runstate:1 刺绣状态 2:擦除状态
 cc.Class({
     extends: cc.Component,
@@ -84,6 +86,7 @@ cc.Class({
     onLoad() {
         this.tile_com = this.node.addComponent(cc.TiledMap);
         this._select_num = 1;
+        this.movespd = normal_moveSpd;
     },
 
     onDestroy() {
@@ -98,11 +101,11 @@ cc.Class({
             let dir_norm = cc.v2(dir.x * length,dir.y * length)
 
             if(this.runstate ==1) {
-               
+                console.log("movespd========",this.movespd);
                 this.pinkheader.getWorldPosition(pinkheaderworld);
-                let dist_position = cc.v2(pinkheaderworld.x + dir_norm.x * dt * movespd,pinkheaderworld.y + dir_norm.y * dt * movespd);
+                let dist_position = cc.v2(pinkheaderworld.x + dir_norm.x * dt * this.movespd,pinkheaderworld.y + dir_norm.y * dt * this.movespd);
                 if(this.checkCanMove(dist_position)){
-                    this.pinknode.position = cc.v2(this.pinknode.position.x + dir_norm.x * dt * movespd,this.pinknode.position.y + dir_norm.y * dt * movespd);;
+                    this.pinknode.position = cc.v2(this.pinknode.position.x + dir_norm.x * dt * this.movespd,this.pinknode.position.y + dir_norm.y * dt * this.movespd);;
                     if(this.progressnode.active) {
                         this.progressnode.position = cc.v2(this.pinknode.position.x,this.pinknode.position.y + pink_y_diff);
                     }
@@ -111,9 +114,9 @@ cc.Class({
                 
             } else {
                 this.erasenode.getWorldPosition(eraseworld);
-                let dist_position = cc.v2(eraseworld.x + dir_norm.x * dt * movespd,eraseworld.y + dir_norm.y * dt * movespd);
+                let dist_position = cc.v2(eraseworld.x + dir_norm.x * dt * this.movespd,eraseworld.y + dir_norm.y * dt * this.movespd);
                 if(this.checkCanMove(dist_position)){
-                    this.erasenode.position = cc.v2(this.erasenode.position.x + dir_norm.x * dt * movespd,this.erasenode.position.y + dir_norm.y * dt * movespd);;
+                    this.erasenode.position = cc.v2(this.erasenode.position.x + dir_norm.x * dt * this.movespd,this.erasenode.position.y + dir_norm.y * dt * this.movespd);;
                     if(this.progressnode.active) {
                         this.progressnode.position = this.erasenode.position;
                     }
@@ -240,6 +243,9 @@ cc.Class({
                 return;
             }
             this.state = 2;
+           
+            this.movespd = movespd;
+            console.log("normal_movespd=======",this.movespd);
             if(this.runstate ==1) {
                 let partile = this.node.parent.getChildByName("particle_pink").getComponent(cc.ParticleSystem);
                 partile.resetSystem();
@@ -284,6 +290,9 @@ cc.Class({
         }
         this.state = 0;
         this.move_pos = null;
+       
+        this.movespd = normal_moveSpd;
+        console.log("drawEnd========",this.movespd)
         rollupmgr.clearCurAction();
         if(this.action_slot) {
             this.pinknode.stopAction(this.action_slot);
@@ -434,7 +443,7 @@ cc.Class({
             this.pinkpartile.endColor = linecolor;
             let line = this.linenode.getComponent(cc.Sprite);
             let mat = line.getMaterial(0);
-            console.log("line mat===",mat)
+           
             mat.setProperty("defalutcolor",linecolor);
         }else{
             this.linenode.active = false;

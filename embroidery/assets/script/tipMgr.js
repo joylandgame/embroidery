@@ -16,8 +16,26 @@ cc.Class({
     },
 
     onLoad(){
+      
+       
+      
+    },
+
+    onDestroy() {
+       
+        cc.vv.eventMgr.off(cc.vv.eventName.push_game_tip_1_open,this.push_game_tip_1_open,this);
+        cc.vv.eventMgr.off(cc.vv.eventName.push_game_tip_1_close,this.push_game_tip_1_close,this);
+        cc.vv.eventMgr.off(cc.vv.eventName.push_game_tip_2_open,this.openPushTip_2,this);
+    },
+
+    initHome() {
         this.loading.active    = false;
         this.loadingAni.active = false;
+        cc.vv.eventMgr.on(cc.vv.eventName.push_game_tip_2_open,this.openPushTip_2,this);
+    },
+    initGame() {
+        cc.vv.eventMgr.on(cc.vv.eventName.push_game_tip_1_open,this.push_game_tip_1_open,this);
+        cc.vv.eventMgr.on(cc.vv.eventName.push_game_tip_1_close,this.push_game_tip_1_close,this);
     },
 
     openShopView(){
@@ -50,5 +68,57 @@ cc.Class({
         })
     },
 
+    push_game_tip_1_open(){
+        let canshow = cc.vv.jsbMgr.gamePushOther();
+      
+        if(!canshow){return}
+      
+        if(!cc.vv.size_grid.list || !cc.vv.size_grid.list.length){return}
+        this.openPushTip_1();
+    },
+
+    push_game_tip_1_close(){
+        let canshow = cc.vv.jsbMgr.gamePushOther();
+        if(!canshow || !this.pushTip_1){return}
+        if(!cc.vv.size_grid.list || !cc.vv.size_grid.list.length){return}
+        this.pushTip_1.getComponent('pushTip_1Mgr').close();
+    },
+
+    openPushTip_1(){
+        if(this.pushTip_1){
+            this.pushTip_1.getComponent('pushTip_1Mgr').init();
+            return;
+        }
+        cc.vv.utils.loadPrefab('./pushprefab/pushTip_1', this.node, null).then((node)=>{
+            if(this.pushTip_1){return}
+            this.pushTip_1 = node;
+            this.pushTip_1.getComponent('pushTip_1Mgr').init();
+        })
+    },
+
+    openPushTip_2(){
+      
+        if(this.pushTip_2){
+            this.pushTip_2.getComponent('pushTip_2Mgr').init();
+            return;
+        }
+        cc.vv.utils.loadPrefab('./pushprefab/pushTip_2', this.node, null).then((node)=>{
+            if(this.pushTip_1){return}
+            this.pushTip_2 = node;
+            this.pushTip_2.getComponent('pushTip_2Mgr').init();
+        })
+    },
+    openNativeInsert(callback) {
+        if(this.nativeInsertView) {
+            this.nativeInsertView.getComponent("nativeInsertMgr").init(callback);
+            return;
+        }
+        console.log("原生 run openNativeInsert")
+        cc.vv.utils.loadPrefab('./pushprefab/NativeInsertView',this.node,null).then((node)=>{
+            console.log("原生加载完成")
+            this.nativeInsertView = node;
+            this.nativeInsertView.getComponent("nativeInsertMgr").init(callback);
+        })
+    }
 
 });

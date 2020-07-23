@@ -21,6 +21,7 @@ cc.Class({
         goNextBtn: cc.Node,
         material:cc.Material,
         hint:cc.Sprite,
+        cutGuilde: cc.Node,       //新手点击引导
     },
 
     init(data){
@@ -35,10 +36,14 @@ cc.Class({
         }else{
             this.clipName = cc.vv.skinMgr.getUserUseScissor().skin_res_name + "_clip";
         }
-        console.log("this.clipName=======",this.clipName);
+       
         this.initView();
         this.addEvent();
         
+        if(!cc.vv.userInfo.guide || !cc.vv.userInfo.guide['6']){
+            this.cutGuilde.active = true;
+        }
+
     },
 
     addEvent(){
@@ -266,10 +271,14 @@ cc.Class({
         this.clipBtnAni();
         this.isOver = true;
         this.goNextBtn.active = true;
+        
         this.showGuide(2);
+        /*
         this.scheduleOnce(()=>{
             this.result();
         }, 5)
+        */
+       this.result();
     },
 
     clipBtnAni(){
@@ -326,5 +335,12 @@ cc.Class({
 
     hideGuide(){
         this.headGuide.active = false;
+    },
+    checkCutAnim() {
+        if(this.cutGuilde.active) {
+            cc.vv.userMgr.setUserGudie('6');
+            this.cutGuilde.active = false;
+        }
+       
     }
 })

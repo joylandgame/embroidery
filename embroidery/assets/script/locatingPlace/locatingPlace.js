@@ -6,7 +6,7 @@ cc.Class({
 
         touchToMoveLayer: cc.Node,
         scaleBtn: cc.Node,
-
+        rotateBtn:cc.Node,
         touchRectSpr: cc.SpriteFrame,
         touchScaleSpr: cc.SpriteFrame,
     },
@@ -17,11 +17,23 @@ cc.Class({
         this.touchToMoveLayer.on('touchend', this.touchend_tomovelayer, this);
         this.touchToMoveLayer.on('touchcancel', this.touchcancel_tomovelayer, this);                                                                                                                                                                                                                   
         
+        
         this.baseDis = Math.sqrt(150*150 + 150*150);
     },
 
-    init(){
-
+    init(data){
+     
+        if (data.pos && data.pos.length > 1) {
+            this.node.x = data.pos[0] + 21
+            this.node.y = data.pos[1] - 228
+        }
+        if(data.scale) {
+            this.node.setScale(cc.v2(data.scale,data.scale));
+        }
+        if(data.angle) {
+            this.node.angle = data.angle;
+        }
+        console.log("init==============",this.node.y)
     },
 
     touchstart_tomovelayer(evt){
@@ -43,12 +55,15 @@ cc.Class({
         rect_2.y = pp_1.y;
         let offSetP = cc.v2(p_1.x + 23, p_1.y + 63)
         if(rect_2.contains(offSetP)){
+            console.log("start condition 1")
             this.targetPos = this.node.getPosition();
         }else if(rect_1.contains(p_1)){
+            console.log("start condition 2")
             this.rectNode.getComponent(cc.Sprite).spriteFrame = this.touchRectSpr;
             this.scaleBtn.getComponent(cc.Sprite).spriteFrame = this.touchScaleSpr;
             this.toMoveStart = p;
         }else{
+            console.log("start condition 3")
             this.angleLayer_touchPos = p;
         }
     },
@@ -56,6 +71,7 @@ cc.Class({
     touchmove_tomovelayer(evt){
         let p = evt.getLocation();
         if(this.toMoveStart){
+            console.log("move condition 1")
             let offSetX = p.x - this.toMoveStart.x;
             let offsetY = p.y - this.toMoveStart.y;
             this.node.x += offSetX;
@@ -64,6 +80,7 @@ cc.Class({
         }
 
         if(this.angleLayer_touchPos){
+            console.log("move condition 2")
             this.angleLayer_move = true;
             let offset = Math.floor(p.x - this.angleLayer_touchPos.x);
 
@@ -72,6 +89,7 @@ cc.Class({
         }
 
         if(this.targetPos){
+            console.log("move condition 3")
             let p_1 = this.touchToMoveLayer.convertToNodeSpaceAR(p);
             this.lastDis   = Math.sqrt((p_1.x - this.targetPos.x)*(p_1.x - this.targetPos.x)+(p_1.y - this.targetPos.y)*(p_1.y - this.targetPos.y));
             let ratio = this.lastDis / this.baseDis;

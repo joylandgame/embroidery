@@ -15,10 +15,12 @@ import utils from './common/utils';
 import gameMgr from './gameMgr';
 
 import audioMgr from './audioMgr';
-
+import pushGameConfig from './PushGame/pushGameConfig';
 import clothesMgr from './c_clothesConfig/clothesMgr';
 import tiledMapMgr from './c_tiledMapConfig/tiledMapMgr';
 import skinMgr from './c_skinConfig/skinMgr';
+import jsbMgr from './jsb/jsbMgr'
+
 cc.Class({
     extends: cc.Component,
 
@@ -26,6 +28,10 @@ cc.Class({
         loading   : cc.Node,
         homeView  : cc.Node,
         commonTip : cc.Node,
+        pushIcon: cc.Node,
+        startBtn:cc.Node,
+        loaddesc:cc.Label,
+        loadprogress:cc.Label,
     },
 
     onLoad(){
@@ -34,7 +40,7 @@ cc.Class({
         this.homeView.active = false;
         this.resReady        = true;
         this.resReadyFunc    = null;
-
+      
         if(gameConfig.loadConfigOver){
             Log.d('游戏json场景前加载完毕');
             this.initData();
@@ -67,7 +73,7 @@ cc.Class({
             Log.d(gameConfig.signin);
             Log.d(gameConfig.skin);
             Log.d(gameConfig.upgrade);
-
+            cc.vv.utils = utils;
             cc.vv.upgrade      = gameConfig.upgrade;
             cc.vv.signinInfo   = gameConfig.signin;
             cc.vv.skinInfo     = null;
@@ -76,6 +82,7 @@ cc.Class({
             cc.vv.scissorsSkin = null;
             cc.vv.skinMgr      = skinMgr;
             cc.vv.skinMgr.init(gameConfig.skin);
+            cc.vv.jsbMgr    = jsbMgr;
 
             //用户当前关卡的衣服资源          /***每关都会重新刷新的资源***/
             cc.vv.clothesDemo      = null;  /**texture                */
@@ -101,6 +108,8 @@ cc.Class({
             //加载home资源
         }
 
+        this.node.getChildByName("tipView").getComponent("tipMgr").initHome()
+
         //游戏相关操作依据
         cc.vv.gameMgr = new gameMgr();
 
@@ -112,14 +121,35 @@ cc.Class({
     //提前加载游戏资源
     preLoadGameRes(){
         Promise.all([
-            cc.vv.clothesMgr.preLoadClothes(),
-            cc.vv.tiledMapMgr.preLoadTiledMap(),
-            cc.vv.skinMgr.preLoadPensSkin(),
-            cc.vv.skinMgr.preLoadScissorsSkin(),
-            cc.vv.skinMgr.preLoadNeedlesSkin(),
+            cc.vv.clothesMgr.preLoadClothes((donenum,totalnum)=>{
+                this.loaddesc.string = "加载衣服:  ";
+                this.loadprogress.string = (Math.floor(donenum / totalnum) * 100).toString() +  "%100";
+            }),
+            cc.vv.tiledMapMgr.preLoadTiledMap((donenum,totalnum)=>{
+                this.loaddesc.string = "加载地图:  ";
+                this.loadprogress.string = (Math.floor(donenum / totalnum) * 100).toString() +  "%100";
+            }),
+            cc.vv.skinMgr.preLoadPensSkin((donenum,totalnum)=>{
+                this.loaddesc.string = "加载笔刷:  ";
+                this.loadprogress.string = (Math.floor(donenum / totalnum) * 100).toString() +  "%100";
+            }),
+            cc.vv.skinMgr.preLoadScissorsSkin((donenum,totalnum)=>{
+                this.loaddesc.string = "加载剪刀:  ";
+                this.loadprogress.string = (Math.floor(donenum / totalnum) * 100).toString() +  "%100";
+            }),
+            cc.vv.skinMgr.preLoadNeedlesSkin((donenum,totalnum)=>{
+                this.loaddesc.string = "加载织针:  ";
+                this.loadprogress.string = (Math.floor(donenum / totalnum) * 100).toString() +  "%100";
+            }),
         ]).then(()=>{
+            console.log("cc.vv.eventMgr========")
+            this.startBtn.active = true;
+            this.loaddesc.node.active = false;
+            this.loadprogress.node.active = false;
             this.resReady = true;
             this.resReadyFunc && this.resReadyFunc();
+            cc.vv.jsbMgr.init();
+            this.initPushGame();
             Log.d(cc.vv.linesAsset);
         })
     },
@@ -130,8 +160,8 @@ cc.Class({
     },
 
     startGame(){
-        this.loading.active  = true;
-        this.homeView.active = false;
+        ////this.loading.active  = true;
+        ////this.homeView.active = false;
         if(this.resReady){
             this.openGameScene();
         }else{
@@ -147,6 +177,86 @@ cc.Class({
 
     initView(){
         this.homeView.getComponent('homeMgr').init();
+    },
+
+    initPushGame(){
+        let canshow = cc.vv.jsbMgr.gamePushOther();
+        if(!canshow){
+            return
+        }
+     
+        cc.vv.pushGameConfig = pushGameConfig;
+        cc.vv.pushGameConfig.initMutualPushFlag().then(()=>{
+            return cc.vv.pushGameConfig.initMiConfig();
+        }).then((data)=>{
+            cc.vv.mutual_push = data[0];
+            cc.vv.size_grid   = data[1];
+            cc.vv.wheel_planting = data[2];
+            this.initMutualPush();
+            this.initWheelIcon();
+        })
+    },
+
+    initMutualPush(){
+      
+        if(cc.vv.mutual_push.list && cc.vv.mutual_push.list.length){
+            cc.vv.eventMgr.emit(eventName.push_game_tip_2_open);
+        }
+    },
+
+    initWheelIcon(){
+        if (!this.active) {
+            return;
+        }
+        this.pushIcon.active = false;
+        if(cc.vv.wheel_planting.list && cc.vv.wheel_planting.list.length){
+            let list = cc.vv.wheel_planting.list;
+            let times= cc.vv.wheel_planting.times;
+            let startIdx = 1;
+            this.wheelApkname = '';
+
+            this.wheelIconPlay = ()=>{
+                ////if(!list[startIdx].url){startIdx = 0};
+                
+                let n = list[startIdx];
+               
+                if(!n.icon) {
+                   
+                    this.scheduleOnce(this.wheelIconPlay,times[startIdx]||2);
+                    startIdx = (startIdx+1) % list.length;
+                  
+                    return;
+                }
+
+                let url  = n.icon;
+              
+                let icon = this.pushIcon.getChildByName('icon').getComponent(cc.Sprite);
+                let name = this.pushIcon.getChildByName('name').getComponent(cc.Label);
+                cc.vv.utils.loadSpriteFrameByHttp(url,icon,94,94).then(()=>{
+                    let time = times[startIdx];
+                    let _name = list[startIdx].name;
+                    name.string = _name;
+                    this.wheelApkname = list[startIdx].apk;
+                   /// this.pushIcon.getChildByName("icon").width = 94;
+                   /// this.pushIcon.getChildByName("icon").height = 94;
+                    this.pushIcon.active = true;
+                    startIdx = (startIdx+1) % list.length ;
+                   
+                    if(startIdx ==0) {
+                        startIdx = 1;
+                    }
+                    this.scheduleOnce(this.wheelIconPlay, time);
+                })
+            }
+
+            this.wheelIconPlay();
+        }
+    },
+
+    wheelIconCallBack(){
+        if(this.wheelApkname){
+            cc.vv.jsbMgr.openGame(this.wheelApkname);
+        }
     },
 
 });

@@ -44,7 +44,9 @@ cc.Class({
         this.game = data.game;
         this.gameID = data.id;
         this.isOver = data.complete;
-
+        this.btnDone.active = false;
+        this.handGuide.active = false;
+        
         mapinfo.init();//初始化画笔
         
         this.initView();
@@ -188,12 +190,7 @@ cc.Class({
         }
         this.map_com.setRunState(1);
         this.takeUpLine();
-        for (let i=0;i<this.lineArr.length;i++) {
-            let other = this.lineArr[i]
-            if(other != this.selectLine) {
-                console.log("other============")
-            }
-        }
+      
         /*
         let sp = this.selectLine.getComponent(cc.Sprite);
         let mat = sp.getMaterial(0)
@@ -316,10 +313,11 @@ cc.Class({
         cc.vv.userMgr.setUserGudie('2');
     },
     checkHandGuide() {
+        this.btnDone.active = true;
         if(cc.vv.userInfo.guide && cc.vv.userInfo.guide['5']) {
             return 
         } else {
-            this.handGuide.active = true;
+            this.handGuide.active = true;  
         }
     },
 

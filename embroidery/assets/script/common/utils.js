@@ -76,9 +76,14 @@ const utils = {
         })
     },
 
-    loadTexture(url, sprite){
+    loadTexture(url, sprite,progress){
         return new Promise((resolve,reject)=>{
-            cc.loader.loadRes(url, (err, texture)=>{
+            cc.loader.loadRes(url,(completeCount,totalCount)=>{
+                console.log("loadTexture=====xxx",completeCount,totalCount);
+                if(progress) {
+                    progress(completeCount,totalCount)
+                }
+            }, (err, texture)=>{
                 if(err){
                     Log.catch(err);
                     return;
@@ -92,7 +97,7 @@ const utils = {
         })
     },
 
-    loadSpriteFrameByHttp(url,spr){
+    loadSpriteFrameByHttp(url,spr,width,height){
         return new Promise((resolve,reject)=>{
             try {
                 // if(!cc.sys.isNative){
@@ -103,9 +108,19 @@ const utils = {
                         Log.catch(err);
                         return;
                     }
-                    let frame = new SpriteFrame(texture)
+                  
+                    let frame = new cc.SpriteFrame(texture)
+                   
                     if(spr){
+                       
                         spr.spriteFrame = frame;
+                       
+                        if(!!width && !!height) {
+                          
+                            spr.node.scaleX = width/frame.getTexture().width;
+                            spr.node.scaleY = height/frame.getTexture().height;
+                        }
+
                         resolve(frame);
                         return;
                     }
@@ -131,9 +146,13 @@ const utils = {
         })
     },
 
-    loadDir: (url, type = cc.Texture2D, call)=>{
+    loadDir: (url, type = cc.Texture2D, progcallback,call)=>{
         return new Promise((resolve, reject)=>{
-            cc.loader.loadResDir(url,function(err,assets){
+            cc.loader.loadResDir(url,(completeCount,totalCount)=>{
+               if(progcallback) {
+                   progcallback(completeCount,totalCount)
+               }
+            },function(err,assets){
                 if (err || assets.length <= 0) {
                     reject();
                     return;

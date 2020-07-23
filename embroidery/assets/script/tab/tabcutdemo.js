@@ -32,6 +32,9 @@ cc.Class({
     },
 
     clipCut(e) {
+        let tailortabmgr = this.node.parent.parent.getComponent("tailorTabMgr");
+        tailortabmgr.checkCutAnim();
+
         let touchnode = e.target
         if (!touchnode.active) {
             return;
@@ -44,7 +47,7 @@ cc.Class({
             cc.moveBy(2,0,-1000),
             ///cc.delayTime(2.0),
 
-        ),cc.delayTime(2),cc.callFunc(()=>{
+        ),cc.callFunc(()=>{
             this.checkEmpty();
             console.log("flow check");
         })) 
@@ -61,7 +64,8 @@ cc.Class({
         if(findindex >= 0) {
             this.lineNodeList[findindex].parent = null;
             this.lineNodeList.splice(findindex,1);
-        }      
+        } 
+
      },
      checkEmpty() {
         if (this.cutNodelist.length ==0) {

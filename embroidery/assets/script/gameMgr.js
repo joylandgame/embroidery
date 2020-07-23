@@ -91,7 +91,8 @@ export default class gameMgr {
         lastStep  += this.complete[this.embroideryID] === this.isComplete ? 1 : 0;
         finalStep += this.complete[this.putEmbroideryTabID] === this.isComplete ? 1 : 0;
         return {
-            finalStep: lastStep == this.complete.length - 1,
+            ////finalStep: lastStep == this.complete.length - 1,
+            finalStep: lastStep,
             complete : (lastStep + finalStep) == this.complete.length
         };
     }

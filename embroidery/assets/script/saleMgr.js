@@ -22,8 +22,9 @@ cc.Class({
         jiage: cc.Label,
         zuizhong: cc.Label,
         draw: cc.Sprite,
-        cixiu: cc.Sprite
-
+        cixiu: cc.Sprite,
+        hightSpriteFrame:cc.SpriteFrame,
+        highestSallBtn:cc.Node,
     },
 
     init(game,price,scoreRatio){
@@ -41,6 +42,7 @@ cc.Class({
         this.initView();
         this.paiMai.active = true;
         this.result.active = false;
+        this.highestSallBtn.active = false;
     },
 
     initView(){
@@ -53,11 +55,16 @@ cc.Class({
         if(price>this._highestPrice){this._highestPrice = price}
         this.highestPrice.string = '目前最高销售价格为:'+this._highestPrice;
         this.nowTime.string = String(this.buyerIndex + 1);
+      
         if(this.buyerIndex == 2){
+        
             this.nextBtn.active = false;
             // this.highestBtn.active = this._highestPrice > this._price;
             // this.saleBtn.x = this._highestPrice <= this._price ? 0 : this.saleBtn.x;
             this.saleBtn.x = 0;
+            this.saleBtn.active = false;
+            this.highestSallBtn.active = true;
+            ///this.highestBtn.spriteFrame = this.hightSpriteFrame;
         }
     },
 
@@ -114,8 +121,8 @@ cc.Class({
 
     noBtnCall(){
         cc.vv.userMgr.addUserGold(this._price);
-        this.game.readyGoNext();
-        this.node.active = false;
+        this.showResultView();
+       
     },
 
     getDoubleCall(){
@@ -125,9 +132,25 @@ cc.Class({
             }
             cc.vv.userMgr.addUserGold(this._price*2);
             cc.vv.audioMgr.playEffect('sell');
-            this.game.readyGoNext();
-            this.node.active = false;
+            this.showResultView();
+            /*
+            this.showResultView().then(()=>{
+                this.game.readyGoNext();
+                this.node.active = false;
+            })
+            */
         }
         this.doubleCall(1); //bind后 传入到广告回调
+    },
+    showResultView(){
+        this.result.active= false;
+      
+        cc.vv.eventMgr.emit(cc.vv.eventName.push_game_tip_1_open);  
+        let nextGame = ()=>{
+            this.game.readyGoNext();
+            this.node.active = false;
+            cc.vv.eventMgr.off(cc.vv.eventName.next_game,nextGame,this);
+        }
+        cc.vv.eventMgr.on(cc.vv.eventName.next_game,nextGame,this);
     }
 })

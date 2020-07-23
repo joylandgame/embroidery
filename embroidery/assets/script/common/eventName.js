@@ -19,6 +19,15 @@ const eventName = {
 
     //需要切的条为空
     clear_tailor_list:'clear_tailor_list',
+
+
+    
+    push_game_tip_1_open : 'push_game_tip_1_open',
+    push_game_tip_1_close: 'push_game_tip_1_close',//关闭game推送（九宫格）
+    push_game_tip_2_open : 'push_game_tip_2_open',
+    push_game_tip_2_close : 'push_game_tip_2_close',
+    next_game: "next_game",
+    last_game_done:"last_game_don",
 }
 
 export default eventName;
