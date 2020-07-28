@@ -379,7 +379,7 @@ cc.Class({
         } 
         
         let score = this.calcScore();
-        if(score >= 80) {
+        if(score >= 50) {
             let embroid = this.node.parent.getComponent("embroideryTabMgr");
             embroid.checkHandGuide();
         }
