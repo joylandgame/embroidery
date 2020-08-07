@@ -6,6 +6,7 @@
 //  - https://docs.cocos.com/creator/manual/en/scripting/life-cycle-callbacks.html
 
 import utils from './common/utils';
+import jsbMgr from './jsb/jsbMgr';
 
 cc.Class({
     extends: cc.Component,
@@ -26,6 +27,7 @@ cc.Class({
         cc.vv.eventMgr.off(cc.vv.eventName.push_game_tip_1_open,this.push_game_tip_1_open,this);
         cc.vv.eventMgr.off(cc.vv.eventName.push_game_tip_1_close,this.push_game_tip_1_close,this);
         cc.vv.eventMgr.off(cc.vv.eventName.push_game_tip_2_open,this.openPushTip_2,this);
+
     },
 
     initHome() {
@@ -109,6 +111,7 @@ cc.Class({
         })
     },
     openNativeInsert(callback) {
+        /*
         if(this.nativeInsertView) {
             this.nativeInsertView.getComponent("nativeInsertMgr").init(callback);
             return;
@@ -119,6 +122,27 @@ cc.Class({
             this.nativeInsertView = node;
             this.nativeInsertView.getComponent("nativeInsertMgr").init(callback);
         })
+        */
+       return new Promise((resolved,rejected)=>{
+           let callback =  cc.vv.jsbMgr.play("showNativeAdView");
+           if(this.nativeInsertView) {
+                this.nativeInsertView.getComponent("nativeInsertMgr").init(callback).then((res)=>{
+                    console.log("res openNativeInsert",res)
+                    resolved(res);
+                });
+            }
+
+            console.log("原生 run openNativeInsert")
+            cc.vv.utils.loadPrefab('./pushprefab/NativeInsertView',this.node,null).then((node)=>{
+                console.log("原生加载完成")
+                this.nativeInsertView = node;
+                this.nativeInsertView.getComponent("nativeInsertMgr").init(callback).then((res)=>{
+                    console.log("res openNativeInsert[222]",res)
+                    resolved(res);
+                });
+                
+         }) 
+       })
     }
 
 });

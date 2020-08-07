@@ -29,21 +29,42 @@ cc.Class({
         this.node.active = true;
         this.callback = callback;
         
-        let model = callback.GetModel()
-        let imgurl = model.imgUrlList
-        if(imgurl && typeof(imgurl) !="string") {
-            imgurl = imgurl[0]
-        }
-     
-       
-        cc.loader.load(imgurl, (err, texture) => {
-            if(err != null) {
-                console.log("原生err======================",err.message);
+        let imgurl;
+        if(!!!callback) {
+            ///////imgurl = "https://kuaizhiyou.com.cn/fenfa/icon/hdybicon.png"
+        } else {
+            let model = callback.GetModel()
+            imgurl = model.imgUrlList
+            if(imgurl && typeof(imgurl) !="string") {
+                imgurl = imgurl[0]
             }
-            var frame = new cc.SpriteFrame(texture);
-            this.imgurl.spriteFrame = frame;
-           
-        });
+
+            cc.loader.load(imgurl, (err, texture) => {
+                if(err != null) {
+                    console.log("原生err======================",err.message);
+                }
+                var frame = new cc.SpriteFrame(texture);
+                this.imgurl.spriteFrame = frame;
+            
+            });
+        }
+        return new Promise((resoved,reject)=>{
+            let success,failure;
+            success = ()=>{
+                console.log("success")
+                this.node.off("success",success,this)
+                this.node.off("failure",failure,this);
+                resoved(true)
+            }
+            failure = ()=>{
+                console.log("failure")
+                this.node.off("success",success,this)
+                this.node.off("failure",failure,this);
+                resoved(false)
+            }
+            this.node.on("success",success,this);
+            this.node.on("failure",failure,this);
+        })
     },
 
     start() {
@@ -52,12 +73,29 @@ cc.Class({
 
     onContinue() {
         ///this.node.active = fale;
-        this.callback.CloseHandle();
+        if(this.callback) {
+            this.callback.CloseHandle();
+        }
+        console.log("onContinue")
+        this.node.emit("failure");
         this.node.active = false;
     },
     onVideo() {
-        this.callback.ClickHandle();
-        this.node.active = false;
+        console.log("onVideo");
+        if(this.callback) {
+            this.callback.ClickHandle().then((res)=>{
+                if(res) {
+                    this.node.emit("success");
+                } else {
+                    this.node.emit("failure"); 
+                }
+                this.node.active = false;
+            });
+        } else {
+           this.node.emit("failure");
+           this.node.active = false; 
+        }
+        
     },
     // update (dt) {},
 });

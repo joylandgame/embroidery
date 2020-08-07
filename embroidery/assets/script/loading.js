@@ -19,7 +19,10 @@ import pushGameConfig from './PushGame/pushGameConfig';
 import clothesMgr from './c_clothesConfig/clothesMgr';
 import tiledMapMgr from './c_tiledMapConfig/tiledMapMgr';
 import skinMgr from './c_skinConfig/skinMgr';
-import jsbMgr from './jsb/jsbMgr'
+import {jsbMgr,initFunc} from './jsb/jsbMgr'
+
+   //通用
+/////initFunc("toutiao");             //头条单独
 
 cc.Class({
     extends: cc.Component,
@@ -35,6 +38,9 @@ cc.Class({
     },
 
     onLoad(){
+        console.log("initfunc=============",initFunc)
+        initFunc(cc.sys.platform); 
+
         //在这里打开loading界面
         this.loading.active  = true;
         this.homeView.active = false;

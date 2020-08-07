@@ -276,14 +276,19 @@ const vivo = {
     loadNativeAd() {
         console.log('this.nativeAd', this.nativeAd);
         let adLoad = this.nativeAd.load();
-        adLoad && adLoad.then(() => {
-            console.log("原生广告加载成功");
-        }).catch(err => {
-            console.log('原生广告加载失败', JSON.stringify(err));
-            setTimeout(() => {
-                this.loadNativeAd();
-            }, 30 * 1000);
+        return new Promise((resolved,reject)=>{
+            adLoad && adLoad.then(() => {
+                console.log("原生广告加载成功");
+                resolved(true)
+            }).catch(err => {
+                console.log('原生广告加载失败', JSON.stringify(err));
+                setTimeout(() => {
+                    this.loadNativeAd();
+                }, 30 * 1000);
+                resolved(false);
+            })
         })
+      
     },
 
     showNativeAdView() {
@@ -297,9 +302,14 @@ const vivo = {
                 this.showBanner();
             },
             ClickHandle: () => {
-                this.reportNativeAdClick(model.adId);
-                this.showBanner();
-                this.loadNativeAd();
+                return new Promise((resolved,reject)=>{
+                    this.reportNativeAdClick(model.adId);
+                    this.showBanner();
+                    this.loadNativeAd().then((res)=>{
+                        resolved(res)
+                    });
+                })
+               
             }
         }
         this.reportNativeAdShow(model.adId);

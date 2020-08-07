@@ -145,12 +145,21 @@ cc.Class({
     showResultView(){
         this.result.active= false;
       
-        cc.vv.eventMgr.emit(cc.vv.eventName.push_game_tip_1_open);  
-        let nextGame = ()=>{
-            this.game.readyGoNext();
-            this.node.active = false;
-            cc.vv.eventMgr.off(cc.vv.eventName.next_game,nextGame,this);
-        }
-        cc.vv.eventMgr.on(cc.vv.eventName.next_game,nextGame,this);
+        ////cc.vv.eventMgr.emit(cc.vv.eventName.push_game_tip_1_open);  
+          
+        console.log("readyGONext=========")
+        this.game.showNativeAd().then(()=>{
+            /*
+            let nextGame = ()=>{
+                this.game.readyGoNext();
+                this.node.active = false;
+                cc.vv.eventMgr.off(cc.vv.eventName.next_game,nextGame,this);
+            }
+
+            cc.vv.eventMgr.on(cc.vv.eventName.next_game,nextGame,this);
+            */
+           this.game.readyGoNext();
+           this.node.active = false;
+        })
     }
 })

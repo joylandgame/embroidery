@@ -1,6 +1,6 @@
 module.exports = {
     init() {
-        console.log("web=============xxxxxxx")
+        console.log("toutiao===============")
     },
     loadBannerView() {
 

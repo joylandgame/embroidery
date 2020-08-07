@@ -1,6 +1,6 @@
-module.exports = {
+const weixin = {
     init() {
-        console.log("web=============xxxxxxx")
+        console.log("weixin============")
     },
     loadBannerView() {
 
@@ -29,3 +29,5 @@ module.exports = {
     sendDesktop() {},
     openGame() {}
 }
+
+module.exports = weixin;

@@ -1,19 +1,32 @@
 import vivo from './vivo';
 import oppo from './oppo';
 import web from './web';
+
+
+
 var jsb    = null;
-(function(){
-    console.log("cc.sys.vivoGame======",cc.sys.platform);
-    if(cc.sys.MOBILE_BROWSER == cc.sys.platform || cc.sys.DESKTOP_BROWSER == cc.sys.platform){
-        jsb = web;
+var initFunc = function(platform) {
+     console.log("cc.sys.vivoGame======",cc.sys.platform);
+    if(cc.sys.MOBILE_BROWSER == platform || cc.sys.DESKTOP_BROWSER == platform){
+        console.log("web========")
+        jsb = require("./web.js");
     }
-    if(cc.sys.VIVO_GAME == cc.sys.platform){
+    if(cc.sys.VIVO_GAME == platform){
         jsb  = vivo;
     }
-    if(cc.sys.OPPO_GAME == cc.sys.platform){
+    if(cc.sys.OPPO_GAME == platform){
         jsb = oppo;
     }
-})()
+    if(cc.sys.WECHAT_GAME == platform) {
+        console.log("wechat");
+        jsb =  require("./weixin.js")
+    }
+    if("toutiao" === platform) {
+        console.log("toutiao")
+        jsb = require("./toutiao.js");
+    }
+}
+
 
 const jsbMgr = {
 
@@ -21,6 +34,7 @@ const jsbMgr = {
 
     init(){
         if(jsb == null){
+            console.error("jsb is empty")
             return;
         }
         jsb.init();
@@ -99,7 +113,15 @@ const jsbMgr = {
         }
 
         jsb.hideBannder();
+    },
+    getNativeAd() {
+        if(jsb) {
+            return 
+        }
     }
 }
 
-export default jsbMgr;
+export default {
+    jsbMgr:jsbMgr,
+    initFunc:initFunc
+};

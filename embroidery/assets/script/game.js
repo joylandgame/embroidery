@@ -38,7 +38,9 @@ cc.Class({
 
     onLoad(){
         this.tabMgr = this.tabNodes.getComponent('tabMgr');
-        this.node.getChildByName("tipView").getComponent("tipMgr").initGame();
+        this.tipMgr =  this.node.getChildByName("tipView").getComponent("tipMgr");
+        this.tipMgr.initGame();
+    
         this.tabMgr.init(this);
         this.initView();
         this.addEvent();
@@ -222,6 +224,27 @@ cc.Class({
         ]).then(()=>{
             this.initView();
         })
-    }
+    },
 
+    showNativeAd() {
+        return new Promise((resolved,rejected)=>{
+            resolved(false)
+        })
+        
+        /*
+        return new Promise((resolved,reject)=>{
+            this.tipMgr.openNativeInsert().then((res)=>{
+                if(res) {
+                    console.log("showNativeAd==== true")
+                    resolved(true)
+                   
+                } else {
+                    console.log("showNativeAd==== false")
+                    resolved(false)
+                    Promise.resolved(false);
+                }
+            })
+        })
+        */
+    }
 });
